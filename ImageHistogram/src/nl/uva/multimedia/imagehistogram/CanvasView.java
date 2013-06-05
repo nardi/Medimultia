@@ -15,10 +15,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Matrix;
 import android.graphics.Bitmap;
+import android.hardware.Camera.Size;
 import android.view.View;
 import android.util.AttributeSet;
 
@@ -32,6 +34,7 @@ public class CanvasView extends View {
 	public int image_height;
 	
 	Bitmap m_image = null;
+	Histogram m_histogram = null;
 
 	public CanvasView(Context context) {
 		super(context);
@@ -48,7 +51,7 @@ public class CanvasView extends View {
 	@Override protected void onMeasure(int width, int height) {
 		super.onMeasure(width, height);
 	}
-
+	
 	/* Called whenever the canvas is dirty and needs redrawing */
 	@Override protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -89,6 +92,11 @@ public class CanvasView extends View {
 
 			canvas.drawBitmap(m_image, null, rect, paint);
 		}
+		
+		// Initialisatie kan wel ergens anders, maar moet nog een goed plekje vinden
+		m_histogram = new Histogram(new Point(40, 110), new Point(380, 180),
+				255, 20);
+		m_histogram.draw(canvas, argb);
 	}
 
 	/* Accessors */
