@@ -109,7 +109,7 @@ public class CanvasView extends View {
 	}
 	
 	public void setBinSize(int sliderVal){
-		binSize = 1 + 254 * sliderVal / 100;
+		binSize = 1 + (254 * sliderVal / 100);
 		m_histogram.setNumBins(binSize);
 		
 	}
