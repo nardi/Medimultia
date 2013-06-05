@@ -25,7 +25,7 @@ public class Histogram {
 	}
 	
 	public void setNumBins(int numBins) {
-		if (numBins < 0 || numBins > range)
+		if (numBins < 1 || numBins > range)
 			return;
 		this.bins = new int[numBins];
 	}
