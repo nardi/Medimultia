@@ -24,7 +24,8 @@ public class CanvasView extends View {
 	public int[] green;
 	public int image_width;
 	public int image_height;
-	public int binSize = 0;
+	public int binSize = 60;
+	public boolean absolute = true;
 	
 	Bitmap m_image = null;
 	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 255, 60);
@@ -75,7 +76,7 @@ public class CanvasView extends View {
 			canvas.drawText("Greenvalue UL: " + green[0], 0.0F, 0, greenVal);
 			canvas.drawText("Greenvalue MID: " + green[image_width/2 * image_height/2],0,40,greenVal);
 			canvas.drawText("Greenvalue LR: " + green[image_width * image_height - 1],0,80,greenVal);
-			canvas.drawText("Binsize: " + binSize, 0, 100, greenVal);
+			canvas.drawText("Binsize: " + 255/binSize , 0, 100, greenVal);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8F);
 			m_histogram.draw(canvas, green, false);
@@ -109,7 +110,8 @@ public class CanvasView extends View {
 	}
 	
 	public void setBinSize(int sliderVal){
-		binSize = 1 + (254 * sliderVal / 100);
+		binSize =(int)( 1 + (float)(254 * sliderVal / 100));
+		
 		m_histogram.setNumBins(binSize);
 		
 	}

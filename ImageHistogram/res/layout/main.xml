@@ -30,13 +30,21 @@
 		android:orientation="horizontal"
 		android:weightSum="3"
 		android:gravity="center_horizontal">
-		<nl.uva.multimedia.imagehistogram.MyButton
-			android:id="@+id/button"
+		<!-- <nl.uva.multimedia.imagehistogram.MyButton
+			android:id="@+id/"
 			style="?android:attr/buttonStyleSmall" 
 			android:layout_width="0dp"
-			android:text="MyButton"
+			android:text="Absolute"
 			android:layout_weight="1"
-			android:layout_height="wrap_content" />
+			android:layout_height="wrap_content" />-->
+		
+		<Switch
+			android:id="@+id/Switch"
+			android:text="Relative"
+			android:layout_weight="1"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:onClick="doSwitch"/>
 	</LinearLayout>
 
 
