@@ -13,29 +13,21 @@ package nl.uva.multimedia.imagehistogram;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Style;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Matrix;
 import android.graphics.Bitmap;
-import android.hardware.Camera.Size;
 import android.view.View;
 import android.util.AttributeSet;
 
-import java.lang.Math;
-import java.lang.String;
-import java.util.ArrayList;
-
 public class CanvasView extends View {
-	public int[] argb;
+	public int[] green;
 	public int image_width;
 	public int image_height;
 	public int binSize = 0;
 	
 	Bitmap m_image = null;
-	Histogram m_histogram = null;
+	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 255, 60);
 
 	public CanvasView(Context context) {
 		super(context);
@@ -55,9 +47,7 @@ public class CanvasView extends View {
 	
 	/* Called whenever the canvas is dirty and needs redrawing */
 	@Override protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-
-		
+		super.onDraw(canvas);	
 				
 		canvas.drawColor(Color.BLACK);
 	
@@ -81,6 +71,7 @@ public class CanvasView extends View {
 		Paint greenVal = new Paint(text);
 		greenVal.setColor(Color.RED);
 		
+<<<<<<< HEAD
 		if(argb != null && image_width > 0 && image_height > 0){
 			canvas.drawText("Greenvalue UL: " + argb[0], 0.0F, 0, greenVal);
 			canvas.drawText("Greenvalue MID: " + argb[image_width/2 * image_height/2],0,40,greenVal);
@@ -88,6 +79,15 @@ public class CanvasView extends View {
 			canvas.drawText("Binsize: " + binSize, 0, 100, y, paint)
 			m_histogram = new Histogram(new Point(0, 110), new Point(380, 180), 255, 20);
 			m_histogram.draw(canvas, argb);
+=======
+		if(green != null && image_width > 0 && image_height > 0){
+			canvas.drawText("Greenvalue UL: " + green[0], 0.0F, 0, greenVal);
+			canvas.drawText("Greenvalue MID: " + green[image_width/2 * image_height/2],0,40,greenVal);
+			canvas.drawText("Greenvalue LR: " + green[image_width * image_height - 1],0,80,greenVal);
+
+			m_histogram.size.x = (int)(getWidth() * 0.8F);
+			m_histogram.draw(canvas, green, false);
+>>>>>>> 16b5623c6e373c2c58a9a8832a8f106c92853727
 		}
 
 		canvas.restore();
@@ -103,7 +103,6 @@ public class CanvasView extends View {
 			bmp.setAntiAlias(true);
 			bmp.setFilterBitmap(true);
 			bmp.setDither(true);
-
 
 			canvas.drawBitmap(m_image, null, rect, paint);
 		}

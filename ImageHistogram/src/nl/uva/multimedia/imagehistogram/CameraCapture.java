@@ -43,11 +43,15 @@ class CameraCapture implements CameraView.PreviewCallback {
 			size.width = holder;
 		}
 
+<<<<<<< HEAD
 		Log.i("CameraCapture", "Width: " + size.width + " Height: " + size.height);
+=======
+		Log.v("CameraCapture", "Width: " + size.width + " Height: " + size.height);
+>>>>>>> 16b5623c6e373c2c58a9a8832a8f106c92853727
 		int[] argb = new int[size.width*size.height];
 		m_canvas_view.image_height = size.height;
 		m_canvas_view.image_width = size.width;
-		m_canvas_view.argb = new int[size.width* size.height];
+		m_canvas_view.green = new int[size.width*size.height];
 	
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
@@ -62,7 +66,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		 * You can do this in other places, evaluate what makes sense to you.
 		 */
 		for(int i = 0; i < size.width * size.height; i++){
-			m_canvas_view.argb[i] = Color.green(argb[i]);
+			m_canvas_view.green[i] = Color.green(argb[i]);
 		}
 		m_canvas_view.invalidate();
 	}
