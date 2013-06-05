@@ -19,7 +19,7 @@ public class Histogram {
 		this.setNumBins(numBins);
 
 		this.paint = new Paint();
-		paint.setColor(Color.GREEN);
+		paint.setColor(Color.rgb(42, 255, 42));
 		this.bg = new Paint();
 		bg.setColor(Color.DKGRAY);
 	}
@@ -34,13 +34,14 @@ public class Histogram {
 		for (int i = 0; i < bins.length; i++)
 			bins[i] = 0;
 		
-		int binSize = (int)Math.round((float)range / bins.length);
+		float binSize = Math.round((float)range / bins.length);
 		for (int i = 0; i < data.length; i++) {
-			int index = Math.min(data[i] / binSize, bins.length - 1);
+			int index = Math.min((int)(data[i] / binSize), bins.length - 1);
 			this.bins[index]++;
 		}
 
 		int binWidth = size.x / bins.length;
+		int edge = Math.min((int)(binWidth * 0.2F), 10);
 		canvas.save();
 		canvas.translate(pos.x, pos.y);
 
@@ -57,7 +58,7 @@ public class Histogram {
 		if (maxHeight != 0) {
 			for (int i = 0; i < bins.length; i++) {
 				int binHeight = size.y * bins[i] / maxHeight;
-				canvas.drawRect(new Rect(0, size.y - binHeight, binWidth, size.y), paint);
+				canvas.drawRect(new Rect(edge, size.y - binHeight, binWidth - 2*edge, size.y), paint);
 				canvas.translate(binWidth, 0);
 			}
 		}
