@@ -46,12 +46,9 @@ class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 			boolean from_user) {
 		s_canvas_view.setBinSize(progress);
 		/* Do something with progress here */
-<<<<<<< HEAD
-		Log.e("Slider","Progress is set to: " + progress);
-		
-=======
+
 		Log.i("Slider","Progress is set to: " + progress);
->>>>>>> 16b5623c6e373c2c58a9a8832a8f106c92853727
+
 	}
 
 	public void onStartTrackingTouch(SeekBar slider) { /* NOP */ }

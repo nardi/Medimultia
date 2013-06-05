@@ -71,23 +71,14 @@ public class CanvasView extends View {
 		Paint greenVal = new Paint(text);
 		greenVal.setColor(Color.RED);
 		
-<<<<<<< HEAD
-		if(argb != null && image_width > 0 && image_height > 0){
-			canvas.drawText("Greenvalue UL: " + argb[0], 0.0F, 0, greenVal);
-			canvas.drawText("Greenvalue MID: " + argb[image_width/2 * image_height/2],0,40,greenVal);
-			canvas.drawText("Greenvalue LR: " + argb[image_width * image_height - 1],0,80,greenVal);
-			canvas.drawText("Binsize: " + binSize, 0, 100, y, paint)
-			m_histogram = new Histogram(new Point(0, 110), new Point(380, 180), 255, 20);
-			m_histogram.draw(canvas, argb);
-=======
 		if(green != null && image_width > 0 && image_height > 0){
 			canvas.drawText("Greenvalue UL: " + green[0], 0.0F, 0, greenVal);
 			canvas.drawText("Greenvalue MID: " + green[image_width/2 * image_height/2],0,40,greenVal);
 			canvas.drawText("Greenvalue LR: " + green[image_width * image_height - 1],0,80,greenVal);
-
+			canvas.drawText("Binsize: " + binSize, 0, 100, greenVal);
+			
 			m_histogram.size.x = (int)(getWidth() * 0.8F);
 			m_histogram.draw(canvas, green, false);
->>>>>>> 16b5623c6e373c2c58a9a8832a8f106c92853727
 		}
 
 		canvas.restore();
