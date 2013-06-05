@@ -25,16 +25,18 @@ public class Histogram {
 	}
 	
 	public void setNumBins(int numBins) {
+		if (numBins < 0 || numBins > range)
+			return;
 		this.bins = new int[numBins];
 	}
 
-	public void draw(Canvas canvas, int[] sortedData) {
+	public void draw(Canvas canvas, int[] data, boolean absolute) {
 		for (int i = 0; i < bins.length; i++)
 			bins[i] = 0;
 		
-		float binSize = Math.round((float)range / bins.length);
-		for (int i = 0; i < sortedData.length; i++) {
-			int index = Math.min((int)(sortedData[i] / binSize), bins.length);
+		int binSize = (int)Math.round((float)range / bins.length);
+		for (int i = 0; i < data.length; i++) {
+			int index = Math.min(data[i] / binSize, bins.length - 1);
 			this.bins[index]++;
 		}
 
@@ -43,11 +45,21 @@ public class Histogram {
 		canvas.translate(pos.x, pos.y);
 
 		canvas.drawRect(new Rect(0, 0, size.x, size.y), bg);
-		
-		for (int i = 0; i < bins.length; i++) {
-			int binHeight = size.y * bins[i] / sortedData.length;
-			canvas.drawRect(new Rect(0, size.y - binHeight, binWidth, size.y), paint);
-			canvas.translate(binWidth, 0);
+
+		int maxHeight = 0;
+		if (absolute)
+			maxHeight = size.y;
+		else {
+			for (int i = 0; i < bins.length; i++)
+				maxHeight = Math.max(maxHeight, bins[i]);
+		}
+
+		if (maxHeight != 0) {
+			for (int i = 0; i < bins.length; i++) {
+				int binHeight = size.y * bins[i] / maxHeight;
+				canvas.drawRect(new Rect(0, size.y - binHeight, binWidth, size.y), paint);
+				canvas.translate(binWidth, 0);
+			}
 		}
 		canvas.restore();
 	}
