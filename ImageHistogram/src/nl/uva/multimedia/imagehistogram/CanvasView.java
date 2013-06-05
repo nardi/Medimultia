@@ -75,15 +75,18 @@ public class CanvasView extends View {
 		canvas.save();
 		canvas.translate(getWidth() * 0.1F, getHeight() * 0.1F);
 
-		canvas.drawText("Hello world! ", 0.0F, 0.0F, text);
+		//canvas.drawText("Hello world! ", 0.0F, 0.0F, text);
 		
 		Paint greenVal = new Paint(text);
 		greenVal.setColor(Color.RED);
 		
 		if(argb != null && image_width > 0 && image_height > 0){
-			canvas.drawText("Greenvalue UL: " + argb[0], 0.0F, 100.0F, greenVal);
-			canvas.drawText("Greenvalue MID: " + argb[image_width/2 * image_height/2],0,200,greenVal);
-			canvas.drawText("Greenvalue LR: " + argb[image_width * image_height - 1],0,300,greenVal);
+			canvas.drawText("Greenvalue UL: " + argb[0], 0.0F, 0, greenVal);
+			canvas.drawText("Greenvalue MID: " + argb[image_width/2 * image_height/2],0,40,greenVal);
+			canvas.drawText("Greenvalue LR: " + argb[image_width * image_height - 1],0,80,greenVal);
+
+			m_histogram = new Histogram(new Point(0, 110), new Point(380, 180), 255, 20);
+			m_histogram.draw(canvas, argb);
 		}
 
 		canvas.restore();
@@ -103,11 +106,6 @@ public class CanvasView extends View {
 
 			canvas.drawBitmap(m_image, null, rect, paint);
 		}
-
-		// Initialisatie kan wel ergens anders, maar moet nog een goed plekje vinden
-		m_histogram = new Histogram(new Point(40, 110), new Point(380, 180),
-				255, 20);
-		m_histogram.draw(canvas, argb);
 	}
 
 	/* Accessors */
