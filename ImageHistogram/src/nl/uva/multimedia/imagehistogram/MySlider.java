@@ -19,6 +19,8 @@ import android.util.Log;
 
 class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 	/* Necessary constructors */
+	public CanvasView s_canvas_view = null;
+	
 	public MySlider(Context context) {
 		super(context);
 		setup();
@@ -42,9 +44,10 @@ class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 	/* Push new bar size to HistogramView on Slider change */
 	public void onProgressChanged(SeekBar slider, int progress,
 			boolean from_user) {
-
+		s_canvas_view.setBinSize(progress);
 		/* Do something with progress here */
 		Log.e("Slider","Progress is set to: " + progress);
+		
 	}
 
 	public void onStartTrackingTouch(SeekBar slider) { /* NOP */ }

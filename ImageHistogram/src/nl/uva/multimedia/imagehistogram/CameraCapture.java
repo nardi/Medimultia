@@ -43,7 +43,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 			size.width = holder;
 		}
 
-		Log.e("CameraCapture", "Width: " + size.width + " Height: " + size.height);
+		Log.i("CameraCapture", "Width: " + size.width + " Height: " + size.height);
 		int[] argb = new int[size.width*size.height];
 		m_canvas_view.image_height = size.height;
 		m_canvas_view.image_width = size.width;

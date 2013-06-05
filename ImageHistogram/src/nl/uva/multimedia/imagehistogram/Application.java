@@ -49,7 +49,7 @@ public class Application extends Activity {
 	MySlider        m_slider           = null;
 	CameraView      m_camera_view      = null;
 	MyButton        m_button           = null;
-
+	
 	/* Change this to enable the image chooser */
 	final private boolean SHOW_SELECT_IMAGE = false;
 	
@@ -71,7 +71,7 @@ public class Application extends Activity {
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
 		m_button           = (MyButton)findViewById(R.id.button);
-		
+		m_slider.s_canvas_view = m_canvas_view;
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
 		/* Can also be BEST_FIT, but BEST might be larger then
