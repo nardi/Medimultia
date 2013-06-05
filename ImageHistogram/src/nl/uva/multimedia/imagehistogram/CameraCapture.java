@@ -17,6 +17,7 @@ package nl.uva.multimedia.imagehistogram;
  * CameraView. This means that smaller screen devices, will, yes, have less
  * to calculate on.
  */
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.util.Log;
 
@@ -44,6 +45,9 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		Log.e("CameraCapture", "Width: " + size.width + " Height: " + size.height);
 		int[] argb = new int[size.width*size.height];
+		m_canvas_view.image_height = size.height;
+		m_canvas_view.image_width = size.width;
+		m_canvas_view.argb = new int[size.width* size.height];
 	
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
@@ -57,6 +61,9 @@ class CameraCapture implements CameraView.PreviewCallback {
 		/* Invalidate the canvas, forcing it to be redrawn with the new data.
 		 * You can do this in other places, evaluate what makes sense to you.
 		 */
+		for(int i = 0; i < size.width * size.height; i++){
+			m_canvas_view.argb[i] = Color.green(argb[i]);
+		}
 		m_canvas_view.invalidate();
 	}
 	
