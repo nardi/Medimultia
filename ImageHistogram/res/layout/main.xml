@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:keepScreenOn="true"
-	android:background="#FF444444"
-	>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FF444444"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
+
 	<LinearLayout
 		android:orientation="vertical"
 		android:layout_width="wrap_content"
@@ -39,22 +38,26 @@
 			android:layout_weight="1"
 			android:layout_height="wrap_content" />-->
 		
-		<nl.uva.multimedia.imagehistogram.MySwitch
-			android:id="@+id/Absolute"
-			android:textOn="Absolute"
-			android:textOff="Relative"
-			android:layout_weight="1"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"/>
-		
-		<nl.uva.multimedia.imagehistogram.MySwitch
-			android:id="@+id/Labels"
-			android:text="Bin Labels"
-			android:textOn="On"
-			android:textOff="Off"
-			android:layout_weight="1"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"/>
+		<nl.uva.multimedia.imagehistogram.Absolute
+		    android:id="@+id/Absolute"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0"
+		    android:paddingLeft="5dp"
+		    android:textOff="Relative"
+		    android:textOn="Absolute" />
+
+		<nl.uva.multimedia.imagehistogram.Labels
+		    android:id="@+id/Labels"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0"
+		    android:checked="true"
+		    android:paddingLeft="5dp"
+		    android:switchPadding="1.0sp"
+		    android:textOff="No Labels"
+		    android:textOn="Labels" />
+
 	</LinearLayout>
 
 
