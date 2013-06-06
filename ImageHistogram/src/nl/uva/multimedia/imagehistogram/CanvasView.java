@@ -27,6 +27,7 @@ public class CanvasView extends View {
 	public int image_width;
 	public int image_height;
 	public boolean absolute;
+	public boolean labels;
 	
 	Bitmap m_image = null;
 	Histogram m_histogram = new Histogram(new Point(0, 54), new Point(0, 0), 256);
@@ -51,7 +52,7 @@ public class CanvasView extends View {
 	@Override protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);	
 				
-		canvas.drawColor(Color.BLACK);
+		canvas.drawColor(Color.DKGRAY);
 	
 		/* Define the basic paint */
 		Paint paint = new Paint();
@@ -71,14 +72,13 @@ public class CanvasView extends View {
 		if (green != null && image_width > 0 && image_height > 0) {
 			Arrays.sort(green);
 			
-			
-			int mean = 0, stdDev = 0;
+			long mean = 0, stdDev = 0;
 			for (int i = 0; i < green.length; i++) {
 				mean += green[i];
-				stdDev += green[i] * green[i];
+				stdDev += (long)green[i] * green[i];
 			}
 			mean /= green.length;
-			stdDev = (int)Math.sqrt((stdDev / green.length) - (mean * mean));
+			stdDev = (long)Math.sqrt((stdDev / green.length) - (mean * mean));
 
 			int median = green[green.length / 2];
 			if (green.length % 2 == 0) {
@@ -93,7 +93,7 @@ public class CanvasView extends View {
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8F);
 			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.pos.y);
-			m_histogram.draw(canvas, green, absolute, true);
+			m_histogram.draw(canvas, green, absolute, labels);
 		}
 
 		canvas.restore();

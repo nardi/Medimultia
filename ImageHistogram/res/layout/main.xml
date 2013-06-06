@@ -5,6 +5,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:keepScreenOn="true"
+	android:background="#FF444444"
 	>
 	<LinearLayout
 		android:orientation="vertical"
@@ -39,9 +40,18 @@
 			android:layout_height="wrap_content" />-->
 		
 		<nl.uva.multimedia.imagehistogram.MySwitch
-			android:id="@+id/Switch"
+			android:id="@+id/Absolute"
 			android:textOn="Absolute"
 			android:textOff="Relative"
+			android:layout_weight="1"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"/>
+		
+		<nl.uva.multimedia.imagehistogram.MySwitch
+			android:id="@+id/Labels"
+			android:text="Bin Labels"
+			android:textOn="On"
+			android:textOff="Off"
 			android:layout_weight="1"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"/>
