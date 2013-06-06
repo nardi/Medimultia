@@ -27,7 +27,7 @@ public class CanvasView extends View {
 	public int binSize = 0;
 	
 	Bitmap m_image = null;
-	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 255, 60);
+	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 256);
 
 	public CanvasView(Context context) {
 		super(context);
@@ -78,7 +78,7 @@ public class CanvasView extends View {
 			canvas.drawText("Binsize: " + binSize, 0, 100, greenVal);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8F);
-			m_histogram.draw(canvas, green, false);
+			m_histogram.draw(canvas, green, false, true);
 		}
 
 		canvas.restore();
@@ -109,10 +109,8 @@ public class CanvasView extends View {
 	}
 	
 	public void setBinSize(int sliderVal){
-		binSize = 1 + 254 * sliderVal / 100;
-		m_histogram.setNumBins(binSize);
-		
+		binSize = (int)Math.pow(2, 8 * sliderVal / 100);
+		m_histogram.setBinSize(binSize);
 	}
-	
 }
 

@@ -44,7 +44,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		}
 
 
-		Log.v("CameraCapture", "Width: " + size.width + " Height: " + size.height);
+		//Log.v("CameraCapture", "Width: " + size.width + " Height: " + size.height);
 
 		int[] argb = new int[size.width*size.height];
 		m_canvas_view.image_height = size.height;
@@ -64,7 +64,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		 * You can do this in other places, evaluate what makes sense to you.
 		 */
 		for(int i = 0; i < size.width * size.height; i++){
-			m_canvas_view.green[i] = Color.green(argb[i]);
+			m_canvas_view.green[i] = Color.green(argb[i]);//(argb[i] >> 16) & 0xFF;
 		}
 		m_canvas_view.invalidate();
 	}
