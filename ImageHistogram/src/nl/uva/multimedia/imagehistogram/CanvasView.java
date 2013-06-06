@@ -20,14 +20,16 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Bitmap;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.util.AttributeSet;
 
-public class CanvasView extends View {
+public class CanvasView extends View implements OnLongClickListener {
 	public int[] green;
 	public int image_width;
 	public int image_height;
 	public boolean absolute;
 	public boolean labels;
+	private boolean connectBars;
 	
 	Bitmap m_image = null;
 	Histogram m_histogram = null;
@@ -46,6 +48,9 @@ public class CanvasView extends View {
 		text.setColor(Color.rgb(234, 234, 234));
 		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
 		text.setTextSize(30);
+		
+		this.setClickable(true);
+		this.setOnLongClickListener(this);
 	}
 	
 	public CanvasView(Context context) {
@@ -93,12 +98,12 @@ public class CanvasView extends View {
 
 			canvas.drawText("Mean: " + mean, 0, 0, text);
 			canvas.drawText("Median: " + median, getWidth() * 0.4f, 0, text);
-			canvas.drawText("Std dev: " + stdDev, 0, 34, text);
+			canvas.drawText("Std. dev: " + stdDev, 0, 34, text);
 			canvas.drawText("Bin amount: " + m_histogram.getNumBins(), getWidth() * 0.4f, 34, text);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8f);
 			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.pos.y);
-			m_histogram.draw(canvas, green, absolute, labels, false);
+			m_histogram.draw(canvas, green, absolute, labels, connectBars);
 		}
 
 		canvas.restore();
@@ -130,6 +135,12 @@ public class CanvasView extends View {
 	
 	public void setBinSize(int sliderVal){
 		m_histogram.setBinSize((int)Math.pow(2, 8 * (100 - sliderVal) / 100));
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+		connectBars = !connectBars;
+		return true;
 	}
 }
 

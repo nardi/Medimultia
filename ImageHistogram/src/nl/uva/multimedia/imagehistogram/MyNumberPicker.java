@@ -9,8 +9,6 @@ import android.widget.NumberPicker.OnValueChangeListener;
 public class MyNumberPicker extends NumberPicker implements OnScrollListener,
 		OnValueChangeListener {
 	
-	public 
-	
 	public MyNumberPicker(Context context) {
 		super(context);
 	}

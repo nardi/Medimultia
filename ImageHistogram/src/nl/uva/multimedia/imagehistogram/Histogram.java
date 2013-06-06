@@ -59,7 +59,7 @@ public class Histogram {
 		return Math.min(sample / this.getBinSize(), bins.length - 1);
 	}
 
-	public void draw(Canvas canvas, int[] data, boolean absolute, boolean labels, boolean connect) {
+	public void draw(Canvas canvas, int[] data, boolean absolute, boolean labels, boolean connectBars) {
 		for (int i = 0; i < bins.length; i++){
 			bins[i] = 0;
 		}
@@ -71,7 +71,7 @@ public class Histogram {
 			this.bins[index]++;
 		}
 
-		int space = connect ? 0 : 1;
+		int space = connectBars ? 0 : 1;
 		int binWidth = (size.x - (bins.length - 1) * space) / bins.length;
 		if (binWidth == 0) {
 			space = 0;
