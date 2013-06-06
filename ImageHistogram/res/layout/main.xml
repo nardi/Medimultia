@@ -54,7 +54,6 @@
 		    android:layout_weight="0"
 		    android:checked="true"
 		    android:paddingLeft="5dp"
-		    android:switchPadding="1.0sp"
 		    android:textOff="No Labels"
 		    android:textOn="Labels" />
 

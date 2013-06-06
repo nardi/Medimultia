@@ -10,6 +10,8 @@ package nl.uva.multimedia.imagehistogram;
 
 /* XXX Yes, you should change stuff here */
 
+import java.util.Arrays;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -28,8 +30,24 @@ public class CanvasView extends View {
 	public boolean labels;
 	
 	Bitmap m_image = null;
-	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 256);
+	Histogram m_histogram = null;
+	Paint paint, text = null;
 
+	{
+		m_histogram = new Histogram(new Point(0, 54), new Point(0, 0), 256);
+		
+		/* Define the basic paint */
+		paint = new Paint();
+		paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
+		paint.setAntiAlias(true);
+	
+		/* text inherits from the basic paint */
+		text = new Paint(paint);
+		text.setColor(Color.rgb(234, 234, 234));
+		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
+		text.setTextSize(30);
+	}
+	
 	public CanvasView(Context context) {
 		super(context);
 	}
@@ -52,31 +70,35 @@ public class CanvasView extends View {
 				
 		canvas.drawColor(Color.DKGRAY);
 	
-		/* Define the basic paint */
-		Paint paint = new Paint();
-		paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
-		paint.setAntiAlias(true);
-	
-		/* text inherits from the basic paint */
-		Paint text = new Paint(paint);
-		text.setColor(Color.rgb(234, 234, 234));
-		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
-		text.setTextSize(getHeight() * 0.1F);
-	
 		/* Save state */
 		canvas.save();
 		canvas.translate(getWidth() * 0.1F, getHeight() * 0.1F);
 
-		if(green != null && image_width > 0 && image_height > 0){
-			canvas.drawText("Mean: " + green[0], 0.0F, 0, text);
-			canvas.drawText("Median: " + green[image_width/2 * image_height/2], 0, 40, text);
-			canvas.drawText("STD Dev: " + green[image_width * image_height - 1], 0, 80, text);
-			canvas.drawText("Bin size: " + m_histogram.getBinSize(), 0, 100, text);
+		if (green != null && image_width > 0 && image_height > 0) {
+			Arrays.sort(green);
 			
-			m_histogram.size.x = (int)(getWidth() * 0.8F);
+			long mean = 0, stdDev = 0;
+			for (int i = 0; i < green.length; i++) {
+				mean += green[i];
+				stdDev += (long)green[i] * green[i];
+			}
+			mean /= green.length;
+			stdDev = (long)Math.sqrt((stdDev / green.length) - (mean * mean));
 
-			m_histogram.draw(canvas, green, absolute, labels);
+			int median = green[green.length / 2];
+			if (green.length % 2 == 0) {
+		      int prev = green[green.length / 2 - 1];
+		      median = (prev + median) / 2;
+		    }
 
+			canvas.drawText("Mean: " + mean, 0, 0, text);
+			canvas.drawText("Median: " + median, getWidth() * 0.4f, 0, text);
+			canvas.drawText("Std dev: " + stdDev, 0, 34, text);
+			canvas.drawText("Bin amount: " + m_histogram.getNumBins(), getWidth() * 0.4f, 34, text);
+			
+			m_histogram.size.x = (int)(getWidth() * 0.8f);
+			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.pos.y);
+			m_histogram.draw(canvas, green, absolute, labels, false);
 		}
 
 		canvas.restore();
@@ -107,7 +129,7 @@ public class CanvasView extends View {
 	}
 	
 	public void setBinSize(int sliderVal){
-		m_histogram.setBinSize((int)Math.pow(2, 8 * sliderVal / 100));
+		m_histogram.setBinSize((int)Math.pow(2, 8 * (100 - sliderVal) / 100));
 	}
 }
 

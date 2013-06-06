@@ -26,6 +26,7 @@ import nl.uva.multimedia.imagehistogram.CameraView;
 
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
+	private int[] argb = null;
 
 	/* Is called by Android when a frame is ready */
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
@@ -45,7 +46,9 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		//Log.v("CameraCapture", "Width: " + size.width + " Height: " + size.height);
 
-		int[] argb = new int[size.width*size.height];
+		int arraySize = size.width * size.height;
+		if (argb == null || argb.length != arraySize)
+			argb = new int[arraySize];
 	
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
@@ -53,8 +56,8 @@ class CameraCapture implements CameraView.PreviewCallback {
 		CameraData.convertYUV420SPtoARGB(argb, data, size.width, size.height);
 
 		/* Work on the argb array */		
-		for(int i = 0; i < size.width * size.height; i++){
-			argb[i] = Color.green(argb[i]);//(argb[i] >> 16) & 0xFF;
+		for(int i = 0; i < argb.length; i++){
+			argb[i] = Color.green(argb[i]); //(argb[i] >> 8) & 0xFF;
 		}
 		
 		/* Transfer data/results to the canvas */
