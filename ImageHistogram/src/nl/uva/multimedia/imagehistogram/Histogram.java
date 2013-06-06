@@ -51,6 +51,10 @@ public class Histogram {
 		return binSize;
 	}
 	
+	public int getNumBins() {
+		return bins.length;
+	}
+	
 	private int findBin(int sample) {
 		return Math.min(sample / this.getBinSize(), bins.length - 1);
 	}
@@ -66,7 +70,12 @@ public class Histogram {
 			this.bins[index]++;
 		}
 
-		int binWidth = (size.x - bins.length + 1) / bins.length;
+		int space = 1;
+		int binWidth = (size.x - (bins.length - 1) * space) / bins.length;
+		if (binWidth == 0) {
+			space = 0;
+			binWidth = size.x / bins.length;
+		}
 		int binSize = this.getBinSize();
 		canvas.save();
 		canvas.translate(pos.x, pos.y);
@@ -87,7 +96,7 @@ public class Histogram {
 				if (labels)
 					canvas.drawText(Integer.toString(i * binSize) + " - " + Integer.toString((i + 1) * binSize), 0, size.y - binHeight - 1, text);
 				canvas.drawRect(new Rect(0, size.y - binHeight, binWidth, size.y), paint);
-				canvas.translate(binWidth + 1, 0);
+				canvas.translate(binWidth + space, 0);
 			}
 		}
 		canvas.restore();
