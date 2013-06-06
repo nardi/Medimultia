@@ -12,7 +12,7 @@ public class Histogram {
 	public int range;
 	private int[] bins;
 	private int binSize;
-	private Paint paint, bg;
+	private Paint paint, bg, text;
 	
 	public Histogram(Point pos, Point size, int range, int binSize) {
 		this.pos = pos;
@@ -22,9 +22,11 @@ public class Histogram {
 
 		this.paint = new Paint();
 		paint.setColor(Color.rgb(42, 255, 42));
-		paint.setTextSize(10);
 		this.bg = new Paint();
 		bg.setColor(Color.DKGRAY);
+		this.text = new Paint();
+		text.setColor(Color.rgb(234, 234, 234));
+		text.setTextSize(10);
 	}
 	
 	public Histogram(Point pos, Point size, int range) {
@@ -83,7 +85,7 @@ public class Histogram {
 			for (int i = 0; i < bins.length; i++) {
 				int binHeight = (int)(size.y * bins[i] / maxHeight);
 				if (labels)
-					canvas.drawText(Integer.toString(i * binSize) + " - " + Integer.toString((i + 1) * binSize), 0, size.y - binHeight - 1, paint);
+					canvas.drawText(Integer.toString(i * binSize) + " - " + Integer.toString((i + 1) * binSize), 0, size.y - binHeight - 1, text);
 				canvas.drawRect(new Rect(0, size.y - binHeight, binWidth, size.y), paint);
 				canvas.translate(binWidth + 1, 0);
 			}
