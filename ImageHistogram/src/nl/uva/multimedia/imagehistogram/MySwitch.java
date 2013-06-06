@@ -3,10 +3,10 @@ package nl.uva.multimedia.imagehistogram;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 
-public abstract class MySwitch extends Switch implements OnClickListener {
+public abstract class MySwitch extends Switch implements OnCheckedChangeListener {
 	CanvasView switch_canvas = null;
 
 	public MySwitch(Context context) {
@@ -22,7 +22,7 @@ public abstract class MySwitch extends Switch implements OnClickListener {
 	}
 	
 	{
-		setOnClickListener(this);
+		setOnCheckedChangeListener(this);
 	}
 
 	

@@ -3,6 +3,7 @@ package nl.uva.multimedia.imagehistogram;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CompoundButton;
 
 public class Labels extends MySwitch {
 
@@ -19,8 +20,8 @@ public class Labels extends MySwitch {
 	}
 	
 	@Override
-	public void onClick(View view) {
-		switch_canvas.labels = !switch_canvas.labels;
+	public void onCheckedChanged(CompoundButton thingemejiggy, boolean isChecked) {
+		switch_canvas.labels = isChecked;
 	}
 
 }

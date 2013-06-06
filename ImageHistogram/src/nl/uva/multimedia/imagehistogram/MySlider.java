@@ -51,6 +51,7 @@ class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 
 	}
 
+	public void onLong
 	public void onStartTrackingTouch(SeekBar slider) { /* NOP */ }
 	public void onStopTrackingTouch(SeekBar slider) { /* NOP */ }
 }

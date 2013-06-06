@@ -80,6 +80,7 @@ public class Application extends Activity {
 		m_canvas_view.labels   = true;
 		m_absolute.switch_canvas = m_canvas_view;
 		m_labels.switch_canvas = m_canvas_view;
+		m_canvas_view.setClickable(true);
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
 		/* Can also be BEST_FIT, but BEST might be larger then
