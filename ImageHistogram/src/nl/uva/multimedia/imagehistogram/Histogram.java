@@ -59,7 +59,7 @@ public class Histogram {
 		return Math.min(sample / this.getBinSize(), bins.length - 1);
 	}
 
-	public void draw(Canvas canvas, int[] data, boolean absolute, boolean labels) {
+	public void draw(Canvas canvas, int[] data, boolean absolute, boolean labels, boolean connect) {
 		for (int i = 0; i < bins.length; i++){
 			bins[i] = 0;
 		}
@@ -71,7 +71,7 @@ public class Histogram {
 			this.bins[index]++;
 		}
 
-		int space = 1;
+		int space = connect ? 0 : 1;
 		int binWidth = (size.x - (bins.length - 1) * space) / bins.length;
 		if (binWidth == 0) {
 			space = 0;
@@ -83,22 +83,28 @@ public class Histogram {
 
 		canvas.drawRect(new Rect(0, 0, size.x, size.y), bg);
 
-		int maxHeight = 0;
+		int maxValue = 0;
 		if (absolute)
-			maxHeight = data.length;
+			maxValue = data.length;
 		else {
 			for (int i = 0; i < bins.length; i++)
-				maxHeight = Math.max(maxHeight, bins[i]);
+				maxValue = Math.max(maxValue, bins[i]);
 		}
 
-		if (maxHeight != 0) {
+		if (maxValue != 0) {
+			int halfTextSize = (int)(text.getTextSize() / 2);
+			canvas.drawText("0%", -26, size.y, text);
+			canvas.drawText(Integer.toString((100 * maxValue) / data.length) + "%", -26, halfTextSize, text);
+			
+			int maxHeight = size.y - halfTextSize;
+			
 			for (int i = 0; i < bins.length; i++) {
-				int binHeight = (int)(size.y * bins[i] / maxHeight);
+				int binHeight = (int)(maxHeight * bins[i] / maxValue);
 				if (labels){
-					canvas.drawText(Integer.toString(i * binSize) + " - " + Integer.toString((i + 1) * binSize), 0, size.y - binHeight - 1, text);
+					canvas.drawText(Integer.toString(i * binSize) + " - " + Integer.toString((i + 1) * binSize), 0, maxHeight - binHeight - 1, text);
 				}
 				paint.setColor(Color.rgb(0, (i * binSize + (i + 1) * binSize) / 2, 0));
-				canvas.drawRect(new Rect(0, size.y - binHeight, binWidth, size.y), paint);
+				canvas.drawRect(new Rect(0, maxHeight - binHeight, binWidth, maxHeight), paint);
 				canvas.translate(binWidth + space, 0);
 			}
 		}

@@ -30,8 +30,24 @@ public class CanvasView extends View {
 	public boolean labels;
 	
 	Bitmap m_image = null;
-	Histogram m_histogram = new Histogram(new Point(0, 54), new Point(0, 0), 256);
+	Histogram m_histogram = null;
+	Paint paint, text = null;
 
+	{
+		m_histogram = new Histogram(new Point(0, 54), new Point(0, 0), 256);
+		
+		/* Define the basic paint */
+		paint = new Paint();
+		paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
+		paint.setAntiAlias(true);
+	
+		/* text inherits from the basic paint */
+		text = new Paint(paint);
+		text.setColor(Color.rgb(234, 234, 234));
+		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
+		text.setTextSize(30);
+	}
+	
 	public CanvasView(Context context) {
 		super(context);
 	}
@@ -53,17 +69,6 @@ public class CanvasView extends View {
 		super.onDraw(canvas);	
 				
 		canvas.drawColor(Color.DKGRAY);
-	
-		/* Define the basic paint */
-		Paint paint = new Paint();
-		paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
-		paint.setAntiAlias(true);
-	
-		/* text inherits from the basic paint */
-		Paint text = new Paint(paint);
-		text.setColor(Color.rgb(234, 234, 234));
-		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
-		text.setTextSize(30);
 	
 		/* Save state */
 		canvas.save();
@@ -89,11 +94,11 @@ public class CanvasView extends View {
 			canvas.drawText("Mean: " + mean, 0, 0, text);
 			canvas.drawText("Median: " + median, getWidth() * 0.4f, 0, text);
 			canvas.drawText("Std dev: " + stdDev, 0, 34, text);
-			canvas.drawText("Bin size: " + m_histogram.getNumBins(), getWidth() * 0.4f, 34, text);
+			canvas.drawText("Bin amount: " + m_histogram.getNumBins(), getWidth() * 0.4f, 34, text);
 			
-			m_histogram.size.x = (int)(getWidth() * 0.8F);
+			m_histogram.size.x = (int)(getWidth() * 0.8f);
 			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.pos.y);
-			m_histogram.draw(canvas, green, absolute, labels);
+			m_histogram.draw(canvas, green, absolute, labels, false);
 		}
 
 		canvas.restore();
