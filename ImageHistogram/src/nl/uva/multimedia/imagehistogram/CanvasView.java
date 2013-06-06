@@ -25,6 +25,7 @@ public class CanvasView extends View {
 	public int image_width;
 	public int image_height;
 	public boolean absolute;
+	public boolean labels;
 	
 	Bitmap m_image = null;
 	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 256);
@@ -49,7 +50,7 @@ public class CanvasView extends View {
 	@Override protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);	
 				
-		canvas.drawColor(Color.BLACK);
+		canvas.drawColor(Color.DKGRAY);
 	
 		/* Define the basic paint */
 		Paint paint = new Paint();
@@ -74,7 +75,7 @@ public class CanvasView extends View {
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8F);
 
-			m_histogram.draw(canvas, green, absolute, true);
+			m_histogram.draw(canvas, green, absolute, labels);
 
 		}
 

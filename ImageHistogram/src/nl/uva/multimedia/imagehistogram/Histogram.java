@@ -56,8 +56,9 @@ public class Histogram {
 	}
 
 	public void draw(Canvas canvas, int[] data, boolean absolute, boolean labels) {
-		for (int i = 0; i < bins.length; i++)
+		for (int i = 0; i < bins.length; i++){
 			bins[i] = 0;
+		}
 
 		for (int i = 0; i < data.length; i++) {
 			int index = this.findBin(data[i]);
@@ -84,8 +85,10 @@ public class Histogram {
 		if (maxHeight != 0) {
 			for (int i = 0; i < bins.length; i++) {
 				int binHeight = (int)(size.y * bins[i] / maxHeight);
-				if (labels)
+				if (labels){
 					canvas.drawText(Integer.toString(i * binSize) + " - " + Integer.toString((i + 1) * binSize), 0, size.y - binHeight - 1, text);
+				}
+				paint.setColor(Color.rgb(0, (i * binSize + (i + 1) * binSize) / 2, 0));
 				canvas.drawRect(new Rect(0, size.y - binHeight, binWidth, size.y), paint);
 				canvas.translate(binWidth + 1, 0);
 			}

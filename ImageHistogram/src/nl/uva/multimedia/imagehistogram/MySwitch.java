@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Switch;
 
-public class MySwitch extends Switch implements OnClickListener {
+public abstract class MySwitch extends Switch implements OnClickListener {
 	CanvasView switch_canvas = null;
 
 	public MySwitch(Context context) {
@@ -25,9 +25,6 @@ public class MySwitch extends Switch implements OnClickListener {
 		setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch_canvas.absolute = !switch_canvas.absolute;
-	}
+	
 
 }
