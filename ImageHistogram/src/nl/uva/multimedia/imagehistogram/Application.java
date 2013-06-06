@@ -85,6 +85,7 @@ public class Application extends Activity {
 		 */
 		m_camera_view.setSizeType(CameraView.SizeType.LARGEST_FIT);
 		m_camera_view.setPreviewCallback(m_camera_capture);
+		m_slider.setProgress(50);
 	}
 	
 	@Override protected void onResume() {

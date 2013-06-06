@@ -24,11 +24,10 @@ public class CanvasView extends View {
 	public int[] green;
 	public int image_width;
 	public int image_height;
-	public int binSize = 60;
 	public boolean absolute;
 	
 	Bitmap m_image = null;
-	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 255, 60);
+	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 256);
 
 	public CanvasView(Context context) {
 		super(context);
@@ -59,7 +58,7 @@ public class CanvasView extends View {
 	
 		/* text inherits from the basic paint */
 		Paint text = new Paint(paint);
-		text.setColor(Color.WHITE);
+		text.setColor(Color.rgb(234, 234, 234));
 		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
 		text.setTextSize(getHeight() * 0.1F);
 	
@@ -67,19 +66,16 @@ public class CanvasView extends View {
 		canvas.save();
 		canvas.translate(getWidth() * 0.1F, getHeight() * 0.1F);
 
-		//canvas.drawText("Hello world! ", 0.0F, 0.0F, text);
-		
-		Paint greenVal = new Paint(text);
-		greenVal.setColor(Color.RED);
-		
 		if(green != null && image_width > 0 && image_height > 0){
-			canvas.drawText("Greenvalue UL: " + green[0], 0.0F, 0, greenVal);
-			canvas.drawText("Greenvalue MID: " + green[image_width/2 * image_height/2],0,40,greenVal);
-			canvas.drawText("Greenvalue LR: " + green[image_width * image_height - 1],0,80,greenVal);
-			canvas.drawText("Binsize: " + 255/binSize , 0, 100, greenVal);
+			canvas.drawText("Mean: " + green[0], 0.0F, 0, text);
+			canvas.drawText("Median: " + green[image_width/2 * image_height/2], 0, 40, text);
+			canvas.drawText("STD Dev: " + green[image_width * image_height - 1], 0, 80, text);
+			canvas.drawText("Bin size: " + m_histogram.getBinSize(), 0, 100, text);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8F);
-			m_histogram.draw(canvas, green, absolute);
+
+			m_histogram.draw(canvas, green, absolute, true);
+
 		}
 
 		canvas.restore();
@@ -110,11 +106,7 @@ public class CanvasView extends View {
 	}
 	
 	public void setBinSize(int sliderVal){
-		binSize =(int)( 1 + (float)(254 * sliderVal / 100));
-		
-		m_histogram.setNumBins(binSize);
-		
+		m_histogram.setBinSize((int)Math.pow(2, 8 * sliderVal / 100));
 	}
-	
 }
 
