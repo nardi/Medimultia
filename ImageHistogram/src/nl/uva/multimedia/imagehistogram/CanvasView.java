@@ -25,7 +25,7 @@ public class CanvasView extends View {
 	public int image_width;
 	public int image_height;
 	public int binSize = 60;
-	public boolean absolute = true;
+	public boolean absolute;
 	
 	Bitmap m_image = null;
 	Histogram m_histogram = new Histogram(new Point(0, 110), new Point(0, 250), 255, 60);
@@ -79,7 +79,7 @@ public class CanvasView extends View {
 			canvas.drawText("Binsize: " + 255/binSize , 0, 100, greenVal);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8F);
-			m_histogram.draw(canvas, green, false);
+			m_histogram.draw(canvas, green, absolute);
 		}
 
 		canvas.restore();

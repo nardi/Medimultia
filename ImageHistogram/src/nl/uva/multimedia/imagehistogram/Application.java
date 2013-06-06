@@ -49,7 +49,7 @@ public class Application extends Activity {
 	MySlider        m_slider           = null;
 	CameraView      m_camera_view      = null;
 	//MyButton        m_button           = null;
-	//MyButton		m_switch		   = null;
+	MySwitch		m_switch		   = null;
 	
 	/* Change this to enable the image chooser */
 	final private boolean SHOW_SELECT_IMAGE = false;
@@ -72,9 +72,10 @@ public class Application extends Activity {
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
 		//m_button           = (MyButton)findViewById(R.id.button);
-		//m_switch           = (MyButton)findViewById(R.id.Switch);
+		m_switch           = (MySwitch)findViewById(R.id.Switch);
 		m_slider.s_canvas_view = m_canvas_view;
 		m_canvas_view.absolute = false;
+		m_switch.switch_canvas = m_canvas_view;
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
 		/* Can also be BEST_FIT, but BEST might be larger then
@@ -167,13 +168,6 @@ public class Application extends Activity {
 
 			m_canvas_view.setSelectedImage(BitmapFactory.decodeFile(path));
 		}
-	}
-	
-	//Dit mag niet omdat ik hier nu iets update en ik dat even netjes moet melden
-	//aan de ListView.Makkelijkste manier is om een MySwitch.java te maken die lijk op
-	//MyButton.
-	public void onSwitch(){
-		m_canvas_view.absolute = !m_canvas_view.absolute;
 	}
 }
 

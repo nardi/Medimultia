@@ -38,13 +38,13 @@
 			android:layout_weight="1"
 			android:layout_height="wrap_content" />-->
 		
-		<Switch
+		<nl.uva.multimedia.imagehistogram.MySwitch
 			android:id="@+id/Switch"
-			android:text="Relative"
+			android:textOn="Absolute"
+			android:textOff="Relative"
 			android:layout_weight="1"
 			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:onClick="doSwitch"/>
+			android:layout_width="wrap_content"/>
 	</LinearLayout>
 
 
