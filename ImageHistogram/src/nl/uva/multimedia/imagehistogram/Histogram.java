@@ -8,14 +8,14 @@ import android.graphics.Rect;
 import android.util.Log;
 
 public class Histogram {
-	public Point pos, size;
+	public Point position, size;
 	public int range;
 	private int[] bins;
 	private int binSize;
 	private Paint paint, bg, text;
 	
 	public Histogram(Point pos, Point size, int range, int binSize) {
-		this.pos = pos;
+		this.position = pos;
 		this.size = size;
 		this.range = range;
 		this.setBinSize(binSize);
@@ -79,7 +79,7 @@ public class Histogram {
 		}
 		int binSize = this.getBinSize();
 		canvas.save();
-		canvas.translate(pos.x, pos.y);
+		canvas.translate(position.x, position.y);
 
 		canvas.drawRect(new Rect(0, 0, size.x, size.y), bg);
 

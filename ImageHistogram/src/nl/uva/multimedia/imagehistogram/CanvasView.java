@@ -17,8 +17,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.util.AttributeSet;
@@ -31,7 +29,7 @@ public class CanvasView extends View implements OnLongClickListener {
 	public boolean labels;
 	private boolean connectBars;
 	
-	Bitmap m_image = null;
+	//Bitmap m_image = null;
 	Histogram m_histogram = null;
 	Paint paint, text = null;
 
@@ -102,35 +100,11 @@ public class CanvasView extends View implements OnLongClickListener {
 			canvas.drawText("Bin amount: " + m_histogram.getNumBins(), getWidth() * 0.4f, 34, text);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8f);
-			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.pos.y);
+			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.position.y);
 			m_histogram.draw(canvas, green, absolute, labels, connectBars);
 		}
 
 		canvas.restore();
-
-		/* Paint a image if we have it, just a demo, clean this up so it works
-		 * your way, or remove it if you don't need it
-		 */
-		if (m_image != null) {
-			Rect rect = new Rect(
-					(int) (getWidth()*0.25F), (int) (getHeight()*0.25F), 
-					(int) (getWidth()*0.75F), (int) (getHeight()*0.75F));
-			Paint bmp = new Paint();
-			bmp.setAntiAlias(true);
-			bmp.setFilterBitmap(true);
-			bmp.setDither(true);
-
-			canvas.drawBitmap(m_image, null, rect, paint);
-		}
-	}
-
-	/* Accessors */
-	public void setSelectedImage(Bitmap image) {
-		m_image = image;
-	}
-
-	public Bitmap getSelectedImage() {
-		return m_image;
 	}
 	
 	public void setBinSize(int sliderVal){

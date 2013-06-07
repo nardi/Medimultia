@@ -16,14 +16,9 @@ package nl.uva.multimedia.imagehistogram;
  */
 
 import android.app.Activity;
-import android.content.Intent; 
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,7 +38,6 @@ public class Application extends Activity {
 	CanvasView      m_canvas_view      = null;
 	MySlider        m_slider           = null;
 	CameraView      m_camera_view      = null;
-	//MyButton        m_button           = null;
 	Absolute		m_absolute		   = null;
 	Labels			m_labels		   = null;
 	
@@ -54,7 +48,7 @@ public class Application extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		/* Hide the window caption if we have a menu key (else those options
-		 * appaer there and attempt to use fullscreen. 
+		 * appear there and attempt to use fullscreen. 
 		 */
 		if (ViewConfiguration.get(this).hasPermanentMenuKey()) {
 			getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -89,7 +83,6 @@ public class Application extends Activity {
 	
 	@Override protected void onResume() {
 		super.onResume();
-
 		m_camera_view.acquireCamera();
 	}
 	
@@ -129,42 +122,14 @@ public class Application extends Activity {
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-		switch (item.getItemId()) {
+        switch (item.getItemId()) {
 			case R.id.camera_switch:
 				if (m_camera_view != null) {
 					m_camera_view.nextCamera();
 				}
 				return true;
-			case R.id.select_image:
-				intent = new Intent();
-				intent.setType("image/*");
-				intent.setAction(Intent.ACTION_GET_CONTENT);
-				startActivityForResult(Intent.createChooser(intent, "Select Image"), 42);
-				return true;
 			default:
 				return super.onContextItemSelected(item);
-		}
-	}
-
-	protected void onActivityResult(int request_code, int result_code, Intent data) {
-		super.onActivityResult(request_code, result_code, data);
-
-	    if (request_code == 42 && result_code == RESULT_OK && data != null) {
-			Uri    selected_image;
-			Cursor cursor;
-			String path;
-
-			selected_image = data.getData();
-			cursor = getContentResolver().query(selected_image,
-				new String[]{ MediaStore.Images.Media.DATA }, null, null, null);
-
-            cursor.moveToFirst();
-
-            path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-			cursor.close();
-
-			m_canvas_view.setSelectedImage(BitmapFactory.decodeFile(path));
 		}
 	}
 }
