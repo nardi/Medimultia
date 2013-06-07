@@ -19,8 +19,6 @@ package nl.uva.multimedia.imagehistogram;
  */
 import android.graphics.Color;
 import android.hardware.Camera;
-import android.util.Log;
-
 import nl.uva.multimedia.imagehistogram.CameraData;
 import nl.uva.multimedia.imagehistogram.CameraView;
 

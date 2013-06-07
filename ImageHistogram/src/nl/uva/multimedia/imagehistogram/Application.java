@@ -16,7 +16,6 @@ package nl.uva.multimedia.imagehistogram;
  */
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent; 
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -25,13 +24,10 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -39,7 +35,6 @@ import nl.uva.multimedia.imagehistogram.R;
 import nl.uva.multimedia.imagehistogram.CameraCapture;
 import nl.uva.multimedia.imagehistogram.CameraView;
 import nl.uva.multimedia.imagehistogram.CanvasView;
-import nl.uva.multimedia.imagehistogram.MyButton;
 import nl.uva.multimedia.imagehistogram.MySlider;
 
 /* Main activity */
@@ -95,8 +90,6 @@ public class Application extends Activity {
 	@Override protected void onResume() {
 		super.onResume();
 
-		Configuration config = getResources().getConfiguration();
-		
 		m_camera_view.acquireCamera();
 	}
 	

@@ -2,7 +2,6 @@ package nl.uva.multimedia.imagehistogram;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.CompoundButton;
 
 public class Absolute extends MySwitch {
