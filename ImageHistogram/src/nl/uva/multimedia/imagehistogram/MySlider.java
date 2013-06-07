@@ -10,8 +10,6 @@ package nl.uva.multimedia.imagehistogram;
 
 /* XXX Yes, you should change stuff here */
 
-import java.lang.Math;
-
 import android.content.Context;
 import android.widget.SeekBar;
 import android.util.AttributeSet;

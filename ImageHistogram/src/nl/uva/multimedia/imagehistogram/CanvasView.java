@@ -102,7 +102,7 @@ public class CanvasView extends View implements OnLongClickListener {
 			canvas.drawText("Bin amount: " + m_histogram.getNumBins(), getWidth() * 0.4f, 34, text);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8f);
-			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.pos.y);
+			m_histogram.size.y = (int)(getHeight() * 0.9f - m_histogram.position.y);
 			m_histogram.draw(canvas, green, absolute, labels, connectBars);
 		}
 
