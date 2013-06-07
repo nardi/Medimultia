@@ -42,8 +42,6 @@ class CameraCapture implements CameraView.PreviewCallback {
 			size.width = holder;
 		}
 
-		//Log.v("CameraCapture", "Width: " + size.width + " Height: " + size.height);
-
 		int arraySize = size.width * size.height;
 		if (argb == null || argb.length != arraySize)
 			argb = new int[arraySize];
@@ -55,7 +53,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		/* Work on the argb array */		
 		for(int i = 0; i < argb.length; i++){
-			argb[i] = Color.green(argb[i]); //(argb[i] >> 8) & 0xFF;
+			argb[i] = Color.green(argb[i]); // the Java way of doing (argb[i] >> 8) & 0xFF;
 		}
 		
 		/* Transfer data/results to the canvas */

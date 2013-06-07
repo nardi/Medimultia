@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.widget.CompoundButton;
 
 public class Absolute extends MySwitch {
-
 	public Absolute(Context context) {
 		super(context);
 	}
@@ -20,7 +19,6 @@ public class Absolute extends MySwitch {
 	
 	@Override
 	public void onCheckedChanged(CompoundButton thingemejiggy, boolean isChecked) {
-		switch_canvas.absolute= isChecked;
+		switch_canvas.absolute = isChecked;
 	}
-
 }

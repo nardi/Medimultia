@@ -10,6 +10,7 @@ package nl.uva.multimedia.imagehistogram;
 
 /* XXX Yes, you should change stuff here */
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import android.content.Context;
@@ -28,11 +29,11 @@ public class CanvasView extends View implements OnLongClickListener {
 	public boolean absolute;
 	public boolean labels;
 	private boolean connectBars;
-	
-	//Bitmap m_image = null;
+
 	Histogram m_histogram = null;
 	Paint paint, text = null;
-
+	DecimalFormat df = new DecimalFormat("#.##");
+	
 	{
 		m_histogram = new Histogram(new Point(0, 54), new Point(0, 0), 256);
 		
@@ -80,13 +81,13 @@ public class CanvasView extends View implements OnLongClickListener {
 		if (green != null && image_width > 0 && image_height > 0) {
 			Arrays.sort(green);
 			
-			long mean = 0, stdDev = 0;
+			double mean = 0, stdDev = 0;
 			for (int i = 0; i < green.length; i++) {
 				mean += green[i];
-				stdDev += (long)green[i] * green[i];
+				stdDev += (double)green[i] * green[i];
 			}
 			mean /= green.length;
-			stdDev = (long)Math.sqrt((stdDev / green.length) - (mean * mean));
+			stdDev = Math.sqrt((stdDev / green.length) - (mean * mean));
 
 			int median = green[green.length / 2];
 			if (green.length % 2 == 0) {
@@ -94,9 +95,9 @@ public class CanvasView extends View implements OnLongClickListener {
 		      median = (prev + median) / 2;
 		    }
 
-			canvas.drawText("Mean: " + mean, 0, 0, text);
+			canvas.drawText("Mean: " + this.df.format(mean), 0, 0, text);
 			canvas.drawText("Median: " + median, getWidth() * 0.4f, 0, text);
-			canvas.drawText("Std. dev: " + stdDev, 0, 34, text);
+			canvas.drawText("Std. dev: " + this.df.format(stdDev), 0, 34, text);
 			canvas.drawText("Bin amount: " + m_histogram.getNumBins(), getWidth() * 0.4f, 34, text);
 			
 			m_histogram.size.x = (int)(getWidth() * 0.8f);

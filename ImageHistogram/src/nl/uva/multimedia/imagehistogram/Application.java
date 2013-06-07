@@ -61,16 +61,14 @@ public class Application extends Activity {
 		m_camera_view      = (CameraView)findViewById(R.id.cameraView);
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
-		//m_button         = (MyButton)findViewById(R.id.button);
 		m_absolute         = (Absolute)findViewById(R.id.Absolute);
 		m_labels           = (Labels)findViewById(R.id.Labels);
-		m_slider.s_canvas_view = m_canvas_view;
-		m_canvas_view.absolute = false;
-		m_canvas_view.labels   = true;
-		m_absolute.switch_canvas = m_canvas_view;
-		m_labels.switch_canvas = m_canvas_view;
+
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
+		m_slider.canvas_view = m_canvas_view;
+		m_absolute.switch_canvas = m_canvas_view;
+		m_labels.switch_canvas = m_canvas_view;
 		/* Can also be BEST_FIT, but BEST might be larger then
 		 * the actual size of the preview canvas, experiment
 		 * with this. Even with LARGEST_FIT it can fallback on
@@ -79,6 +77,8 @@ public class Application extends Activity {
 		m_camera_view.setSizeType(CameraView.SizeType.LARGEST_FIT);
 		m_camera_view.setPreviewCallback(m_camera_capture);
 		m_slider.setProgress(50);
+		m_absolute.setChecked(false);
+		m_labels.setChecked(true);
 	}
 	
 	@Override protected void onResume() {

@@ -13,11 +13,9 @@ package nl.uva.multimedia.imagehistogram;
 import android.content.Context;
 import android.widget.SeekBar;
 import android.util.AttributeSet;
-import android.util.Log;
 
 class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
-	/* Necessary constructors */
-	public CanvasView s_canvas_view = null;
+	public CanvasView canvas_view = null;
 	
 	public MySlider(Context context) {
 		super(context);
@@ -37,16 +35,11 @@ class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 	private void setup() {
 		setOnSeekBarChangeListener(this);
 	}
-	
 
-	/* Push new bar size to HistogramView on Slider change */
+	/* Push new bar size to Histogram on Slider change */
 	public void onProgressChanged(SeekBar slider, int progress,
 			boolean from_user) {
-		s_canvas_view.setBinSize(progress);
-		/* Do something with progress here */
-
-		Log.i("Slider","Progress is set to: " + progress);
-
+		canvas_view.setBinSize(progress);
 	}
 
 	public void onStartTrackingTouch(SeekBar slider) { /* NOP */ }
