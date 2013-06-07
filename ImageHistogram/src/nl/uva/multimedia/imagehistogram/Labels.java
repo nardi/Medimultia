@@ -1,3 +1,8 @@
+/*
+ * This class is used to create a Switch that allows the user to choose whether
+ * they want to see the labels.
+ */
+
 package nl.uva.multimedia.imagehistogram;
 
 import android.content.Context;

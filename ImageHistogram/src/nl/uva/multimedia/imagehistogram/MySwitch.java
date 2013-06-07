@@ -1,3 +1,8 @@
+/*
+ * Switch class that is used to create toggle-switches for switching between
+ * absolute and relative values and to toggle the labels.
+ */
+
 package nl.uva.multimedia.imagehistogram;
 
 import android.content.Context;

@@ -1,3 +1,8 @@
+/*
+ * This class is used to create a Switch that allows the user to choose between
+ * absolute values and relative values.
+ */
+
 package nl.uva.multimedia.imagehistogram;
 
 import android.content.Context;
