@@ -87,7 +87,7 @@ public class CanvasView extends View {
 			bmp.setDither(true);
 
 			if (argb != null) {
-				canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, bmp);
+				canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, false, null);
 			}
 		}
 	}
