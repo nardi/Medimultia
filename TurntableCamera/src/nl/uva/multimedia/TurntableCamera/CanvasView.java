@@ -78,14 +78,14 @@ public class CanvasView extends View {
 		 * your way, or remove it if you don't need it
 		 */
 		if (true) {
-			Rect rect = new Rect(
+			/*Rect rect = new Rect(
 					(int) (getWidth()*0.25F), (int) (getHeight()*0.25F), 
 					(int) (getWidth()*0.75F), (int) (getHeight()*0.75F));
 			Paint bmp = new Paint();
 			bmp.setAntiAlias(true);
 			bmp.setFilterBitmap(true);
 			bmp.setDither(true);
-
+			*/
 			if (argb != null) {
 				canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, false, null);
 			}

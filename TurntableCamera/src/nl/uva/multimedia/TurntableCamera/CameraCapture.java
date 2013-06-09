@@ -29,16 +29,19 @@ import nl.uva.multimedia.TurntableCamera.CameraView;
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
 
+	public int curHeight;
+	public int curWidth;
+	public int argb[];
 	/* Is called by Android when a frame is ready */
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
 		Camera.Parameters parameters = camera.getParameters();
 		Camera.Size       size       = parameters.getPreviewSize();
-		
 
 		/* Rotated is true if the height and width parameters should be swapped
 		 * due to the image having been rotated internally. (Turns out it is
 		 * rather tricky to patch a method in Java....) 
 		 */
+		
 		if (rotated) {
 			int holder;
 			holder = size.height;
@@ -46,8 +49,13 @@ class CameraCapture implements CameraView.PreviewCallback {
 			size.width = holder;
 		}
 
-		Log.e("CameraCapture", "Width: " + size.width + " Height: " + size.height);
-		int[] argb = new int[size.width*size.height];
+		if(curHeight != size.height || curWidth != size.width){
+			Log.e("CameraCapture", "Width: " + size.width + " Height: " + size.height);
+		
+			curHeight = size.height;
+			curWidth = size.width;
+			argb = new int[size.width*size.height];
+		}
 	
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
@@ -56,7 +64,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		//m_canvas_view.setSelectedImage(Bitmap.createBitmap(argb,0,size.width,size.width, size.height, Bitmap.Config.RGB_565));
 		m_canvas_view.image_height = size.height;
 		m_canvas_view.image_width = size.width;
-		m_canvas_view.setArgb(argb);
+		m_canvas_view.argb = argb;
 		/* Work on the argb array */
 
 		/* Transfer data/results to the canvas */
