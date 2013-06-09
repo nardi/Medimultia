@@ -348,7 +348,7 @@ public class CameraView extends ViewGroup implements SurfaceHolder.Callback, Sen
 	 */
 	public void surfaceChanged(SurfaceHolder surface_holder, int format,
 			int width, int height) {
-		List preview_fps_ranges;
+		List<int[]> preview_fps_ranges;
 		int preview_fps_range[];
 
 		if (m_camera == null)
