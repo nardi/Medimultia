@@ -27,7 +27,7 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public class CanvasView extends View {
-	//public int[] argb;
+	public int[] argb;
 	public int image_width;
 	public int image_height;
 	
@@ -86,8 +86,8 @@ public class CanvasView extends View {
 			bmp.setFilterBitmap(true);
 			bmp.setDither(true);
 
-			if (m_image != null) {
-				canvas.drawBitmap(m_image, null, rect, paint);
+			if (argb != null) {
+				canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, bmp);
 			}
 		}
 	}
@@ -99,6 +99,10 @@ public class CanvasView extends View {
 
 	public Bitmap getSelectedImage() {
 		return m_image;
+	}
+	
+	public void setArgb(int[] rgb){
+		this.argb = rgb;
 	}
 }
 

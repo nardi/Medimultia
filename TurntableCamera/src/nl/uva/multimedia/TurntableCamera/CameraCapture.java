@@ -53,8 +53,8 @@ class CameraCapture implements CameraView.PreviewCallback {
 		 * data we actually intend to process.
 		 */
 		CameraData.convertYUV420SPtoARGB(argb, data, size.width, size.height);
-		m_canvas_view.setSelectedImage(Bitmap.createBitmap(argb,0,size.width,size.width, size.height, Bitmap.Config.RGB_565));
-
+		//m_canvas_view.setSelectedImage(Bitmap.createBitmap(argb,0,size.width,size.width, size.height, Bitmap.Config.RGB_565));
+		m_canvas_view.setArgb(argb);
 		/* Work on the argb array */
 
 		/* Transfer data/results to the canvas */
