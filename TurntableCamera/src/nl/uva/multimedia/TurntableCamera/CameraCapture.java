@@ -8,18 +8,6 @@ package nl.uva.multimedia.TurntableCamera;
  * I.M.J. Kamps, S.J.R. van Schaik, R. de Vries (2013)
  */
 
-/* XXX Yes, you should change stuff here */
-
-
-/* Handles the camera data 
- *
- * The size is based on the size of the onscreen preview and calculated in
- * CameraView. This means that smaller screen devices, will, yes, have less
- * to calculate on.
- */
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.util.Log;
 
@@ -28,10 +16,8 @@ import nl.uva.multimedia.TurntableCamera.CameraView;
 
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
+	private int argb[] = null;
 
-	public int curHeight;
-	public int curWidth;
-	public int argb[];
 	/* Is called by Android when a frame is ready */
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
 		Camera.Parameters parameters = camera.getParameters();
@@ -41,7 +27,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		 * due to the image having been rotated internally. (Turns out it is
 		 * rather tricky to patch a method in Java....) 
 		 */
-		
+
 		if (rotated) {
 			int holder;
 			holder = size.height;
@@ -49,25 +35,22 @@ class CameraCapture implements CameraView.PreviewCallback {
 			size.width = holder;
 		}
 
-		if(curHeight != size.height || curWidth != size.width){
-			Log.e("CameraCapture", "Width: " + size.width + " Height: " + size.height);
-		
-			curHeight = size.height;
-			curWidth = size.width;
-			argb = new int[size.width*size.height];
+		int arraySize = size.width * size.height;
+		if (argb == null || argb.length != arraySize) {
+			Log.i("CameraCapture", "Width: " + size.width + " Height: " + size.height);
+			
+			argb = new int[arraySize];
 		}
 	
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
 		 */
 		CameraData.convertYUV420SPtoARGB(argb, data, size.width, size.height);
-		//m_canvas_view.setSelectedImage(Bitmap.createBitmap(argb,0,size.width,size.width, size.height, Bitmap.Config.RGB_565));
-		m_canvas_view.image_height = size.height;
-		m_canvas_view.image_width = size.width;
-		m_canvas_view.argb = argb;
+
 		/* Work on the argb array */
 
 		/* Transfer data/results to the canvas */
+		m_canvas_view.setImage(argb, size.width, size.height);
 		 
 		/* Invalidate the canvas, forcing it to be redrawn with the new data.
 		 * You can do this in other places, evaluate what makes sense to you.
