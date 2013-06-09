@@ -27,7 +27,7 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public class CanvasView extends View {
-	public int[] argb;
+	//public int[] argb;
 	public int image_width;
 	public int image_height;
 	
@@ -77,7 +77,7 @@ public class CanvasView extends View {
 		/* Paint a image if we have it, just a demo, clean this up so it works
 		 * your way, or remove it if you don't need it
 		 */
-		if (m_image != null) {
+		if (true) {
 			Rect rect = new Rect(
 					(int) (getWidth()*0.25F), (int) (getHeight()*0.25F), 
 					(int) (getWidth()*0.75F), (int) (getHeight()*0.75F));
@@ -86,8 +86,9 @@ public class CanvasView extends View {
 			bmp.setFilterBitmap(true);
 			bmp.setDither(true);
 
-
-			canvas.drawBitmap(m_image, null, rect, paint);
+			if (m_image != null) {
+				canvas.drawBitmap(m_image, null, rect, paint);
+			}
 		}
 	}
 

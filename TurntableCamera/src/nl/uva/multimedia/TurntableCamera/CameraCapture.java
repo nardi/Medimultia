@@ -17,6 +17,9 @@ package nl.uva.multimedia.TurntableCamera;
  * CameraView. This means that smaller screen devices, will, yes, have less
  * to calculate on.
  */
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.util.Log;
 
@@ -30,6 +33,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
 		Camera.Parameters parameters = camera.getParameters();
 		Camera.Size       size       = parameters.getPreviewSize();
+		
 
 		/* Rotated is true if the height and width parameters should be swapped
 		 * due to the image having been rotated internally. (Turns out it is
@@ -49,11 +53,12 @@ class CameraCapture implements CameraView.PreviewCallback {
 		 * data we actually intend to process.
 		 */
 		CameraData.convertYUV420SPtoARGB(argb, data, size.width, size.height);
+		m_canvas_view.setSelectedImage(Bitmap.createBitmap(argb,0,size.width,size.width, size.height, Bitmap.Config.RGB_565));
 
 		/* Work on the argb array */
 
 		/* Transfer data/results to the canvas */
-
+		 
 		/* Invalidate the canvas, forcing it to be redrawn with the new data.
 		 * You can do this in other places, evaluate what makes sense to you.
 		 */

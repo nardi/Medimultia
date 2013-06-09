@@ -40,7 +40,7 @@ import nl.uva.multimedia.TurntableCamera.CameraView;
 import nl.uva.multimedia.TurntableCamera.CanvasView;
 import nl.uva.multimedia.TurntableCamera.MyButton;
 import nl.uva.multimedia.TurntableCamera.MySlider;
-import nl.uva.multimedia.camera.R;
+import nl.uva.multimedia.TurntableCamera.R;
 
 /* Main activity */
 public class Application extends Activity {
@@ -142,27 +142,6 @@ public class Application extends Activity {
 				return true;
 			default:
 				return super.onContextItemSelected(item);
-		}
-	}
-
-	protected void onActivityResult(int request_code, int result_code, Intent data) {
-		super.onActivityResult(request_code, result_code, data);
-
-	    if (request_code == 42 && result_code == RESULT_OK && data != null) {
-			Uri    selected_image;
-			Cursor cursor;
-			String path;
-
-			selected_image = data.getData();
-			cursor = getContentResolver().query(selected_image,
-				new String[]{ MediaStore.Images.Media.DATA }, null, null, null);
-
-            cursor.moveToFirst();
-
-            path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-			cursor.close();
-
-			m_canvas_view.setSelectedImage(BitmapFactory.decodeFile(path));
 		}
 	}
 }
