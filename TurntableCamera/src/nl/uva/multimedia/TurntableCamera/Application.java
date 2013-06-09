@@ -71,7 +71,7 @@ public class Application extends Activity {
 		 * with this. Even with LARGEST_FIT it can fallback on
 		 * BEST_FIT if no image is small enough.
 		 */
-		m_camera_view.setSizeType(CameraView.SizeType.BEST_FIT);
+		m_camera_view.setSizeType(CameraView.SizeType.LARGEST_FIT);
 		m_camera_view.setPreviewCallback(m_camera_capture);
 	}
 	
