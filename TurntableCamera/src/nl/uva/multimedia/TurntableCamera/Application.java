@@ -30,7 +30,6 @@ import android.view.WindowManager;
 import nl.uva.multimedia.TurntableCamera.CameraCapture;
 import nl.uva.multimedia.TurntableCamera.CameraView;
 import nl.uva.multimedia.TurntableCamera.CanvasView;
-import nl.uva.multimedia.TurntableCamera.MyButton;
 import nl.uva.multimedia.TurntableCamera.MySlider;
 import nl.uva.multimedia.TurntableCamera.R;
 
@@ -40,7 +39,6 @@ public class Application extends Activity {
 	CanvasView      m_canvas_view      = null;
 	MySlider        m_slider           = null;
 	CameraView      m_camera_view      = null;
-	MyButton        m_button           = null;
 
 	/* Change this to enable the image chooser */
 	final private boolean SHOW_SELECT_IMAGE = false;
@@ -62,7 +60,6 @@ public class Application extends Activity {
 		m_camera_view      = (CameraView)findViewById(R.id.cameraView);
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
-		m_button           = (MyButton)findViewById(R.id.button);
 		
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
