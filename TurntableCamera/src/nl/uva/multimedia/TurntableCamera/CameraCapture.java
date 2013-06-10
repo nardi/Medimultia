@@ -16,6 +16,8 @@ import nl.uva.multimedia.TurntableCamera.CameraView;
 
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
+
+	public int rawAngle;
 	private int image[] = null;
 	private int rotatedImage[] = null;
 
@@ -50,7 +52,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		CameraData.convertYUV420SPtoARGB(image, data, size.width, size.height);
 
 		/* Work on the argb array */
-		Rotator.rotate(rotatedImage, image, size.width, size.height, (float)Math.PI/2);
+		Rotator.rotate(rotatedImage, image, size.width, size.height,(float) Math.toRadians(rawAngle));
 		
 		/* Transfer data/results to the canvas */
 		m_canvas_view.setImage(rotatedImage, size.width, size.height);

@@ -30,6 +30,7 @@ public class Rotator {
 				srcPixel.y = Math.round(srcPoint.y + center.y);
 
 				int destPixelLocation = destPixel.x + destPixel.y * width;
+
 				if (srcPixel.x < 0 || srcPixel.x >= width
 				 || srcPixel.y < 0 || srcPixel.y >= height) {
 					dest[destPixelLocation] = 0;

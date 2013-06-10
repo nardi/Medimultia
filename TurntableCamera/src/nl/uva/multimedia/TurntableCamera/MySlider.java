@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
+	public CameraCapture toRotate;
 	/* Necessary constructors */
 	public MySlider(Context context) {
 		super(context);
@@ -39,6 +40,7 @@ class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 
 		/* Do something with progress here */
 		Log.i("Slider","Progress is set to: " + progress);
+		toRotate.rawAngle = progress;
 	}
 
 	public void onStartTrackingTouch(SeekBar slider) { /* NOP */ }
