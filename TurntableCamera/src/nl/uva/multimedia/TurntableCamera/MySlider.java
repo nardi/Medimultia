@@ -40,7 +40,7 @@ class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 
 		/* Do something with progress here */
 		Log.i("Slider","Progress is set to: " + progress);
-		toRotate.rawAngle = progress;
+		toRotate.rawAngle = progress - 180;
 	}
 
 	public void onStartTrackingTouch(SeekBar slider) { /* NOP */ }

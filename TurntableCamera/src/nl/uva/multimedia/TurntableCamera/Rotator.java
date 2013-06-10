@@ -8,7 +8,8 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 public class Rotator {
-	public static void rotate(int[] dest, int[] src, int width, int height, double angle) {
+	public static void rotate(int[] dest, int[] src, int width, int height,
+			double angle, InterpolationMode intMode) {
 		PointF center = new PointF(width/2f, height/2f);
 		Point destPixel = new Point();
 		PointF destPoint = new PointF();

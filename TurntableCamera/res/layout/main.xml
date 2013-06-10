@@ -24,6 +24,23 @@
 		android:layout_height="wrap_content"
 		android:layout_weight="1" />
 
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:weightSum="3"
+		android:gravity="center_horizontal">
+
+		<nl.uva.multimedia.TurntableCamera.InterpolationSwitch
+		    android:id="@+id/intSwitch"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0"
+		    android:textOff="Nearest-neighbor"
+		    android:textOn="Bilinear interpolation" />
+
+	</LinearLayout>
+	
 	<nl.uva.multimedia.TurntableCamera.MySlider
 		android:id="@+id/slider"
 		android:layout_width="match_parent"
