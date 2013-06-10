@@ -61,6 +61,10 @@ public class Application extends Activity {
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
 		
+		/* Set the max value of the slide to 360 */
+		m_slider.setMax(360);
+		m_slider.toRotate = m_camera_capture;
+		
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
 		/* Can also be BEST_FIT, but BEST might be larger then

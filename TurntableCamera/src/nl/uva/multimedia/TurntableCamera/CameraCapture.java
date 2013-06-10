@@ -17,6 +17,7 @@ import nl.uva.multimedia.TurntableCamera.CameraView;
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
 	private int argb[] = null;
+	public int rawAngle;
 
 	/* Is called by Android when a frame is ready */
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
