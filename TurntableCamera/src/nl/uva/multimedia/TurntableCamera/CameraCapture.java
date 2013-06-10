@@ -16,8 +16,10 @@ import nl.uva.multimedia.TurntableCamera.CameraView;
 
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
-	private int argb[] = null;
+
 	public int rawAngle;
+	private int image[] = null;
+	private int rotatedImage[] = null;
 
 	/* Is called by Android when a frame is ready */
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
@@ -37,21 +39,23 @@ class CameraCapture implements CameraView.PreviewCallback {
 		}
 
 		int arraySize = size.width * size.height;
-		if (argb == null || argb.length != arraySize) {
+		if (image == null || image.length != arraySize) {
 			Log.i("CameraCapture", "Width: " + size.width + " Height: " + size.height);
 			
-			argb = new int[arraySize];
+			image = new int[arraySize];
+			rotatedImage = new int[arraySize];
 		}
 	
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
 		 */
-		CameraData.convertYUV420SPtoARGB(argb, data, size.width, size.height);
+		CameraData.convertYUV420SPtoARGB(image, data, size.width, size.height);
 
 		/* Work on the argb array */
-
+		Rotator.rotate(rotatedImage, image, size.width, size.height,(float) Math.toRadians(rawAngle));
+		
 		/* Transfer data/results to the canvas */
-		m_canvas_view.setImage(argb, size.width, size.height);
+		m_canvas_view.setImage(rotatedImage, size.width, size.height);
 		 
 		/* Invalidate the canvas, forcing it to be redrawn with the new data.
 		 * You can do this in other places, evaluate what makes sense to you.
