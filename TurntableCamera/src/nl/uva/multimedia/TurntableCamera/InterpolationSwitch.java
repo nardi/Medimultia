@@ -31,4 +31,7 @@ public class InterpolationSwitch extends MySwitch {
 					InterpolationMode.BILINEAR : InterpolationMode.NEAREST_NEIGHBOR);
 	}
 
+	public void setCameraCapture(CameraCapture c) {
+		cameraCapture = c;
+	}
 }

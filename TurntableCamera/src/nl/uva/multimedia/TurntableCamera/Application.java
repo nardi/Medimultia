@@ -68,6 +68,7 @@ public class Application extends Activity {
 		m_slider.setMax(360);
 		m_slider.setProgress(180);
 
+		m_int_switch.setCameraCapture(m_camera_capture);
 		m_int_switch.setChecked(true);
 		
 		/* Do some basic plumbing */

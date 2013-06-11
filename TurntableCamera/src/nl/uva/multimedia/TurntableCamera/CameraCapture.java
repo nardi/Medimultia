@@ -21,6 +21,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 	private int image[] = null;
 	private int rotatedImage[] = null;
 	private InterpolationMode intMode;
+	private Rotator rotator = new Rotator();
 
 	/* Is called by Android when a frame is ready */
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
@@ -53,7 +54,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		CameraData.convertYUV420SPtoARGB(image, data, size.width, size.height);
 
 		/* Work on the argb array */
-		Rotator.rotate(rotatedImage, image, size.width, size.height,
+		rotator.rotate(rotatedImage, image, size.width, size.height,
 				(float)Math.toRadians(rawAngle), intMode);
 
 		/* Transfer data/results to the canvas */
