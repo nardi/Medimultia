@@ -6,6 +6,7 @@ package nl.uva.multimedia.TurntableCamera;
 
 import android.graphics.Point;
 import android.graphics.PointF;
+import nl.uva.multimedia.TurntableCamera.InterpolationMode;
 
 public class Rotator {
 
@@ -45,23 +46,24 @@ public class Rotator {
 				
 				/*Bilinear interpolation */
 				//TODO helft kan weg
-				lowerLeft.x = (int) srcPoint.x;
-				lowerLeft.y = (int)	srcPoint.y;
-				
-				upperLeft.x = (int) srcPoint.x;
-				upperLeft.y = (int) srcPoint.y + 1;
-				
-				lowerRight.x = (int) srcPoint.x + 1;
-				lowerRight.y = (int) srcPoint.y;
-				
-				upperRight.x = (int)srcPoint.x + 1;
-				upperRight.y = (int)srcPoint.y + 1;		
-				
-				lowerColour = ((lowerRight.x - srcPoint.x) * getColour(src,lowerLeft, width))+ ((srcPoint.x - lowerLeft.x) * getColour(src, lowerRight, width));
-				upperColour = ((lowerRight.x - srcPoint.x) * getColour(src,upperLeft, width)) +((srcPoint.x - lowerLeft.x) * getColour(src, upperRight, width));
-				
-				colour = (int)((upperLeft.y - srcPoint.y) * lowerColour) + ((upperRight.y - srcPoint.y) * upperColour);
-				
+				if(intMode == InterpolationMode.BILINEAR){
+					lowerLeft.x = (int) srcPoint.x;
+					lowerLeft.y = (int)	srcPoint.y;
+					
+					upperLeft.x = (int) srcPoint.x;
+					upperLeft.y = (int) srcPoint.y + 1;
+					
+					lowerRight.x = (int) srcPoint.x + 1;
+					lowerRight.y = (int) srcPoint.y;
+					
+					upperRight.x = (int)srcPoint.x + 1;
+					upperRight.y = (int)srcPoint.y + 1;		
+					
+					lowerColour = ((lowerRight.x - srcPoint.x) * getColour(src,lowerLeft, width))+ ((srcPoint.x - lowerLeft.x) * getColour(src, lowerRight, width));
+					upperColour = ((lowerRight.x - srcPoint.x) * getColour(src,upperLeft, width)) +((srcPoint.x - lowerLeft.x) * getColour(src, upperRight, width));
+					
+					colour = (int)((upperLeft.y - srcPoint.y) * lowerColour) + ((upperRight.y - srcPoint.y) * upperColour);
+				}
 				// Niet meer Bilinear interpolation
 				
 				if (srcPixel.x < 0 || srcPixel.x >= width
