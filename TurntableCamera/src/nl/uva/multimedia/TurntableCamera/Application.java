@@ -35,10 +35,11 @@ import nl.uva.multimedia.TurntableCamera.R;
 
 /* Main activity */
 public class Application extends Activity {
-	CameraCapture   m_camera_capture   = new CameraCapture();
-	CanvasView      m_canvas_view      = null;
-	MySlider        m_slider           = null;
-	CameraView      m_camera_view      = null;
+	CameraCapture   	m_camera_capture   = new CameraCapture();
+	CanvasView      	m_canvas_view      = null;
+	MySlider        	m_slider           = null;
+	CameraView      	m_camera_view      = null;
+	InterpolationSwitch m_int_switch	   = null;
 
 	/* Change this to enable the image chooser */
 	final private boolean SHOW_SELECT_IMAGE = false;
@@ -60,11 +61,14 @@ public class Application extends Activity {
 		m_camera_view      = (CameraView)findViewById(R.id.cameraView);
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
-		
+		m_int_switch       = (InterpolationSwitch)findViewById(R.id.intSwitch);
+
 		/* Set the max value of the slide to 360 */
 		m_slider.toRotate = m_camera_capture;
 		m_slider.setMax(360);
-		
+		m_slider.setProgress(180);
+
+		m_int_switch.setChecked(true);
 		
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);

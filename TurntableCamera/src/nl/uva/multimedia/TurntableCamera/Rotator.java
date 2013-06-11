@@ -8,7 +8,9 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 public class Rotator {
-	public static void rotate(int[] dest, int[] src, int width, int height, double angle) {
+
+	public static void rotate(int[] dest, int[] src, int width, int height,
+			double angle, InterpolationMode intMode) {
 		//TODO Deze 1 keer laten alloceren.
 		PointF center = new PointF(width/2f, height/2f);
 		Point destPixel = new Point();
@@ -22,8 +24,8 @@ public class Rotator {
 		Point upperRight = new Point();
 		
 		double lowerColour;
-		int upperColour;
-		int colour;
+		double upperColour;
+		double colour;
 		
 		float cos = (float)Math.cos(angle), sin = (float)Math.sin(angle);
 		
@@ -42,6 +44,7 @@ public class Rotator {
 				srcPixel.y = Math.round(srcPoint.y + center.y);
 				
 				/*Bilinear interpolation */
+				//TODO helft kan weg
 				lowerLeft.x = (int) srcPoint.x;
 				lowerLeft.y = (int)	srcPoint.y;
 				
@@ -54,7 +57,11 @@ public class Rotator {
 				upperRight.x = (int)srcPoint.x + 1;
 				upperRight.y = (int)srcPoint.y + 1;		
 				
-				lowerColour = ((lowerRight.x - srcPoint.x) * src[lowerLeft.x + lowerLeft.y * width]) + ((srcPoint.x - lowerLeft.x) * src[lowerRight.x + lowerRight.y * width]);
+				lowerColour = ((lowerRight.x - srcPoint.x) * getColour(src,lowerLeft, width))+ ((srcPoint.x - lowerLeft.x) * getColour(src, lowerRight, width));
+				upperColour = ((lowerRight.x - srcPoint.x) * getColour(src,upperLeft, width)) +((srcPoint.x - lowerLeft.x) * getColour(src, upperRight, width));
+				
+				colour = (int)((upperLeft.y - srcPoint.y) * lowerColour) + ((upperRight.y - srcPoint.y) * upperColour);
+				
 				// Niet meer Bilinear interpolation
 				
 				if (srcPixel.x < 0 || srcPixel.x >= width
@@ -66,5 +73,9 @@ public class Rotator {
 				}					
 			}
 		}
+	}
+	
+	public static int getColour(int[] src, Point toGet, int width){
+		return src[toGet.x + toGet.y * width];
 	}
 }
