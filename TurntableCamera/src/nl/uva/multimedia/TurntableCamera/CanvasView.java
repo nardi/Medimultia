@@ -18,12 +18,6 @@ public class CanvasView extends View {
 	private int[] argb = null;
 	private int image_width;
 	private int image_height;
-	private Paint paint;
-	
-	{
-		paint = new Paint();
-		//paint.setAntiAlias(true);
-	}
 
 	public CanvasView(Context context) {
 		super(context);
@@ -47,7 +41,7 @@ public class CanvasView extends View {
 
 		if (argb != null) {
 			canvas.drawBitmap(argb, 0, image_width, (getWidth() - image_width) / 2,
-					(getHeight() - image_height) / 2, image_width, image_height, false, paint);
+					(getHeight() - image_height) / 2, image_width, image_height, false, null);
 		}
 	}
 	
