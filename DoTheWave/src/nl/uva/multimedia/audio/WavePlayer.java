@@ -20,6 +20,7 @@ import android.util.Log;
 public class WavePlayer extends Thread implements AudioPlayer {
 
 	private WaveFile file;
+	private EchoFilter echofilter;
 	private AudioTrack audioPlayer;
 
 	private boolean playing = true;
@@ -31,6 +32,7 @@ public class WavePlayer extends Thread implements AudioPlayer {
 	private PlaybackManager manager;
 
 	public WavePlayer(String path, PlaybackManager manager) {
+		this.echofilter = new EchoFilter();
 		this.file = new WaveFile(path);
 		this.manager = manager;
 
@@ -57,7 +59,6 @@ public class WavePlayer extends Thread implements AudioPlayer {
 
 		short[] buffer = new short[bufferSizeInBytes];
 
-		EchoFilter echofilter = new EchoFilter();
 		echofilter.waveFile = file;
 
 		int i = 0;
@@ -109,6 +110,11 @@ public class WavePlayer extends Thread implements AudioPlayer {
 
 		if (audioPlayer.getState() == AudioTrack.PLAYSTATE_PAUSED)
 			audioPlayer.play();
+	}
+
+	@Override
+	public EchoFilter getEchoFilter() {
+		return this.echofilter;
 	}
 
 }

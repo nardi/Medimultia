@@ -17,4 +17,6 @@ public interface AudioPlayer{
 	public void run();
 	public void stopPlaying();
 	public void togglePause();
+	public EchoFilter getEchoFilter();
 }
+

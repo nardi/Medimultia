@@ -20,8 +20,8 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1" >
 
-        <nl.uva.multimedia.audio.MySlider
-            android:id="@+id/mySlider"
+        <nl.uva.multimedia.audio.EchoDelaySlider
+            android:id="@+id/EchoDelaySlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -29,7 +29,7 @@
             android:id="@+id/audioSourceSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/mySlider"
+            android:layout_below="@id/EchoDelaySlider"
             android:layout_centerVertical="true" />
 
         <nl.uva.multimedia.audio.MySwitch

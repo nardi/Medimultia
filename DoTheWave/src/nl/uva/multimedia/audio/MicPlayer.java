@@ -21,6 +21,7 @@ public class MicPlayer extends Thread implements AudioPlayer {
 
 	private AudioTrack audioPlayer;
 	private AudioRecord recorder;
+	private EchoFilter echofilter;
 	private int bufferSize;
 	private int bufferSizeInShorts;
 
@@ -28,7 +29,8 @@ public class MicPlayer extends Thread implements AudioPlayer {
 	private boolean pause = false;
 
 	public MicPlayer() {
-
+		echofilter = new EchoFilter();
+		
 		bufferSize = AudioRecord.getMinBufferSize(44100,
 				AudioFormat.CHANNEL_CONFIGURATION_MONO,
 				AudioFormat.ENCODING_PCM_16BIT);
@@ -56,7 +58,6 @@ public class MicPlayer extends Thread implements AudioPlayer {
 			recorder.startRecording();
 
 		short[] buffer = new short[bufferSize];
-		EchoFilter echofilter = new EchoFilter();
 
 		while (playing) {
 
@@ -99,6 +100,11 @@ public class MicPlayer extends Thread implements AudioPlayer {
 			audioPlayer.play();
 			recorder.startRecording();
 		}
+	}
+
+	@Override
+	public EchoFilter getEchoFilter() {
+		return this.echofilter;
 	}
 
 

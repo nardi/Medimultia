@@ -27,7 +27,7 @@ import android.widget.Switch;
 public class MainActivity extends Activity {
 
 	Switch switch1, switch2;
-	SeekBar seekBar1;
+	EchoDelaySlider seekBar1;
 	SurfaceView surfaceView1;
 
 	PlaybackManager playbackmanager;
@@ -52,6 +52,9 @@ public class MainActivity extends Activity {
 				.setAudioSourceSwitch((AudioSourceSwitch) findViewById(R.id.audioSourceSwitch));
 		playbackmanager.setVisiblity(PlaybackManager.STATE_STOPPED);
 
+		seekBar1 = (EchoDelaySlider) findViewById(R.id.EchoDelaySlider);
+		
+		playbackmanager.setEchoDelaySlider(seekBar1);
 
 	}
 
