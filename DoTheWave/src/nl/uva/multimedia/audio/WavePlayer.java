@@ -15,6 +15,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Message;
+import android.util.Log;
 
 public class WavePlayer extends Thread implements AudioPlayer {
 
@@ -58,6 +59,7 @@ public class WavePlayer extends Thread implements AudioPlayer {
 
 		EchoFilter echofilter = new EchoFilter();
 
+		int i = 0;
 		while (playing) {
 
 			/* Only continue when not paused. */
@@ -67,8 +69,11 @@ public class WavePlayer extends Thread implements AudioPlayer {
 			}
 
 			/* Fill the buffer, break when done */
-			if (!file.getData(buffer, bufferSizeInBytes))
+			if (!file.getData(buffer, bufferSizeInBytes)){
+				Log.e("EOF", "End of file, bytes read: " + i);
+				i++;
 				break;
+			}
 
 			/* Now we can manipulate the buffer and create an echo. */
 			echofilter.filter(buffer, bufferSizeInShorts);
