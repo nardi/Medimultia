@@ -28,6 +28,6 @@ public class CircularBuffer {
 			System.arraycopy(data, bufferLeft, buffer, 0, data.length - bufferLeft);
 		}
 		
-		 return (position + data.length) % buffer.length;
+		return (position + data.length) % buffer.length;
 	}
 }

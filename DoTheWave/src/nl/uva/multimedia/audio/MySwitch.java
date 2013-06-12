@@ -42,9 +42,10 @@ public class MySwitch extends Switch implements Switch.OnCheckedChangeListener {
 		
 	}
 
-
 	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 		Log.e("MySwitch","State is now: " + arg1);
+		
+		
 	}
 
 }
