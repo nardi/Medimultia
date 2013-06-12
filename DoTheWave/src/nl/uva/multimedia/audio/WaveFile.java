@@ -91,16 +91,37 @@ public class WaveFile {
 		/* Re-use the bytebuffer for efficient memory usage.. */
 		if (byteBuffer == null)
 			byteBuffer = new byte[bufferSizeInBytes];
-
+		
+		Log.v("getData","bufferSizeInBytes: " + bufferSizeInBytes);
 		/*
 		 * XXX Read the file into the byteBuffer, and put the bytes into the
 		 * given shortBuffer.. Please think about the 8 or 16-bit encoding of
 		 * a wave file.. XXX
-		 * 
+		 */
+		/*
+		 * Making sure the InputStream will start reading the actual data instead
+		 * of metadata. Data starts at offset 44;
+		 */
+		try{
+			//file.reset();
+			file.skip(44);
+			
+			file.read(byteBuffer);
+			
+			for (int i = 0, q = 0; q < bufferSizeInBytes; i++, q += 2){
+				shortBuffer[i] = bytesToShort(byteBuffer, q);
+				
+			}
+		}catch(Exception IO){
+			Log.e("getDatra","IO exception while trying to read data chunk from wave file", IO);
+			return false;
+		}
+		
+		/* 
 		 * Return false when done reading or when an error occurs.
 		 */
 		
-		return false;
+		return true;
 
 	}
 
