@@ -218,8 +218,14 @@ public abstract class GameFragment extends Fragment
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		surfaceCreated = false;
-		thread.shouldWait(true);
+		/*
+		 * To stop the thread from accessing the surface, you can either shut it down
+		 * or block it after completing the current update-draw cycle.
+		 * It seems to be about equal in performance.
+		 */
+		thread.shouldWait(true); 	// Block thread
 		while (!thread.waiting());
+		//this.halt(); 				// Shut down thread
 		surfaceHolder = null;
     }
 	
