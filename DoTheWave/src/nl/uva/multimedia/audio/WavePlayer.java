@@ -58,6 +58,7 @@ public class WavePlayer extends Thread implements AudioPlayer {
 		short[] buffer = new short[bufferSizeInBytes];
 
 		EchoFilter echofilter = new EchoFilter();
+		echofilter.waveFile = file;
 
 		int i = 0;
 		

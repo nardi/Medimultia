@@ -18,6 +18,8 @@ public class EchoFilter {
 	int inPos, outPos, samplesPassed;
 	short[] echo;
 	
+	public WaveFile waveFile;
+	
 	public void filter(short[] samples, int length)
 	{
 		if (echo == null || length != echo.length) {

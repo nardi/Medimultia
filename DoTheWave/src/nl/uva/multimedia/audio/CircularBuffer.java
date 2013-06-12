@@ -3,6 +3,7 @@ package nl.uva.multimedia.audio;
 import android.util.Log;
 
 public class CircularBuffer {
+	
 	private short[] buffer;
 	
 	public CircularBuffer(int size) {
