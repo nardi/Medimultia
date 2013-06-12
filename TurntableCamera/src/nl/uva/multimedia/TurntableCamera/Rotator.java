@@ -92,7 +92,7 @@ public class Rotator {
 		return Color.rgb(red, green, blue);
 	}
 	
-	private int getColour(int[] src, Point toGet, int width){
+	private int getColour(int[] src, Point toGet, int width) {
 		return src[toGet.x + toGet.y * width];
 	}
 }
