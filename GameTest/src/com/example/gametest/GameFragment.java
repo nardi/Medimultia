@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -30,8 +31,9 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 	public boolean showStats = false;
 	
 	private Paint statsPaint = new Paint();
-	private long beginTime, timeDiff, sleepTime, updateTime, updateCount, drawCount;
-	
+	private long beginTime, timeDiff, sleepTime, updateTime,
+		updateCount, drawCount, prevUpdate, gameStartTime;
+
 	{
 		setTargetFps(60);
 		
@@ -69,9 +71,12 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 			this.run();
 		}
 	}
+	
+	protected void onRun() {}
 
 	public synchronized void run() {
 		if (!running) {
+			onRun();
 			running = true;
 			if (thread.getState() != Thread.State.NEW)
 				thread = new GameThread();
@@ -79,8 +84,11 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 		}
 	}
 	
+	protected void onHalt() {}
+	
 	public synchronized void halt() {
 		if (running) {
+			onHalt();
 			running = false;
 			while (true) {
 				try {
@@ -91,13 +99,17 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 		}
 	}
 	
-	public abstract void onUpdate();
+	public abstract void onUpdate(long dt);
 
 	public abstract void onDraw(Canvas canvas);
 	
 	private class GameThread extends Thread {		
 		private void update() {
-			onUpdate();
+			if (prevUpdate == 0)
+				prevUpdate = SystemClock.uptimeMillis();
+			long dt = SystemClock.uptimeMillis() - prevUpdate;
+			onUpdate(dt);
+			prevUpdate += dt;
 		}
 		
 		private void drawStats(Canvas canvas) {
@@ -115,6 +127,10 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 		@Override
 		public void run() {
 			int framesSkipped;
+			
+			if (gameStartTime == 0)
+				gameStartTime = SystemClock.uptimeMillis();
+			
 			while (running) {
 				framesSkipped = 0;
 				beginTime = SystemClock.uptimeMillis();
@@ -150,6 +166,8 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 				updateTime = (SystemClock.uptimeMillis() - beginTime) / (framesSkipped + 1);
 				updateCount += framesSkipped + 1;
 				drawCount++;
+				
+				Log.d("GameFragment", "Game time = " + (SystemClock.uptimeMillis() - gameStartTime));
 			}
 		}
 	}
