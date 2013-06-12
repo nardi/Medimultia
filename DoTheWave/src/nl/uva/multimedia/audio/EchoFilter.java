@@ -11,10 +11,10 @@ package nl.uva.multimedia.audio;
 
 public class EchoFilter {
 	private int delayLength = 44100;
-	double feedback = 0.5;
-	CircularBuffer buffer;
-	int position;
-	short[] echo;
+	private double feedback = 0.5;
+	private CircularBuffer buffer;
+	private int position;
+	private short[] echo;
 	
 	public WaveFile waveFile;
 	
