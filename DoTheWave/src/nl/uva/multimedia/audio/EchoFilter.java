@@ -12,9 +12,9 @@ package nl.uva.multimedia.audio;
 /* XXX Yes, you should change stuff here */
 
 public class EchoFilter {
-	int delayLength = 2 * 44100;
-	//double feedback = 0.6;
-	CircularBuffer buffer = new CircularBuffer(delayLength * 2);
+	int delayLength = 44100;
+	double feedback = 0.4;
+	CircularBuffer buffer = new CircularBuffer(delayLength);
 	int inPos, outPos, samplesPassed;
 	short[] echo;
 	
@@ -23,14 +23,15 @@ public class EchoFilter {
 		if (echo == null || length != echo.length) {
 			echo = new short[length];
 		}
-		
-		inPos = buffer.placeFrom(samples, inPos);
+
 		samplesPassed += length;
 		
 		if (samplesPassed >= delayLength) {
-			outPos = buffer.getFrom(echo, outPos);
+			outPos = buffer.getFrom(outPos, echo, length);
 			for (int i = 0; i < length; i++)
-				samples[i] += (short)(echo[i]);// * feedback);
+				samples[i] += (short)(echo[i] * feedback);
 		}
+		
+		inPos = buffer.placeFrom(inPos, samples, length);
 	}
 }
