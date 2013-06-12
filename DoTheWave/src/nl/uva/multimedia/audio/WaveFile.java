@@ -87,7 +87,7 @@ public class WaveFile {
 
 
 	public boolean getData(short[] shortBuffer, int bufferSizeInBytes) {
-
+		int bytesRead;
 		/* Re-use the bytebuffer for efficient memory usage.. */
 		if (byteBuffer == null)
 			byteBuffer = new byte[bufferSizeInBytes];
@@ -103,15 +103,17 @@ public class WaveFile {
 		 * of metadata. Data starts at offset 44;
 		 */
 		try{
-			//file.reset();
-			file.skip(44);
 			
-			file.read(byteBuffer);
+			bytesRead = file.read(byteBuffer);
+			
+			if(bytesRead <= 0){
+				return false;
+			}
 			
 			for (int i = 0, q = 0; q < bufferSizeInBytes; i++, q += 2){
 				shortBuffer[i] = bytesToShort(byteBuffer, q);
-				
 			}
+			
 		}catch(Exception IO){
 			Log.e("getDatra","IO exception while trying to read data chunk from wave file", IO);
 			return false;
@@ -174,5 +176,12 @@ public class WaveFile {
 	private static short bytesToShort(byte[] bytes, int offset) {
 		return (short) (((bytes[offset + 1] & 0xFF) << 8) + (bytes[offset] & 0xFF));
 	}
-
+	
+	public void skipToData(){
+		try{
+			file.skip(16);
+		}catch(Exception e){
+			Log.e("Playing", "Unexpected IO error while skipping to data chunk");
+		}
+	}
 }

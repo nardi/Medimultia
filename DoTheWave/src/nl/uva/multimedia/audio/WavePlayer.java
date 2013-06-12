@@ -60,6 +60,9 @@ public class WavePlayer extends Thread implements AudioPlayer {
 		EchoFilter echofilter = new EchoFilter();
 
 		int i = 0;
+		
+		file.skipToData();
+		
 		while (playing) {
 
 			/* Only continue when not paused. */
