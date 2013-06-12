@@ -35,4 +35,8 @@ public class CircularBuffer {
 		
 		return (position + length) % buffer.length;
 	}
+	
+	public int getLength() {
+		return buffer.length;
+	}
 }
