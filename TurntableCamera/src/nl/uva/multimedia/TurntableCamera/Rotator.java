@@ -21,25 +21,32 @@ public class Rotator {
 	Point upperLeft = new Point();
 	Point upperRight = new Point();
 	
+	/*
+	 * Rotates src by angle radians in counterclockwise direction (using intMode
+	 * when interpolating subpixels) and places the result in dest.
+	 */
 	public void rotate(int[] dest, int[] src, int width, int height,
 			double angle, InterpolationMode intMode) {
 		center.x = width / 2f;
 		center.y = height / 2f;
 		
-		float cos = (float)Math.cos(-angle), sin = (float)Math.sin(-angle);
+		float cos = (float)Math.cos(angle), sin = (float)Math.sin(angle);
 		
 		for (destPixel.x = 0; destPixel.x < width; destPixel.x++) {
 			for (destPixel.y = 0; destPixel.y < height; destPixel.y++) {
 				int destPixelLocation = destPixel.x + destPixel.y * width;
 
+				/* Get point relative to center */
 				destPoint.x = destPixel.x - center.x;
 				destPoint.y = destPixel.y - center.y;
 				
+				/* Rotate around center and get absolute location */
 				srcPoint.x = destPoint.x * cos - destPoint.y * sin + center.x;
 				srcPoint.y = destPoint.x * sin + destPoint.y * cos + center.y;
 
 				int colour = 0x00000000;
 				
+				/* Only try to find a colour if the point of origin lies within the image. */
 				if (srcPoint.x >= 0 && srcPoint.x < width - 1
 				 && srcPoint.y >= 0 && srcPoint.y < height - 1) {
 					switch (intMode) {
@@ -79,6 +86,10 @@ public class Rotator {
 		}
 	}
 	
+	/*
+	 * Linearily nterpolates between two colours, with factor1 being the amount
+	 * (between 0 and 1) of colour1 (which means the amount of colour2 is 1 - factor1).
+	 */
 	private int interpolateColour(int colour1, double factor1, int colour2) {
 		int red1 = Color.red(colour1), green1 = Color.green(colour1),
 			blue1 = Color.blue(colour1);
@@ -92,6 +103,9 @@ public class Rotator {
 		return Color.rgb(red, green, blue);
 	}
 	
+	/*
+	 * Retrieves a colour from a pixel array.
+	 */
 	private int getColour(int[] src, Point toGet, int width) {
 		return src[toGet.x + toGet.y * width];
 	}

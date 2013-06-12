@@ -55,7 +55,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		/* Work on the argb array */
 		rotator.rotate(rotatedImage, image, size.width, size.height,
-				(float)Math.toRadians(rawAngle), intMode);
+				-(float)Math.toRadians(rawAngle), intMode);
 
 		/* Transfer data/results to the canvas */
 		m_canvas_view.setImage(rotatedImage, size.width, size.height);

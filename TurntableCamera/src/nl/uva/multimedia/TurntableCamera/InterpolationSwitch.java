@@ -1,9 +1,9 @@
-/*
- * This class is used to create a Switch that allows the user to choose whether
- * they want to see the labels.
- */
-
 package nl.uva.multimedia.TurntableCamera;
+
+/*
+ * This class is used to create a Switch that allows the user to choose
+ * which type of interpolation is used when rotating the image.
+ */
 
 import android.content.Context;
 import android.util.AttributeSet;
