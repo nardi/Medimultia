@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -17,8 +18,11 @@ import android.view.ViewGroup;
  * Veel hulp van http://www.mysecretroom.com/www/programming-and-software/android-game-loops
  */
 
-public abstract class GameFragment extends Fragment implements SurfaceHolder.Callback {
+public abstract class GameFragment extends Fragment
+	implements SurfaceHolder.Callback, View.OnTouchListener {
 	private final static int MAX_FRAME_SKIPS = 5;
+	
+	private final GameFragment fragment = this;
 	
 	private GameThread thread = new GameThread();
 	private boolean running = false;
@@ -58,6 +62,8 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		SurfaceView surface = new SurfaceView(this.getActivity());
 		surface.getHolder().addCallback(this);
+		surface.setFocusable(true);
+		surface.setOnTouchListener(thread);
 		return surface;
 	}
 
@@ -65,6 +71,9 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 	public void surfaceCreated(SurfaceHolder holder) {
 		surfaceHolder = holder;
 		surfaceCreated = true;
+		
+		if (thread.waiting())
+			thread.shouldWait(false);
 		
 		if (paused) {
 			paused = false;
@@ -103,8 +112,26 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 
 	public abstract void onDraw(Canvas canvas);
 	
-	private class GameThread extends Thread {		
-		private void update() {
+	public void onResize(int width, int height) {}
+	
+	@Override
+	public boolean onTouch(View v, MotionEvent me) {
+		return false;
+	}
+	
+	private class GameThread extends Thread implements View.OnTouchListener {
+		private boolean waiting = false;
+		private boolean shouldWait = true;
+		
+		public boolean waiting() {
+			return waiting;
+		}
+		
+		public void shouldWait(boolean b) {
+			shouldWait = b;
+		}			
+		
+		private synchronized void update() {
 			if (prevUpdate == 0)
 				prevUpdate = SystemClock.uptimeMillis();
 			long dt = SystemClock.uptimeMillis() - prevUpdate;
@@ -118,7 +145,7 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 			canvas.drawText("Skipped frames: " + (updateCount - drawCount), 5, canvas.getHeight() - 5, statsPaint);
 		}
 		
-		private void draw(Canvas canvas) {
+		private synchronized void draw(Canvas canvas) {
 			onDraw(canvas);
 			if (showStats)
 				drawStats(canvas);
@@ -132,6 +159,12 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 				gameStartTime = SystemClock.uptimeMillis();
 			
 			while (running) {
+				if (shouldWait) {
+					waiting = true;
+					while (shouldWait);
+					waiting = false;
+				}
+				
 				framesSkipped = 0;
 				beginTime = SystemClock.uptimeMillis();
 				update();
@@ -170,15 +203,23 @@ public abstract class GameFragment extends Fragment implements SurfaceHolder.Cal
 				Log.d("GameFragment", "Game time = " + (SystemClock.uptimeMillis() - gameStartTime));
 			}
 		}
+
+		@Override
+		public synchronized boolean onTouch(View v, MotionEvent me) {
+			return fragment.onTouch(v, me);
+		}
 	}
 	
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+		onResize(width, height);
+	}
 	
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		surfaceCreated = false;
-		this.halt();
+		thread.shouldWait(true);
+		while (!thread.waiting());
 		surfaceHolder = null;
     }
 	
