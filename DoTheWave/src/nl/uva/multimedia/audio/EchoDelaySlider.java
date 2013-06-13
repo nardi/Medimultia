@@ -8,6 +8,7 @@ import android.widget.SeekBar;
 public class EchoDelaySlider extends MySlider {
 	
 	public EchoFilter echofilter;
+	//Dit is commentaar om GIT te testen.
 
 	public EchoDelaySlider(Context context) {
 		super(context);
