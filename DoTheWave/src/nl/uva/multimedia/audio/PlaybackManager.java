@@ -37,6 +37,7 @@ public class PlaybackManager {
 	private String wavePath;
 	
 	private EchoDelaySlider echoDelaySlider;
+	private EchoFeedbackSlider echoFeedbackSlider;
 
 	/*
 	 * Tiny message listener so that the audioplayer can change the state from
@@ -100,8 +101,9 @@ public class PlaybackManager {
 			audioPlayer = new MicPlayer();
 		else
 			audioPlayer = new WavePlayer(wavePath, this);
-		
+
 		echoDelaySlider.setEchoFilter(audioPlayer.getEchoFilter());
+		echoFeedbackSlider.setEchoFilter(audioPlayer.getEchoFilter());
 
 		audioPlayer.start();
 		setVisiblity(STATE_PLAYING);
@@ -131,5 +133,9 @@ public class PlaybackManager {
 
 	public void setEchoDelaySlider(EchoDelaySlider echo){
 		this.echoDelaySlider = echo;
+	}
+	
+	public void setEchoFeedbackSlider(EchoFeedbackSlider echo){
+		this.echoFeedbackSlider = echo;
 	}
 }
