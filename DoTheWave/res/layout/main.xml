@@ -24,28 +24,34 @@
             android:id="@+id/EchoDelaySlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        
+        <nl.uva.multimedia.audio.EchoFeedbackSlider
+            android:id="@+id/EchoFeedbackSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/EchoDelaySlider" />
 
         <nl.uva.multimedia.audio.AudioSourceSwitch
             android:id="@+id/audioSourceSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/EchoDelaySlider"
+            android:layout_below="@id/EchoFeedbackSlider"
             android:layout_centerVertical="true" />
 
-        <nl.uva.multimedia.audio.MySwitch
+        <!-- <nl.uva.multimedia.audio.MySwitch
             android:id="@+id/mySwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/audioSourceSwitch"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp" /> -->
 
         <nl.uva.multimedia.audio.PlayButton
             android:id="@+id/playbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/mySwitch"
+            android:layout_below="@+id/audioSourceSwitch"
             android:layout_marginTop="34dp" />
 
         <nl.uva.multimedia.audio.PauseButton

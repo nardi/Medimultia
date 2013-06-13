@@ -102,8 +102,10 @@ public class PlaybackManager {
 		else
 			audioPlayer = new WavePlayer(wavePath, this);
 
-		echoDelaySlider.setEchoFilter(audioPlayer.getEchoFilter());
-		echoFeedbackSlider.setEchoFilter(audioPlayer.getEchoFilter());
+		EchoFilter filter = new EchoFilter();
+		audioPlayer.setEchoFilter(filter);
+		echoDelaySlider.setEchoFilter(filter);
+		echoFeedbackSlider.setEchoFilter(filter);
 
 		audioPlayer.start();
 		setVisiblity(STATE_PLAYING);

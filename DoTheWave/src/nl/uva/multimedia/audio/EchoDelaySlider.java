@@ -7,8 +7,8 @@ import android.widget.SeekBar;
 
 public class EchoDelaySlider extends MySlider {
 	
-	public EchoFilter echofilter;
-	//Dit is commentaar om GIT te testen.
+	private EchoFilter echofilter;
+	private double delay = 1;
 
 	public EchoDelaySlider(Context context) {
 		super(context);
@@ -29,8 +29,8 @@ public class EchoDelaySlider extends MySlider {
 			boolean from_user) {
 
 		/* Do something with progress here */
-		Log.e("Slider","Progress is set to: " + progress);
-		float delay = progress/100 * 2;
+		//Log.i("Slider","Progress is set to: " + progress);
+		delay = 0.01 + 1.99 * (100 - progress) / 100.0;
 		if(echofilter != null){
 			echofilter.setDelay(delay);
 		}
@@ -38,6 +38,7 @@ public class EchoDelaySlider extends MySlider {
 	
 	public void setEchoFilter(EchoFilter echofilter){
 		this.echofilter = echofilter;
+		echofilter.setDelay(delay);
 	}
 
 }

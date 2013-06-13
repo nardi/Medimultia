@@ -32,7 +32,6 @@ public class WavePlayer extends Thread implements AudioPlayer {
 	private PlaybackManager manager;
 
 	public WavePlayer(String path, PlaybackManager manager) {
-		this.echofilter = new EchoFilter();
 		this.file = new WaveFile(path);
 		this.manager = manager;
 
@@ -115,6 +114,11 @@ public class WavePlayer extends Thread implements AudioPlayer {
 	@Override
 	public EchoFilter getEchoFilter() {
 		return this.echofilter;
+	}
+
+	@Override
+	public void setEchoFilter(EchoFilter filter) {
+		this.echofilter = filter;
 	}
 
 }

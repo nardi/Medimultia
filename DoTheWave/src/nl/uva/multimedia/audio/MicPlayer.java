@@ -107,5 +107,8 @@ public class MicPlayer extends Thread implements AudioPlayer {
 		return this.echofilter;
 	}
 
-
+	@Override
+	public void setEchoFilter(EchoFilter filter) {
+		this.echofilter = filter;
+	}
 }

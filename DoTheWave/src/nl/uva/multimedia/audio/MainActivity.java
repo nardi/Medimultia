@@ -27,7 +27,8 @@ import android.widget.Switch;
 public class MainActivity extends Activity {
 
 	Switch switch1, switch2;
-	EchoDelaySlider seekBar1;
+	EchoDelaySlider delaySlider;
+	EchoFeedbackSlider feedbackSlider;
 	SurfaceView surfaceView1;
 
 	PlaybackManager playbackmanager;
@@ -52,10 +53,13 @@ public class MainActivity extends Activity {
 				.setAudioSourceSwitch((AudioSourceSwitch) findViewById(R.id.audioSourceSwitch));
 		playbackmanager.setVisiblity(PlaybackManager.STATE_STOPPED);
 
-		seekBar1 = (EchoDelaySlider) findViewById(R.id.EchoDelaySlider);
+		delaySlider = (EchoDelaySlider) findViewById(R.id.EchoDelaySlider);
+		playbackmanager.setEchoDelaySlider(delaySlider);
+		feedbackSlider = (EchoFeedbackSlider) findViewById(R.id.EchoFeedbackSlider);
+		playbackmanager.setEchoFeedbackSlider(feedbackSlider);
 		
-		playbackmanager.setEchoDelaySlider(seekBar1);
-
+		delaySlider.setProgress(50);
+		feedbackSlider.setProgress(50);
 	}
 
 	/* Function to handle the incoming intent (music-file chooser)*/
