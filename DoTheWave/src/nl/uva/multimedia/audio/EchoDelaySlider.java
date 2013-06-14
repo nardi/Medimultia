@@ -1,14 +1,19 @@
 package nl.uva.multimedia.audio;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class EchoDelaySlider extends MySlider {
 	
 	private EchoFilter echofilter;
 	private double delay = 1;
+	private static CanvasView canvas;
+	
 
 	public EchoDelaySlider(Context context) {
 		super(context);
@@ -34,11 +39,20 @@ public class EchoDelaySlider extends MySlider {
 		if(echofilter != null){
 			echofilter.setDelay(delay);
 		}
+		
+		Log.v("Progress", "Delay set to: " + delay);
+		canvas.setDelay(delay);
+		canvas.drawDelay();
+		
 	}
 	
 	public void setEchoFilter(EchoFilter echofilter){
 		this.echofilter = echofilter;
 		echofilter.setDelay(delay);
+	}
+	
+	public static void setCanvasView(CanvasView drawingCanvas){
+		canvas = drawingCanvas;
 	}
 
 }

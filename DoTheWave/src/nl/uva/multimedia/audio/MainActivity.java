@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -57,6 +58,8 @@ public class MainActivity extends Activity {
 		playbackmanager.setEchoDelaySlider(delaySlider);
 		feedbackSlider = (EchoFeedbackSlider) findViewById(R.id.EchoFeedbackSlider);
 		playbackmanager.setEchoFeedbackSlider(feedbackSlider);
+		
+		EchoDelaySlider.setCanvasView((CanvasView) findViewById(R.id.canvasView));
 		
 		delaySlider.setProgress(50);
 		feedbackSlider.setProgress(50);
@@ -117,5 +120,4 @@ public class MainActivity extends Activity {
 		playbackmanager.stopPlaying();
 
 	}
-	
 }

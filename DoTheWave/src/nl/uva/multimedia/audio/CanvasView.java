@@ -16,9 +16,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class CanvasView extends View {
+	
+	public double curDelay;
+	public Paint drawText;
+	public Canvas drawCanvas;
 
 	public CanvasView(Context context) {
 		super(context);
@@ -39,7 +44,8 @@ public class CanvasView extends View {
 	/* Called whenever the canvas is dirty and needs redrawing */
 	@Override protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
+		
+		this.drawCanvas = canvas;
 		canvas.drawColor(Color.BLACK);
 	
 		/* Define the basic paint */
@@ -53,13 +59,26 @@ public class CanvasView extends View {
 		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
 		text.setTextSize(getHeight() * 0.1F);
 	
+		drawText = text;
 		/* Save state */
 		canvas.save();
 		canvas.translate(getWidth() * 0.1F, getHeight() * 0.1F);
 
 		canvas.drawText("Hello world! ", 0.0F, 0.0F, text);
+		
+		
 
 		canvas.restore();
+	}
+	
+	public void setDelay(double delay){
+		this.curDelay = delay;
+	}
+	
+	public void drawDelay(){
+		if(drawCanvas != null && drawText != null){
+			drawCanvas.drawText("Delay: " + curDelay +"s", 100F , 50F, drawText);
+		}
 	}
 
 }
