@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
 	EchoDelaySlider delaySlider;
 	EchoFeedbackSlider feedbackSlider;
 	SurfaceView surfaceView1;
+	CanvasView canvas;
 
 	PlaybackManager playbackmanager;
 
@@ -59,7 +60,9 @@ public class MainActivity extends Activity {
 		feedbackSlider = (EchoFeedbackSlider) findViewById(R.id.EchoFeedbackSlider);
 		playbackmanager.setEchoFeedbackSlider(feedbackSlider);
 		
-		EchoDelaySlider.setCanvasView((CanvasView) findViewById(R.id.canvasView));
+		canvas = ((CanvasView) findViewById(R.id.canvasView));
+		delaySlider.setCanvas(canvas);
+		feedbackSlider.setCanvas(canvas);
 		
 		delaySlider.setProgress(50);
 		feedbackSlider.setProgress(50);
@@ -105,6 +108,8 @@ public class MainActivity extends Activity {
 				playbackmanager.setAudioSource(PlaybackManager.SOURCE_MIC);
 			} else {
 				playbackmanager.setFileSource(path);
+				canvas.setFile(path);
+				canvas.invalidate();
 			}
 
 		}

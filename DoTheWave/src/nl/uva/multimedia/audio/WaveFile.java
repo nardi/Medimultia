@@ -7,6 +7,12 @@ package nl.uva.multimedia.audio;
  * at the University of Amsterdam 
  *
  * I.M.J. Kamps, S.J.R. van Schaik, R. de Vries (2013)
+ * 
+ * This file handles the .wave file. It verifies whether it indeed is a wave file
+ * and gets the meta data such as bitrate. It also reads the rest of the data (the
+ * actual sound)
+ * 
+ * Nardi Lam and Bas Visser
  */
 
 /* XXX Yes, you should change stuff here */

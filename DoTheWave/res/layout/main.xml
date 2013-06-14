@@ -11,14 +11,7 @@
 		android:id="@+id/canvasView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_weight="1" />
-	
-	<nl.uva.multimedia.audio.CanvasView
-		android:id="@+id/lable"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1" />
-	
+		android:layout_weight="1" />	
 
     <RelativeLayout
         android:layout_width="fill_parent"

@@ -1,8 +1,15 @@
+/*
+ * A simple slider used to set the delay after which the first echo is played.
+ * 
+ * Nardi Lam and Bas Visser
+ */
+
 package nl.uva.multimedia.audio;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.SeekBar;
@@ -12,22 +19,18 @@ public class EchoDelaySlider extends MySlider {
 	
 	private EchoFilter echofilter;
 	private double delay = 1;
-	private static CanvasView canvas;
+	private CanvasView canvas;
 	
-
 	public EchoDelaySlider(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public EchoDelaySlider(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
 	}
 
 	public EchoDelaySlider(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void onProgressChanged(SeekBar slider, int progress,
@@ -41,9 +44,13 @@ public class EchoDelaySlider extends MySlider {
 		}
 		
 		Log.v("Progress", "Delay set to: " + delay);
-		canvas.setDelay(delay);
-		canvas.drawDelay();
+		if(canvas != null){
+			canvas.setDelay(delay);
+		}
 		
+		if(canvas != null){
+			canvas.invalidate();
+		}
 	}
 	
 	public void setEchoFilter(EchoFilter echofilter){
@@ -51,8 +58,7 @@ public class EchoDelaySlider extends MySlider {
 		echofilter.setDelay(delay);
 	}
 	
-	public static void setCanvasView(CanvasView drawingCanvas){
-		canvas = drawingCanvas;
+	public void setCanvas(CanvasView canvas){
+		this.canvas = canvas;
 	}
-
 }
