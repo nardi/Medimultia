@@ -45,7 +45,7 @@ public class EchoDelaySlider extends MySlider {
 		
 		Log.v("Progress", "Delay set to: " + delay);
 		if(canvas != null){
-			canvas.setDelay(delay);
+			canvas.setDelay((2 - delay) + 0.01);
 		}
 		
 		if(canvas != null){
