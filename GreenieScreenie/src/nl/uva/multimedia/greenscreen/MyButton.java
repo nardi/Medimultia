@@ -1,4 +1,4 @@
-package nl.uva.multimedia.camera;
+package nl.uva.multimedia.greenscreen;
 /* 
  * Framework for camera processing and visualisation
  *

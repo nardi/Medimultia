@@ -11,14 +11,14 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_weight="1">
-		<nl.uva.multimedia.camera.CameraView
+		<nl.uva.multimedia.greenscreen.CameraView
 			android:id="@+id/cameraView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_weight="1" />
 	</LinearLayout>
 
-	<nl.uva.multimedia.camera.CanvasView
+	<nl.uva.multimedia.greenscreen.CanvasView
 		android:id="@+id/canvasView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
 		android:orientation="horizontal"
 		android:weightSum="3"
 		android:gravity="center_horizontal">
-		<nl.uva.multimedia.camera.MyButton
+		<nl.uva.multimedia.greenscreen.MyButton
 			android:id="@+id/button"
 			style="?android:attr/buttonStyleSmall" 
 			android:layout_width="0dp"
@@ -40,7 +40,7 @@
 	</LinearLayout>
 
 
-	<nl.uva.multimedia.camera.MySlider
+	<nl.uva.multimedia.greenscreen.MySlider
 		android:id="@+id/slider"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package nl.uva.multimedia.camera;
+package nl.uva.multimedia.greenscreen;
 /* 
  * Framework for camera processing and visualisation
  *
@@ -35,11 +35,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import nl.uva.multimedia.camera.CameraCapture;
-import nl.uva.multimedia.camera.CameraView;
-import nl.uva.multimedia.camera.CanvasView;
-import nl.uva.multimedia.camera.MySlider;
-import nl.uva.multimedia.camera.MyButton;
+import nl.uva.multimedia.camera.R;
+import nl.uva.multimedia.greenscreen.CameraCapture;
+import nl.uva.multimedia.greenscreen.CameraView;
+import nl.uva.multimedia.greenscreen.CanvasView;
+import nl.uva.multimedia.greenscreen.MyButton;
+import nl.uva.multimedia.greenscreen.MySlider;
 
 /* Main activity */
 public class Application extends Activity {

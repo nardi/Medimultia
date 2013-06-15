@@ -1,4 +1,4 @@
-package nl.uva.multimedia.camera;
+package nl.uva.multimedia.greenscreen;
 /* 
  * Framework for camera processing and visualisation
  *
@@ -20,8 +20,8 @@ package nl.uva.multimedia.camera;
 import android.hardware.Camera;
 import android.util.Log;
 
-import nl.uva.multimedia.camera.CameraData;
-import nl.uva.multimedia.camera.CameraView;
+import nl.uva.multimedia.greenscreen.CameraData;
+import nl.uva.multimedia.greenscreen.CameraView;
 
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
