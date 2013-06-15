@@ -1,3 +1,10 @@
+/*
+ * This is the circular buffer the program uses to create an echo. It reads and
+ * writes audio samples from and to this buffer.
+ * 
+ * Nardi Lam and Bas Visser
+ */
+
 package nl.uva.multimedia.audio;
 
 import android.util.Log;

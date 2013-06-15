@@ -7,6 +7,10 @@ package nl.uva.multimedia.audio;
  * at the University of Amsterdam 
  *
  * I.M.J. Kamps, S.J.R. van Schaik, R. de Vries (2013)
+ * 
+ * Plays the wave file.
+ * 
+ * Nardi Lam and Bas Visser
  */
 
 /* XXX Yes, you should change stuff here */

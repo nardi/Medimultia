@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
 	EchoDelaySlider delaySlider;
 	EchoFeedbackSlider feedbackSlider;
 	SurfaceView surfaceView1;
+	CanvasView canvas;
 
 	PlaybackManager playbackmanager;
 
@@ -57,6 +59,10 @@ public class MainActivity extends Activity {
 		playbackmanager.setEchoDelaySlider(delaySlider);
 		feedbackSlider = (EchoFeedbackSlider) findViewById(R.id.EchoFeedbackSlider);
 		playbackmanager.setEchoFeedbackSlider(feedbackSlider);
+		
+		canvas = ((CanvasView) findViewById(R.id.canvasView));
+		delaySlider.setCanvas(canvas);
+		feedbackSlider.setCanvas(canvas);
 		
 		delaySlider.setProgress(50);
 		feedbackSlider.setProgress(50);
@@ -102,6 +108,8 @@ public class MainActivity extends Activity {
 				playbackmanager.setAudioSource(PlaybackManager.SOURCE_MIC);
 			} else {
 				playbackmanager.setFileSource(path);
+				canvas.setFile(path);
+				canvas.invalidate();
 			}
 
 		}
@@ -117,5 +125,4 @@ public class MainActivity extends Activity {
 		playbackmanager.stopPlaying();
 
 	}
-	
 }

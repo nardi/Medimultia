@@ -1,3 +1,9 @@
+/*
+ * Simple slider used to set the feedback of the echo.
+ * 
+ * Nardi Lam and Bas Visser
+ */
+
 package nl.uva.multimedia.audio;
 
 import android.content.Context;
@@ -9,20 +15,18 @@ public class EchoFeedbackSlider extends MySlider {
 	
 	private EchoFilter echofilter;
 	private double feedback = 0.5;
+	private CanvasView canvas;
 
 	public EchoFeedbackSlider(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public EchoFeedbackSlider(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
 	}
 
 	public EchoFeedbackSlider(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void onProgressChanged(SeekBar slider, int progress,
@@ -34,11 +38,23 @@ public class EchoFeedbackSlider extends MySlider {
 		if (echofilter != null) {
 			echofilter.setFeedback(feedback);
 		}
+		
+		if(canvas != null){
+			canvas.setFeedback(feedback);
+		}
+		
+		if(canvas != null){
+			canvas.invalidate();
+		}
 	}
 	
 	public void setEchoFilter(EchoFilter echofilter){
 		this.echofilter = echofilter;
 		echofilter.setFeedback(feedback);
+	}
+	
+	public void setCanvas(CanvasView canvas){
+		this.canvas = canvas;
 	}
 
 }

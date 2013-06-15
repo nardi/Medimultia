@@ -7,6 +7,11 @@ package nl.uva.multimedia.audio;
  * at the University of Amsterdam 
  *
  * I.M.J. Kamps, S.J.R. van Schaik, R. de Vries (2013)
+ * 
+ * This object is used to actually play the echo.
+ * 
+ * Nardi Lam and Bas Visser
+ * 
  */
 
 public class EchoFilter {

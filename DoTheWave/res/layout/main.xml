@@ -11,7 +11,7 @@
 		android:id="@+id/canvasView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_weight="1" />
+		android:layout_weight="1" />	
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -24,6 +24,11 @@
             android:id="@+id/EchoDelaySlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        
+        <!-- <nl.uva.multimedia.audio.ProgressDialog
+            android:id="@+id/ProgressDialog"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"/>-->
         
         <nl.uva.multimedia.audio.EchoFeedbackSlider
             android:id="@+id/EchoFeedbackSlider"

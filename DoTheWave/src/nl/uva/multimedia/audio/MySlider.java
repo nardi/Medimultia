@@ -7,6 +7,10 @@ package nl.uva.multimedia.audio;
  * at the University of Amsterdam 
  *
  * I.M.J. Kamps, S.J.R. van Schaik, R. de Vries (2013)
+ * 
+ * Basis for the sliders we used.
+ * 
+ * Nardi Lam and Bas Visser
  */
 
 /* XXX Yes, you should change stuff here */
