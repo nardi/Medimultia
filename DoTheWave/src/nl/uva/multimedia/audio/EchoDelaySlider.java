@@ -31,7 +31,7 @@ public class EchoDelaySlider extends MySlider {
 		/* Do something with progress here */
 		//Log.i("Slider","Progress is set to: " + progress);
 		delay = 0.01 + 1.99 * (100 - progress) / 100.0;
-		if(echofilter != null){
+		if (echofilter != null) {
 			echofilter.setDelay(delay);
 		}
 	}
