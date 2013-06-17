@@ -39,7 +39,7 @@ import nl.uva.multimedia.greenscreen.R;
 import nl.uva.multimedia.greenscreen.CameraCapture;
 import nl.uva.multimedia.greenscreen.CameraView;
 import nl.uva.multimedia.greenscreen.CanvasView;
-import nl.uva.multimedia.greenscreen.MyButton;
+import nl.uva.multimedia.greenscreen.SnapshotButton;
 import nl.uva.multimedia.greenscreen.MySlider;
 
 /* Main activity */
@@ -48,7 +48,7 @@ public class Application extends Activity {
 	CanvasView      m_canvas_view      = null;
 	MySlider        m_slider           = null;
 	CameraView      m_camera_view      = null;
-	MyButton        m_button           = null;
+	SnapshotButton  m_button           = null;
 	SwitchColourSpace m_switch_colour_space = null;
 
 	/* Change this to enable the image chooser */
@@ -71,7 +71,7 @@ public class Application extends Activity {
 		m_camera_view      = (CameraView)findViewById(R.id.cameraView);
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
-		m_button           = (MyButton)findViewById(R.id.button);
+		m_button           = (SnapshotButton)findViewById(R.id.SnapshotButton);
 		m_switch_colour_space = (SwitchColourSpace)findViewById(R.id.SwitchColourSpace);
 		
 		/* Do some basic plumbing */
@@ -84,6 +84,7 @@ public class Application extends Activity {
 		m_camera_view.setSizeType(CameraView.SizeType.LARGEST_FIT);
 		m_camera_view.setPreviewCallback(m_camera_capture);
 		m_switch_colour_space.canvas = m_canvas_view;
+		m_button.canvas = m_canvas_view;
 	}
 	
 	@Override protected void onResume() {

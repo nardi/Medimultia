@@ -34,6 +34,8 @@ public class CanvasView extends View {
 	public int image_width;
 	public int image_height;
 	
+	private Canvas canvasHist;
+	
 	public boolean yuv;
 	
 	Bitmap m_image = null;
@@ -58,6 +60,8 @@ public class CanvasView extends View {
 	/* Called whenever the canvas is dirty and needs redrawing */
 	@Override protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		
+		this.canvasHist = canvas;
 
 		canvas.drawColor(Color.BLACK);
 
@@ -81,12 +85,6 @@ public class CanvasView extends View {
 
 			canvas.drawBitmap(m_image, null, rect, paint);
 		}
-		
-		if (hsv != null) {
-			histogram.position.x = (getWidth() - image_width) / 2;
-			histogram.setSize(image_width, Math.min(getHeight() - 30, image_height));
-			histogram.draw(canvas, hsv);
-		}
 	}
 
 	/* Accessors */
@@ -96,6 +94,14 @@ public class CanvasView extends View {
 
 	public Bitmap getSelectedImage() {
 		return m_image;
+	}
+	
+	public void snapshot(){
+		if (hsv != null && canvasHist != null) {
+			histogram.position.x = (getWidth() - image_width) / 2;
+			histogram.setSize(image_width, Math.min(getHeight() - 30, image_height));
+			histogram.draw(canvasHist, hsv);
+		}
 	}
 }
 
