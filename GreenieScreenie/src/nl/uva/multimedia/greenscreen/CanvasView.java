@@ -37,7 +37,7 @@ public class CanvasView extends View {
 	public boolean yuv;
 	
 	Bitmap m_image = null;
-	Histogram histogram = new HSVHistogram(new Point(0, 54), new Point(0, 0));
+	Histogram histogram = new HSVHistogram(new Point(0, 5), new Point(0, 0));
 
 	public CanvasView(Context context) {
 		super(context);
@@ -60,30 +60,16 @@ public class CanvasView extends View {
 		super.onDraw(canvas);
 
 		canvas.drawColor(Color.BLACK);
-	
-		/* Define the basic paint */
-		Paint paint = new Paint();
-		paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
-		paint.setAntiAlias(true);
-	
-		/* text inherits from the basic paint */
-		Paint text = new Paint(paint);
-		text.setColor(Color.WHITE);
-		text.setShadowLayer(3.0F,3.0F,3.0F,Color.rgb(0x20,0x20,0x20));
-		text.setTextSize(getHeight() * 0.1F);
-	
-		/* Save state */
-		canvas.save();
-		canvas.translate(getWidth() * 0.1F, getHeight() * 0.1F);
 
-		canvas.drawText("Hello world! ", 0.0F, 0.0F, text);
-
-		canvas.restore();
-
-		/* Paint a image if we have it, just a demo, clean this up so it works
+		/* Paint an image if we have it, just a demo, clean this up so it works
 		 * your way, or remove it if you don't need it
 		 */
 		if (m_image != null) {
+			/* Define the basic paint */
+			Paint paint = new Paint();
+			paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
+			paint.setAntiAlias(true);
+			
 			Rect rect = new Rect(
 					(int) (getWidth()*0.25F), (int) (getHeight()*0.25F), 
 					(int) (getWidth()*0.75F), (int) (getHeight()*0.75F));
@@ -97,7 +83,8 @@ public class CanvasView extends View {
 		}
 		
 		if (hsv != null) {
-			histogram.setSize(image_width, image_height);
+			histogram.position.x = (getWidth() - image_width) / 2;
+			histogram.setSize(image_width, Math.min(getHeight() - 30, image_height));
 			histogram.draw(canvas, hsv);
 		}
 	}

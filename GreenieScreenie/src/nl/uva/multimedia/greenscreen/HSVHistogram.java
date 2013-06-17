@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.util.Log;
 
 public class HSVHistogram extends Histogram {
 	public HSVHistogram(Point pos, Point size) {
@@ -19,15 +20,23 @@ public class HSVHistogram extends Histogram {
 	 * 
 	 * TODO Deze methode (en klasse) kan gedeeltelijk naar Histogram verplaatst worden denk ik
 	 */
-	protected void drawPixel(Canvas canvas, int x, int y, int amount, int maxAmount) {
+	protected void drawPixel(Canvas canvas, int x, int y, double intensity) {
 		hsv[0] = x * size.x / range.x;
 		hsv[1] = y * size.y / range.y;
-		hsv[2] = (float)amount / maxAmount;
+		hsv[2] = (float)intensity;
 
-		if (amount == 0)
-			paint.setColor(0);
-		else
-			paint.setColor(Color.HSVToColor(hsv));
+		//Log.i("drawPixel", "x: " + x + " y: " + y + " amount: " + amount);
+		paint.setColor(Color.HSVToColor(hsv));
 		canvas.drawPoint(x, y, paint);
+	}
+
+	String xAxis = "H";
+	protected String getXAxis() {
+		return xAxis;
+	}
+
+	String yAxis = "S";
+	protected String getYAxis() {
+		return yAxis;
 	}
 }

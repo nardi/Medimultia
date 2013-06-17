@@ -26,6 +26,11 @@ import nl.uva.multimedia.greenscreen.CameraView;
 
 class CameraCapture implements CameraView.PreviewCallback {
 	protected CanvasView m_canvas_view = null;
+	
+	int[] argb = null;
+	int[] yuvComponents = null;
+	float[] hsv = null;
+	float[]	hsvTemp = new float[3];
 
 	/* Is called by Android when a frame is ready */
 	public void onPreviewFrame(byte[] data, Camera camera, boolean rotated) {
@@ -43,12 +48,14 @@ class CameraCapture implements CameraView.PreviewCallback {
 			size.width = holder;
 		}
 
-		Log.e("CameraCapture", "Width: " + size.width + " Height: " + size.height);
-		int[] argb = new int[size.width*size.height];
-		int[] yuvComponents = new int[size.width*size.height];
-		float[] hsvComponents = new float[3];
-		float[] hsv = new float[2 * argb.length];
-		float[]	hsvTemp = new float[3];
+		//Log.i("CameraCapture", "Width: " + size.width + " Height: " + size.height);
+		
+		int arraySize = size.width * size.height;
+		if (argb == null || arraySize != argb.length) {
+			argb = new int[arraySize];
+			yuvComponents = new int[arraySize];
+			hsv = new float[2 * arraySize];
+		}
 
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
@@ -57,10 +64,10 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		/* Work on the argb array */
 
-		for(int i = 0; i < argb.length; i++){
+		for(int i = 0, h = 0, s = 1; s < argb.length; i++, h += 2, s += 2) {
 			Color.colorToHSV(argb[i], hsvTemp);
-			hsv[i * 2] = hsvTemp[0];
-			hsv[i * 2 + 1] = hsvTemp[1];
+			hsv[h] = hsvTemp[0];
+			hsv[s] = hsvTemp[1];
 		}
 		
 		/* Transfer data/results to the canvas */
