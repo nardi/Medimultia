@@ -47,10 +47,13 @@ class CameraCapture implements CameraView.PreviewCallback {
 		int[] argb = new int[size.width*size.height];
 		int[] yuvComponents = new int[size.width*size.height];
 		float[] hsvComponents = new float[3];
-		float[][] hsv = new float[argb.length][3];
+		float[] hsv = new float[2 * argb.length];
+		float[]	hsvTemp = new float[3];
 		
 		for(int i : argb){
-			Color.colorToHSV(argb[i], hsv[i]);
+			Color.colorToHSV(argb[i], hsvTemp);
+			hsv[i] = hsvTemp[0];
+			hsv[i + 1] = hsvTemp[1];
 		}
 		m_canvas_view.hsv = hsv;
 		m_canvas_view.yuvComponents = yuvComponents;
