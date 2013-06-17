@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class CanvasView extends View {
 	public int[] argb;
 	public int[] yuvComponents;
-	public float[][] hsv;
+	public float[] hsv;
 	public int image_width;
 	public int image_height;
 	
