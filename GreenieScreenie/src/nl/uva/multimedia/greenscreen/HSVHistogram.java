@@ -54,8 +54,8 @@ public class HSVHistogram extends Histogram {
 				hsv[1] = y * size.y / range.y;
 				hsv[2] = (float)pixelBins[x + y * size.x] / maxAmount;
 
+				paint.setColor(Color.HSVToColor(hsv));
 				canvas.drawPoint(x, y, paint);
-	
 			}
 		}
 
