@@ -1,5 +1,7 @@
 package nl.uva.multimedia.greenscreen;
 
+import java.text.DecimalFormat;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -39,6 +41,8 @@ public abstract class Histogram {
 	protected abstract String getXAxis();
 	protected abstract String getYAxis();
 	
+	private DecimalFormat rangeFormat = new DecimalFormat("0.##");
+	
 	private void drawBase(Canvas canvas) {
 		canvas.drawRect(0, 0, size.x, size.y, bg);
 		canvas.drawRect(0, size.y - 1, size.x, size.y, front);
@@ -46,6 +50,10 @@ public abstract class Histogram {
 		
 		canvas.drawText(getXAxis(), size.x / 2 - 8, size.y + 20, front);
 		canvas.drawText(getYAxis(), -20, size.y / 2 + 8, front);
+		
+		canvas.drawText("0", -17, size.y + 17, front);
+		canvas.drawText(rangeFormat.format(range.x), size.x - 8, size.y + 17, front);
+		canvas.drawText(rangeFormat.format(range.y), -17, 8, front);
 	}
 	
 	public void draw(Canvas canvas, float[] data) {

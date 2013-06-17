@@ -29,7 +29,7 @@ public class SnapshotButton extends Button implements View.OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
-		canvas.snapshot();		
+		canvas.invalidate();		
 	}
 
 }
