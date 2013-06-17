@@ -84,6 +84,7 @@ public class Application extends Activity {
 		m_camera_view.setSizeType(CameraView.SizeType.LARGEST_FIT);
 		m_camera_view.setPreviewCallback(m_camera_capture);
 		m_switch_colour_space.canvas = m_canvas_view;
+		m_button.canvas = m_canvas_view;
 	}
 	
 	@Override protected void onResume() {
