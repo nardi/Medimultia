@@ -49,6 +49,7 @@ public class Application extends Activity {
 	MySlider        m_slider           = null;
 	CameraView      m_camera_view      = null;
 	MyButton        m_button           = null;
+	SwitchColourSpace m_switch_colour_space = null;
 
 	/* Change this to enable the image chooser */
 	final private boolean SHOW_SELECT_IMAGE = false;
@@ -71,6 +72,7 @@ public class Application extends Activity {
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
 		m_slider           = (MySlider)findViewById(R.id.slider);
 		m_button           = (MyButton)findViewById(R.id.button);
+		m_switch_colour_space = (SwitchColourSpace)findViewById(R.id.SwitchColourSpace);
 		
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
@@ -81,6 +83,7 @@ public class Application extends Activity {
 		 */
 		m_camera_view.setSizeType(CameraView.SizeType.LARGEST_FIT);
 		m_camera_view.setPreviewCallback(m_camera_capture);
+		m_switch_colour_space.canvas = m_canvas_view;
 	}
 	
 	@Override protected void onResume() {
