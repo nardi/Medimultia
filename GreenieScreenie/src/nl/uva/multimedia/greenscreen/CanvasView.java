@@ -33,6 +33,8 @@ public class CanvasView extends View {
 	public int image_width;
 	public int image_height;
 	
+	public boolean yuv;
+	
 	Bitmap m_image = null;
 
 	public CanvasView(Context context) {
