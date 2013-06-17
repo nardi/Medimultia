@@ -36,7 +36,7 @@ public final class CameraData {
 	 * @param width The width of the output image
 	 * @param height The height of the output image
 	 */
-	public static void convertYUV420SPtoARGB(int[] rgb, byte[] yuv, int width,
+	public static void convertYUV420SPtoARGB(int[] rgb, int[] yuvComponents, byte[] yuv, int width,
 		int height) {
 
 		/* Sanity check, we won't do anything for wrongly sized data */
@@ -76,6 +76,8 @@ public final class CameraData {
 					/* Subtract 128 to fix the range. */
 					v_value = (yuv[uv_plane++] & 0xFF) - 128;
 					u_value = (yuv[uv_plane++] & 0xFF) - 128;
+					yuvComponents[x] = u_value;
+					yuvComponents[x + 1] = v_value;
 				}
 			
 				/* Multiply the YUV-vector with the YUVtoRGB matrix. */

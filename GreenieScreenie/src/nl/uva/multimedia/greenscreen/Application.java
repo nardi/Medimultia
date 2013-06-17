@@ -35,7 +35,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import nl.uva.multimedia.camera.R;
+import nl.uva.multimedia.greenscreen.R;
 import nl.uva.multimedia.greenscreen.CameraCapture;
 import nl.uva.multimedia.greenscreen.CameraView;
 import nl.uva.multimedia.greenscreen.CanvasView;

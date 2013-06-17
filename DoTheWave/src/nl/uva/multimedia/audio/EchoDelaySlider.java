@@ -6,14 +6,10 @@
 
 package nl.uva.multimedia.audio;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class EchoDelaySlider extends MySlider {
 	

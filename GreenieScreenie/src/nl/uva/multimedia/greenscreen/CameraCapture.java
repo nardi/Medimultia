@@ -17,6 +17,7 @@ package nl.uva.multimedia.greenscreen;
  * CameraView. This means that smaller screen devices, will, yes, have less
  * to calculate on.
  */
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.util.Log;
 
@@ -44,11 +45,19 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		Log.e("CameraCapture", "Width: " + size.width + " Height: " + size.height);
 		int[] argb = new int[size.width*size.height];
-	
+		int[] yuvComponents = new int[size.width*size.height];
+		float[] hsvComponents = new float[3];
+		float[][] hsv = new float[argb.length][3];
+		
+		for(int i : argb){
+			Color.colorToHSV(argb[i], hsv[i]);
+		}
+		m_canvas_view.hsv = hsv;
+		m_canvas_view.yuvComponents = yuvComponents;
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
 		 */
-		CameraData.convertYUV420SPtoARGB(argb, data, size.width, size.height);
+		CameraData.convertYUV420SPtoARGB(argb, yuvComponents, data, size.width, size.height);
 
 		/* Work on the argb array */
 
