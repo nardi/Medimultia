@@ -33,9 +33,10 @@ public class EchoFeedbackSlider extends MySlider {
 			boolean from_user) {
 
 		/* Do something with progress here */
+
 		Log.e("Slider","Progress is set to: " + progress);
 		feedback = 0.99 * progress / 100.0;
-		if(echofilter != null){
+		if (echofilter != null) {
 			echofilter.setFeedback(feedback);
 		}
 		

@@ -113,10 +113,6 @@ public class WaveFile {
 			
 			bytesRead = file.read(byteBuffer);
 			
-			if(bytesRead <= 0){
-				return false;
-			}
-			
 			for (int i = 0, q = 0; q < bufferSizeInBytes; i++, q += 2){
 				shortBuffer[i] = bytesToShort(byteBuffer, q);
 			}
