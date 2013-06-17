@@ -49,14 +49,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		float[] hsvComponents = new float[3];
 		float[] hsv = new float[2 * argb.length];
 		float[]	hsvTemp = new float[3];
-		
-		for(int i : argb){
-			Color.colorToHSV(argb[i], hsvTemp);
-			hsv[i] = hsvTemp[0];
-			hsv[i + 1] = hsvTemp[1];
-		}
-		m_canvas_view.hsv = hsv;
-		m_canvas_view.yuvComponents = yuvComponents;
+
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
 		 */
@@ -64,7 +57,18 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		/* Work on the argb array */
 
+		for(int i = 0; i < argb.length; i++){
+			Color.colorToHSV(argb[i], hsvTemp);
+			hsv[i * 2] = hsvTemp[0];
+			hsv[i * 2 + 1] = hsvTemp[1];
+		}
+		
 		/* Transfer data/results to the canvas */
+		
+		m_canvas_view.hsv = hsv;
+		m_canvas_view.yuvComponents = yuvComponents;
+		m_canvas_view.image_height = size.height;
+		m_canvas_view.image_width = size.width;
 
 		/* Invalidate the canvas, forcing it to be redrawn with the new data.
 		 * You can do this in other places, evaluate what makes sense to you.

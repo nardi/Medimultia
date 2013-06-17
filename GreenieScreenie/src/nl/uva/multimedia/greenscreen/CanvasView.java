@@ -15,6 +15,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Matrix;
@@ -36,6 +37,7 @@ public class CanvasView extends View {
 	public boolean yuv;
 	
 	Bitmap m_image = null;
+	Histogram histogram = new HSVHistogram(new Point(0, 54), new Point(0, 0));
 
 	public CanvasView(Context context) {
 		super(context);
@@ -92,6 +94,11 @@ public class CanvasView extends View {
 
 
 			canvas.drawBitmap(m_image, null, rect, paint);
+		}
+		
+		if (hsv != null) {
+			histogram.setSize(image_width, image_height);
+			histogram.draw(canvas, hsv);
 		}
 	}
 
