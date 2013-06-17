@@ -19,7 +19,6 @@ package nl.uva.multimedia.audio;
 
 import java.io.*;
 
-import android.R.integer;
 import android.media.AudioFormat;
 import android.util.Log;
 
@@ -50,7 +49,7 @@ public class WaveFile {
 				Log.e("SampleRate", "IOException while trying to read SampleRate");
 			}
 			
-			sampleRate = this.bytesToInt(tempParamStorage, 0, 4);
+			sampleRate = WaveFile.bytesToInt(tempParamStorage, 0, 4);
 			/* XXX Here you can read in the header and set some variables.. */
 			
 
@@ -73,8 +72,10 @@ public class WaveFile {
 			String waveCheck = new String(wave,8,4);
 			if(riffCheck.equals("RIFF") && waveCheck.equals("WAVE")){
 				Log.v("WAVECHECK", "This is a .wav file!");
+				isWave.close();
 				return true;
 			}
+			isWave.close();
 			
 		}catch(Exception e){
 			Log.e("FNF", "Could not find file");

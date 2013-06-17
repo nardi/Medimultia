@@ -19,7 +19,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class CanvasView extends View {
@@ -67,7 +66,7 @@ public class CanvasView extends View {
 		canvas.drawText("Delay: " + df.format(curDelay) +"s", 10F , 50F, text);
 		canvas.drawText("Echo Amplification " + df.format(curFeedback) , 10F, 80F, text);
 		if(file != null){
-			fileStart = fileStart = file.lastIndexOf("/");
+			fileStart = file.lastIndexOf("/");
 			fileToDraw = file.substring(fileStart + 1);
 			canvas.drawText("File: " + fileToDraw, 10F, 110F, text);
 		}
@@ -75,13 +74,6 @@ public class CanvasView extends View {
 		else{
 			canvas.drawText("No file chosen", 10F, 110F, text);
 		}
-		/* Save state */
-		/*canvas.save();
-		canvas.translate(getWidth() * 0.1F, getHeight() * 0.1F);
-
-		canvas.drawText("Hello world! ", 0.0F, 0.0F, text);
-		
-		canvas.restore();*/
 	}
 	
 	public void setDelay(double delay){
