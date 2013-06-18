@@ -8,8 +8,8 @@ import android.graphics.PointF;
 public class YUVHistogram extends Histogram {
 	
 	
-	public YUVHistogram(Point pos, Point size, PointF range) {
-		super(pos, size, range);
+	public YUVHistogram(Point pos, Point size) {
+		super(pos, size, new PointF(100, 100));
 	}
 
 	@Override

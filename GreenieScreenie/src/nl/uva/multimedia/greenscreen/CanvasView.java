@@ -37,7 +37,14 @@ public class CanvasView extends View {
 	public boolean yuv;
 	
 	Bitmap m_image = null;
-	Histogram histogram = new HSVHistogram(new Point(0, 5), new Point(0, 0));
+	Histogram histogram;
+	
+	
+	/* Define the basic paint */
+	Paint paint = new Paint(); {
+		paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
+		paint.setAntiAlias(true);
+	}
 
 	public CanvasView(Context context) {
 		super(context);
@@ -65,11 +72,6 @@ public class CanvasView extends View {
 		 * your way, or remove it if you don't need it
 		 */
 		if (m_image != null) {
-			/* Define the basic paint */
-			Paint paint = new Paint();
-			paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
-			paint.setAntiAlias(true);
-			
 			Rect rect = new Rect(
 					(int) (getWidth()*0.25F), (int) (getHeight()*0.25F), 
 					(int) (getWidth()*0.75F), (int) (getHeight()*0.75F));
@@ -80,20 +82,31 @@ public class CanvasView extends View {
 
 			canvas.drawBitmap(m_image, null, rect, paint);
 		}
-		
+
 		if (hsv != null && !yuv) {
+			histogram = new HSVHistogram(new Point(0, 0), new Point(0, 0));
 			histogram.position.x = (getWidth() - image_width) / 2;
 			histogram.position.y = getHeight()/10;
 			histogram.setSize(getWidth()/2, 4*getHeight()/5);
 			histogram.draw(canvas, hsv);
 		}
+
 		
 		if (yuvComponents != null && yuv) {
+			histogram = new YUVHistogram(new Point(0, 0), new Point(0, 0));
 			histogram.position.x = (getWidth() - image_width) / 2;
 			histogram.position.y = getHeight()/10;
 			histogram.setSize(getWidth()/2, 4*getHeight()/5);
 			histogram.draw(canvas, yuvComponents);
 		}
+
+		/*if (argb != null && yuv) {
+			GreenScreener.screen(argb);
+			canvas.save();
+			canvas.translate((getWidth() - image_width) / 2, getHeight()/10);
+			canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, paint);
+
+		}*/
 	}
 
 	/* Accessors */
