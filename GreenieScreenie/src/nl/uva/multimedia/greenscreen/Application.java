@@ -50,6 +50,7 @@ public class Application extends Activity {
 	CameraView      m_camera_view      = null;
 	SnapshotButton  m_button           = null;
 	SwitchColourSpace m_switch_colour_space = null;
+	GreenScreenSwitch m_green_screen_switch = null;
 
 	/* Change this to enable the image chooser */
 	final private boolean SHOW_SELECT_IMAGE = true;
@@ -73,6 +74,7 @@ public class Application extends Activity {
 		m_slider           = (MySlider)findViewById(R.id.slider);
 		m_button           = (SnapshotButton)findViewById(R.id.SnapshotButton);
 		m_switch_colour_space = (SwitchColourSpace)findViewById(R.id.SwitchColourSpace);
+		m_green_screen_switch = (GreenScreenSwitch)findViewById(R.id.GreenScreenSwitch);
 		
 		/* Do some basic plumbing */
 		m_camera_capture.setCanvasView(m_canvas_view);
@@ -84,6 +86,7 @@ public class Application extends Activity {
 		m_camera_view.setSizeType(CameraView.SizeType.LARGEST_FIT);
 		m_camera_view.setPreviewCallback(m_camera_capture);
 		m_switch_colour_space.canvas = m_canvas_view;
+		m_green_screen_switch.canvas = m_canvas_view;
 		m_button.canvas = m_canvas_view;
 	}
 	

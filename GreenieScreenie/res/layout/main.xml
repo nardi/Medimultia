@@ -38,14 +38,29 @@
 			android:layout_weight="1"
 			android:layout_height="wrap_content" />
 		
-		<nl.uva.multimedia.greenscreen.SwitchColourSpace
-		    android:id="@+id/SwitchColourSpace"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="0"
-		    android:paddingLeft="5dp"
-		    android:textOff="HSV"
-		    android:textOn="YUV" />
+		<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:weightSum="0"
+		android:gravity="center_horizontal">
+			<nl.uva.multimedia.greenscreen.SwitchColourSpace
+			    android:id="@+id/SwitchColourSpace"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0"
+			    android:paddingLeft="5dp"
+			    android:textOff="HSV"
+			    android:textOn="YUV" />
+			<nl.uva.multimedia.greenscreen.GreenScreenSwitch
+			    android:id="@+id/GreenScreenSwitch"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0"
+			    android:paddingLeft="5dp"
+			    android:textOff="GS Off"
+			    android:textOn="GS On" />
+		</LinearLayout>
 	</LinearLayout>
 
 
