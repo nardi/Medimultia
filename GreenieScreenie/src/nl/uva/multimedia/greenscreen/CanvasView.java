@@ -83,7 +83,8 @@ public class CanvasView extends View {
 		
 		if (hsv != null) {
 			histogram.position.x = (getWidth() - image_width) / 2;
-			histogram.setSize(image_width, Math.min(getHeight() - 30, image_height));
+			histogram.position.y = getHeight()/10;
+			histogram.setSize(getWidth()/2, 4*getHeight()/5);
 			histogram.draw(canvas, hsv);
 		}
 	}

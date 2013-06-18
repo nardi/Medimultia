@@ -48,12 +48,12 @@ public abstract class Histogram {
 		canvas.drawRect(0, 0, size.x, 1, front);
 		canvas.drawRect(0, 0, 1, size.y, front);
 		
-		canvas.drawText(getXAxis(), size.x / 2 - 8, -20, front);
-		canvas.drawText(getYAxis(), -20, size.y / 2 + 8, front);
+		canvas.drawText(getXAxis(), size.x / 2 - 8, -10, front);
+		canvas.drawText(getYAxis(), -15, size.y / 2 + 8, front);
 		
-		canvas.drawText("0", -17, -17, front);
-		canvas.drawText(rangeFormat.format(range.x), size.x - 8, -17, front);
-		canvas.drawText(rangeFormat.format(range.y), -17, 8, front);
+		canvas.drawText("0", -10, -10, front);
+		canvas.drawText(rangeFormat.format(range.x), size.x - 8, -10, front);
+		canvas.drawText(rangeFormat.format(range.y), -10, size.y + 8, front);
 	}
 	
 	public void draw(Canvas canvas, float[] data) {
@@ -90,12 +90,13 @@ public abstract class Histogram {
 		
 		drawBase(canvas);
 		
-		double logMaxAmount = Math.log(maxAmount);
+		//double logMaxAmount = Math.log(maxAmount);
 		
 		for (int y = 0; y < size.y; y++) {
 			for (int x = 0; x < size.x; x++) {
 				int amount = pixelBins[x + y * size.x];
-				double intensity = Math.log(amount) / logMaxAmount;
+				//double intensity = Math.log(amount) / logMaxAmount;
+				double intensity = (double)amount / maxAmount;
 				if (amount > 0) {
 					drawPixel(canvas, x, y, intensity);
 				}
