@@ -21,8 +21,8 @@ public class HSVHistogram extends Histogram {
 	 * TODO Deze methode (en klasse) kan gedeeltelijk naar Histogram verplaatst worden denk ik
 	 */
 	protected void drawPixel(Canvas canvas, int x, int y, double intensity) {
-		hsv[0] = x * size.x / range.x;
-		hsv[1] = y * size.y / range.y;
+		hsv[0] = x / size.x * range.x;
+		hsv[1] = y / size.y * range.y;
 		hsv[2] = (float)(0.8 + 0.2 * intensity);
 
 		//Log.i("drawPixel", "x: " + x + " y: " + y + " amount: " + amount);
