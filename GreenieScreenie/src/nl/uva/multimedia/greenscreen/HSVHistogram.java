@@ -20,10 +20,10 @@ public class HSVHistogram extends Histogram {
 	 * 
 	 * TODO Deze methode (en klasse) kan gedeeltelijk naar Histogram verplaatst worden denk ik
 	 */
-	protected void drawPixel(Canvas canvas, int x, int y, double intensity) {
-		hsv[0] = x * size.x / range.x;
-		hsv[1] = y * size.y / range.y;
-		hsv[2] = (float)(0.8 + 0.2 * intensity);
+	protected void drawPixel(Canvas canvas, int x, int y, float intensity) {
+		hsv[0] = range.x * x / (float)size.x;
+		hsv[1] = range.y * y / (float)size.y;
+		hsv[2] = 0.4f + 0.6f * intensity;
 
 		//Log.i("drawPixel", "x: " + x + " y: " + y + " amount: " + amount);
 		paint.setColor(Color.HSVToColor(hsv));
