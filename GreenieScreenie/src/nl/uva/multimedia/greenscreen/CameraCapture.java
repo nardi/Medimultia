@@ -80,7 +80,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		m_canvas_view.image_height = size.height;
 		m_canvas_view.image_width = size.width;
 		
-		m_canvas_view.invalidate();
+		//m_canvas_view.invalidate();
 	}
 	
 	/*
