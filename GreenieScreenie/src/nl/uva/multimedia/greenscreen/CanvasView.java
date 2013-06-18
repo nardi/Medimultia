@@ -34,15 +34,19 @@ public class CanvasView extends View {
 	public int image_width;
 	public int image_height;
 	
-	public boolean yuv;
+	public boolean yuv, doGreenScreen;
 	
 	Bitmap m_image = null;
 	Histogram histogram = new HSVHistogram(new Point(0, 0), new Point(0, 0));
+	
+	Rect imageRect = new Rect();
 	
 	/* Define the basic paint */
 	Paint paint = new Paint(); {
 		paint.setColor(Color.rgb(0xa0,0xa0,0xb0));
 		paint.setAntiAlias(true);
+		paint.setDither(true);
+		paint.setFilterBitmap(true);
 	}
 
 	public CanvasView(Context context) {
@@ -70,29 +74,26 @@ public class CanvasView extends View {
 		/* Paint an image if we have it, just a demo, clean this up so it works
 		 * your way, or remove it if you don't need it
 		 */
-		if (m_image != null) {
-			Rect rect = new Rect(
-					(int) (getWidth()*0.25F), (int) (getHeight()*0.25F), 
-					(int) (getWidth()*0.75F), (int) (getHeight()*0.75F));
-			Paint bmp = new Paint();
-			bmp.setAntiAlias(true);
-			bmp.setFilterBitmap(true);
-			bmp.setDither(true);
+		if (m_image != null && doGreenScreen) {
+			imageRect.left = (getWidth() - image_width) / 2;
+			imageRect.top = getHeight() / 10;
+			imageRect.right = (getWidth() + image_width) / 2;
+			imageRect.bottom = 9 * getHeight() / 10;
 
-			canvas.drawBitmap(m_image, null, rect, paint);
+			canvas.drawBitmap(m_image, null, imageRect, paint);
 		}
 
-		if (hsv != null && !yuv) {
-			histogram.position.x = (getWidth() - image_width) / 2;
+		if (hsv != null && !yuv && !doGreenScreen) {
+			histogram.position.x = getWidth()/4;
 			histogram.position.y = getHeight()/10;
 			histogram.setSize(getWidth()/2, 4*getHeight()/5);
 			histogram.draw(canvas, hsv);
 		}
 
-		if (argb != null && yuv) {
+		if (argb != null && doGreenScreen) {
 			GreenScreener.screen(argb);
 			canvas.save();
-			canvas.translate((getWidth() - image_width) / 2, getHeight()/10);
+			canvas.translate((getWidth() - image_width) / 2, getHeight() / 10);
 			canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, paint);
 		}
 	}

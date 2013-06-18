@@ -52,7 +52,7 @@ public class Application extends Activity {
 	SwitchColourSpace m_switch_colour_space = null;
 
 	/* Change this to enable the image chooser */
-	final private boolean SHOW_SELECT_IMAGE = false;
+	final private boolean SHOW_SELECT_IMAGE = true;
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -20,7 +20,6 @@ public class GreenScreener {
 			 && hsv[1] >= GREEN_MIN_SATURATION
 			 && hsv[2] >= GREEN_MIN_VALUE) {
 			 //&& chroma >= GREEN_MIN_CHROMA) {
-				
 				float hueAmount = 0;
 				if (hsv[0] > GREEN_HUE_CENTER) {
 					hueAmount = (hsv[0] - GREEN_HUE_CENTER)
