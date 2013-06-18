@@ -45,6 +45,7 @@ public class CanvasView extends View {
 		else
 			histogram = new YUVHistogram(new Point(0, 0), new Point(0, 0));
 		this.yuv = yuv;
+		this.invalidate();
 	}
 	
 	Rect imageRect = new Rect();
