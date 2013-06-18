@@ -55,6 +55,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 			argb = new int[arraySize];
 			yuvComponents = new int[arraySize];
 			hsv = new float[2 * arraySize];
+			m_canvas_view.invalidate();
 		}
 
 		/* Use the appropriate YUV conversion routine to retrieve the
@@ -79,8 +80,6 @@ class CameraCapture implements CameraView.PreviewCallback {
 		m_canvas_view.yuvComponents = yuvComponents;
 		m_canvas_view.image_height = size.height;
 		m_canvas_view.image_width = size.width;
-		
-		//m_canvas_view.invalidate();
 	}
 	
 	/*
