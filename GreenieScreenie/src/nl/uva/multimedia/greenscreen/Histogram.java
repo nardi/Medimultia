@@ -45,14 +45,14 @@ public abstract class Histogram {
 	
 	private void drawBase(Canvas canvas) {
 		canvas.drawRect(0, 0, size.x, size.y, bg);
-		canvas.drawRect(0, size.y - 1, size.x, size.y, front);
+		canvas.drawRect(0, 0, size.x, 1, front);
 		canvas.drawRect(0, 0, 1, size.y, front);
 		
-		canvas.drawText(getXAxis(), size.x / 2 - 8, size.y + 20, front);
+		canvas.drawText(getXAxis(), size.x / 2 - 8, -20, front);
 		canvas.drawText(getYAxis(), -20, size.y / 2 + 8, front);
 		
-		canvas.drawText("0", -17, size.y + 17, front);
-		canvas.drawText(rangeFormat.format(range.x), size.x - 8, size.y + 17, front);
+		canvas.drawText("0", -17, -17, front);
+		canvas.drawText(rangeFormat.format(range.x), size.x - 8, -17, front);
 		canvas.drawText(rangeFormat.format(range.y), -17, 8, front);
 	}
 	
@@ -97,7 +97,7 @@ public abstract class Histogram {
 				int amount = pixelBins[x + y * size.x];
 				double intensity = Math.log(amount) / logMaxAmount;
 				if (amount > 0) {
-					drawPixel(canvas, x, size.y - y, intensity);
+					drawPixel(canvas, x, y, intensity);
 				}
 			}
 		}
