@@ -67,7 +67,7 @@ public abstract class Histogram {
 		for (int y = 0; y < size.y; y++) {
 			for (int x = 0; x < size.x; x++) {
 				int amount = pixelBins[x + y * size.x];
-				float intensity = (float)amount / maxAmount;
+				float intensity = (float)(Math.sqrt(amount) / Math.sqrt(maxAmount));
 				if (amount > 0) {
 					drawPixel(canvas, x, y, intensity);
 				}

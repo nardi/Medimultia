@@ -25,7 +25,6 @@ public class HSVHistogram extends Histogram {
 		hsv[1] = range.y * y / (float)size.y;
 		hsv[2] = 0.4f + 0.6f * intensity;
 
-		//Log.i("drawPixel", "x: " + x + " y: " + y + " amount: " + amount);
 		paint.setColor(Color.HSVToColor(hsv));
 		canvas.drawPoint(x, y, paint);
 	}
