@@ -59,6 +59,8 @@ class CameraCapture implements CameraView.PreviewCallback {
 
 		/* Use the appropriate YUV conversion routine to retrieve the
 		 * data we actually intend to process.
+		 * 
+		 * yuvComponents is filled with the U and V components alternating
 		 */
 		CameraData.convertYUV420SPtoARGB(argb, yuvComponents, data, size.width, size.height);
 

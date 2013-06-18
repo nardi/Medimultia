@@ -81,11 +81,18 @@ public class CanvasView extends View {
 			canvas.drawBitmap(m_image, null, rect, paint);
 		}
 		
-		if (hsv != null) {
+		if (hsv != null && !yuv) {
 			histogram.position.x = (getWidth() - image_width) / 2;
 			histogram.position.y = getHeight()/10;
 			histogram.setSize(getWidth()/2, 4*getHeight()/5);
 			histogram.draw(canvas, hsv);
+		}
+		
+		if (yuvComponents != null && yuv) {
+			histogram.position.x = (getWidth() - image_width) / 2;
+			histogram.position.y = getHeight()/10;
+			histogram.setSize(getWidth()/2, 4*getHeight()/5);
+			histogram.draw(canvas, yuvComponents);
 		}
 	}
 

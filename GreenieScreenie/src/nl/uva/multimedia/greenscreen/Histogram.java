@@ -30,14 +30,16 @@ public abstract class Histogram {
 	}
 	
 	private Paint bg = new Paint(); {
-		bg.setColor(0xFF555555);
+		bg.setColor(0xFF333333);
 	}
 	private Paint front = new Paint(); {
 		front.setColor(Color.WHITE);
 		front.setTextSize(15);
 	}
 	
-	protected abstract void drawPixel(Canvas canvas, int x, int y, double intensity);
+	protected Paint paint = new Paint();
+	
+	protected abstract void drawPixel(Canvas canvas, int x, int y, float intensity);
 	protected abstract String getXAxis();
 	protected abstract String getYAxis();
 	
@@ -65,38 +67,26 @@ public abstract class Histogram {
 		}
 		
 		int maxAmount = 1;
-		//int maxIndex = 0, oneCount = 0;
 		for (int i = 0; i < data.length - 1; i += 2) {
 			int x = (int)((size.x - 1) * data[i] / range.x);
 			int y = (int)((size.y - 1) * data[i + 1] / range.y);
 			int index = x + y * size.x;
 
-			//pixelBins[index] += 1;
 			int amount = ++pixelBins[index];
-			/* if (index == 76560) {
-				Log.i("draw", "data[i]: " + data[i] + " data[i+1]: " + data[i+1] + " index: " + index);
-				Log.i("draw", "pixelBins[" + index + "] is now equal to" + pixelBins[index]);
-			} */
 			if (amount > maxAmount) {
 				maxAmount = amount;
-				//maxIndex = index;
 			}
 		}
-		
-		//Log.i("draw", "maxAmount: " + maxAmount + ", maxIndex: " + maxIndex);
-		
+
 		canvas.save();
 		canvas.translate(position.x, position.y);
 		
 		drawBase(canvas);
 		
-		//double logMaxAmount = Math.log(maxAmount);
-		
 		for (int y = 0; y < size.y; y++) {
 			for (int x = 0; x < size.x; x++) {
 				int amount = pixelBins[x + y * size.x];
-				//double intensity = Math.log(amount) / logMaxAmount;
-				double intensity = (double)amount / maxAmount;
+				float intensity = (float)amount / maxAmount;
 				if (amount > 0) {
 					drawPixel(canvas, x, y, intensity);
 				}
@@ -129,20 +119,18 @@ public abstract class Histogram {
 				maxAmount = amount;
 			}
 		}
-		
+
 		canvas.save();
 		canvas.translate(position.x, position.y);
 		
 		drawBase(canvas);
 		
-		double logMaxAmount = Math.log(maxAmount);
-		
 		for (int y = 0; y < size.y; y++) {
 			for (int x = 0; x < size.x; x++) {
 				int amount = pixelBins[x + y * size.x];
-				double intensity = Math.log(amount) / logMaxAmount;
+				float intensity = (float)amount / maxAmount;
 				if (amount > 0) {
-					drawPixel(canvas, x, size.y - y, intensity);
+					drawPixel(canvas, x, y, intensity);
 				}
 			}
 		}
