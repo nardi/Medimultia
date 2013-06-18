@@ -34,7 +34,7 @@
 			android:id="@+id/SnapshotButton"
 			style="?android:attr/buttonStyleSmall" 
 			android:layout_width="0dp"
-			android:text="MyButton"
+			android:text="Snapshot"
 			android:layout_weight="1"
 			android:layout_height="wrap_content" />
 		

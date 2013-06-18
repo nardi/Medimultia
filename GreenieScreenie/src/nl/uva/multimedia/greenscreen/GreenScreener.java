@@ -11,7 +11,7 @@ public class GreenScreener {
 	private static final float GREEN_HUE_LOWER = 60;
 	private static final float GREEN_HUE_UPPER = 180;
 	private static final float GREEN_MIN_SATURATION = 0.15f;
-	private static final float GREEN_MIN_VALUE = 0.3f;
+	private static final float GREEN_MIN_VALUE = 0.25f;
 	private static final float GREEN_MAX_VALUE = 0.9f;
 	
 	private static final float[] hsv = new float[3];
