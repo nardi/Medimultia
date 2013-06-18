@@ -7,7 +7,7 @@
 
 	<application android:label="@string/app_name">
 		<activity android:name="Application"
-			android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
+			android:configChanges="screenLayout|screenSize|smallestScreenSize"
 			android:screenOrientation="sensor"
 			android:label="@string/app_name">
 			<intent-filter>
