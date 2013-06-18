@@ -43,7 +43,16 @@ public abstract class Histogram {
 	
 	private DecimalFormat rangeFormat = new DecimalFormat("0.##");
 	
-	private void drawBase(Canvas canvas) {
+	private void emptyPixelBins() {
+		for (int i = 0; i < pixelBins.length; i++) {
+			pixelBins[i] = 0;
+		}
+	}
+	
+	private void drawBase(Canvas canvas, int maxAmount) {
+		canvas.save();
+		canvas.translate(position.x, position.y);
+		
 		canvas.drawRect(0, 0, size.x, size.y, bg);
 		canvas.drawRect(0, 0, size.x, 1, front);
 		canvas.drawRect(0, 0, 1, size.y, front);
@@ -54,32 +63,6 @@ public abstract class Histogram {
 		canvas.drawText("0", -10, -10, front);
 		canvas.drawText(rangeFormat.format(range.x), size.x - 8, -10, front);
 		canvas.drawText(rangeFormat.format(range.y), -10, size.y + 8, front);
-	}
-	
-	public void draw(Canvas canvas, float[] data) {
-		if (data.length == 0)
-			return;
-
-		for (int i = 0; i < pixelBins.length; i++) {
-			pixelBins[i] = 0;
-		}
-		
-		int maxAmount = 1;
-		for (int i = 0; i < data.length - 1; i += 2) {
-			int x = (int)((size.x - 1) * data[i] / range.x);
-			int y = (int)((size.y - 1) * data[i + 1] / range.y);
-			int index = x + y * size.x;
-
-			int amount = ++pixelBins[index];
-			if (amount > maxAmount) {
-				maxAmount = amount;
-			}
-		}
-
-		canvas.save();
-		canvas.translate(position.x, position.y);
-		
-		drawBase(canvas);
 		
 		for (int y = 0; y < size.y; y++) {
 			for (int x = 0; x < size.x; x++) {
@@ -92,6 +75,27 @@ public abstract class Histogram {
 		}
 
 		canvas.restore();
+	}
+	
+	public void draw(Canvas canvas, float[] data) {
+		if (data.length == 0)
+			return;
+
+		emptyPixelBins();
+		
+		int maxAmount = 1;
+		for (int i = 0; i < data.length - 1; i += 2) {
+			int x = (int)((size.x - 1) * data[i] / range.x);
+			int y = (int)((size.y - 1) * data[i + 1] / range.y);
+			int index = x + y * size.x;
+
+			int amount = ++pixelBins[index];
+			if (amount > maxAmount) {
+				maxAmount = amount;
+			}
+		}
+		
+		drawBase(canvas, maxAmount);
 	}
 	
 	/*
@@ -102,9 +106,7 @@ public abstract class Histogram {
 		if (data.length == 0)
 			return;
 
-		for (int i = 0; i < pixelBins.length; i++) {
-			pixelBins[i] = 0;
-		}
+		emptyPixelBins();
 		
 		int maxAmount = 1;
 		for (int i = 0; i < data.length - 1; i += 2) {
@@ -117,22 +119,7 @@ public abstract class Histogram {
 				maxAmount = amount;
 			}
 		}
-
-		canvas.save();
-		canvas.translate(position.x, position.y);
 		
-		drawBase(canvas);
-		
-		for (int y = 0; y < size.y; y++) {
-			for (int x = 0; x < size.x; x++) {
-				int amount = pixelBins[x + y * size.x];
-				float intensity = (float)amount / maxAmount;
-				if (amount > 0) {
-					drawPixel(canvas, x, y, intensity);
-				}
-			}
-		}
-
-		canvas.restore();
+		drawBase(canvas, maxAmount);
 	}
 }
