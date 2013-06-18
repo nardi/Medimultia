@@ -1,5 +1,9 @@
 package nl.uva.multimedia.greenscreen;
 
+/*
+ * Greenscreeners gonna greenscreen
+ */
+
 import android.graphics.Color;
 
 public class GreenScreener {
