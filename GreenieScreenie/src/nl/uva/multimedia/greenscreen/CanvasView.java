@@ -39,12 +39,12 @@ public class CanvasView extends View {
 	Bitmap m_image = null;
 	Histogram histogram;
 	
-	public void switchHistogram() {
-		if (yuv)
+	public void switchHistogram(boolean newYuv) {
+		if (!newYuv)
 			histogram = new HSVHistogram(new Point(0, 0), new Point(0, 0));
 		else
 			histogram = new YUVHistogram(new Point(0, 0), new Point(0, 0));
-		yuv = !yuv;
+		yuv = newYuv;
 	}
 	
 	Rect imageRect = new Rect();

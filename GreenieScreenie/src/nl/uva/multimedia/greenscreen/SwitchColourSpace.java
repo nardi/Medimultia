@@ -28,7 +28,7 @@ public class SwitchColourSpace extends Switch implements
 
 	@Override
 	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-		canvas.switchHistogram();
+		canvas.switchHistogram(arg1);
 	}
 
 }
