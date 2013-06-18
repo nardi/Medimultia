@@ -37,7 +37,15 @@ public class CanvasView extends View {
 	public boolean yuv, doGreenScreen;
 	
 	Bitmap m_image = null;
-	Histogram histogram = new HSVHistogram(new Point(0, 0), new Point(0, 0));
+	Histogram histogram;
+	
+	public void switchHistogram() {
+		if (yuv)
+			histogram = new HSVHistogram(new Point(0, 0), new Point(0, 0));
+		else
+			histogram = new YUVHistogram(new Point(0, 0), new Point(0, 0));
+		yuv = !yuv;
+	}
 	
 	Rect imageRect = new Rect();
 	
@@ -89,12 +97,19 @@ public class CanvasView extends View {
 			histogram.setSize(getWidth()/2, 4*getHeight()/5);
 			histogram.draw(canvas, hsv);
 		}
+		if (yuvComponents != null && yuv) {
+			histogram.position.x = (getWidth() - image_width) / 2;
+			histogram.position.y = getHeight()/10;
+			histogram.setSize(getWidth()/2, 4*getHeight()/5);
+			histogram.draw(canvas, yuvComponents);
+		}
 
 		if (argb != null && doGreenScreen) {
 			GreenScreener.screen(argb);
 			canvas.save();
 			canvas.translate((getWidth() - image_width) / 2, getHeight() / 10);
 			canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, paint);
+
 		}
 	}
 

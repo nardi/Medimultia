@@ -37,6 +37,8 @@ public abstract class Histogram {
 		front.setTextSize(15);
 	}
 	
+	protected Paint paint = new Paint();
+	
 	protected abstract void drawPixel(Canvas canvas, int x, int y, float intensity);
 	protected abstract String getXAxis();
 	protected abstract String getYAxis();

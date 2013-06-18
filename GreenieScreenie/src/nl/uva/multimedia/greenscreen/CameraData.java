@@ -76,8 +76,8 @@ public final class CameraData {
 					/* Subtract 128 to fix the range. */
 					v_value = (yuv[uv_plane++] & 0xFF) - 128;
 					u_value = (yuv[uv_plane++] & 0xFF) - 128;
-					yuvComponents[x] = u_value + 128;
-					yuvComponents[x + 1] = v_value + 128;
+					yuvComponents[x] = u_value + 50;
+					yuvComponents[x + 1] = v_value + 50;
 				}
 			
 				/* Multiply the YUV-vector with the YUVtoRGB matrix. */
