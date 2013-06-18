@@ -13,19 +13,12 @@ package nl.uva.multimedia.greenscreen;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Style;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Matrix;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.util.AttributeSet;
-
-import java.lang.Math;
-import java.lang.String;
-import java.util.ArrayList;
 
 public class CanvasView extends View {
 	public int[] argb;
@@ -70,6 +63,10 @@ public class CanvasView extends View {
 		super(context, attributes, style);
 	}
 	
+	{
+		switchHistogram(false);
+	}
+	
 	@Override protected void onMeasure(int width, int height) {
 		super.onMeasure(width, height);
 	}
@@ -110,7 +107,6 @@ public class CanvasView extends View {
 			canvas.save();
 			canvas.translate((getWidth() - image_width) / 2, getHeight() / 10);
 			canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, paint);
-
 		}
 	}
 
