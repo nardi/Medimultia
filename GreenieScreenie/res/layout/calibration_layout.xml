@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	   
+    <nl.uva.multimedia.greenscreen.ThreshholdSlider 
+        android:id="@+id/hueLower"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+    
+    <nl.uva.multimedia.greenscreen.ThreshholdSlider 
+        android:id="@+id/hueCentre"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+    
+    <nl.uva.multimedia.greenscreen.ThreshholdSlider 
+        android:id="@+id/hueUpper"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />    
+	
+    <nl.uva.multimedia.greenscreen.ThreshholdSlider 
+        android:id="@+id/minSat"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+    
+    <nl.uva.multimedia.greenscreen.ThreshholdSlider 
+        android:id="@+id/minVal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+    
+    <nl.uva.multimedia.greenscreen.ThreshholdSlider 
+        android:id="@+id/maxVal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+</LinearLayout>
