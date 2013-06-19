@@ -1,3 +1,7 @@
+/*
+ * Histogram for the HSV colour space
+ */
+
 package nl.uva.multimedia.greenscreen;
 
 import android.graphics.Canvas;

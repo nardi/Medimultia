@@ -1,3 +1,7 @@
+/*
+ * Histogram for the YUV colour space
+ */
+
 package nl.uva.multimedia.greenscreen;
 
 import android.graphics.Canvas;
@@ -14,10 +18,6 @@ public class YUVHistogram extends Histogram {
 
 	@Override
 	protected void drawPixel(Canvas canvas, int x, int y, float intensity) {
-		int Y = Math.round(intensity);
-		int U = Math.round(range.x * x / (float)size.x);
-		int V = Math.round(range.y * y / (float)size.y);
-		
 		paint.setColor(Color.RED);
 		canvas.drawPoint(x, y, paint);
 	}
