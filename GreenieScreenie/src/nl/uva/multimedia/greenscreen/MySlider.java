@@ -44,7 +44,7 @@ class MySlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 			boolean from_user) {
 
 		/* Do something with progress here */
-		Log.e("Slider","Progress is set to: " + progress);
+		//Log.i("Slider","Progress is set to: " + progress);
 	}
 
 	public void onStartTrackingTouch(SeekBar slider) { /* NOP */ }

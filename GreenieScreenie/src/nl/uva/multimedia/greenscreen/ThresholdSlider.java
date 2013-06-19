@@ -7,27 +7,23 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 
-public class ThreshholdSlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
+public class ThresholdSlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
 	
 	public float value;
 	
-	public ThreshholdSlider(Context context) {
+	public ThresholdSlider(Context context) {
 		super(context);
 	}
 
-	public ThreshholdSlider(Context context, AttributeSet attrs) {
+	public ThresholdSlider(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public ThreshholdSlider(Context context, AttributeSet attrs, int defStyle) {
+	public ThresholdSlider(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 	
 	{
-		setup();
-	}
-	
-	private void setup(){
 		setOnSeekBarChangeListener(this);
 	}
 	
@@ -36,7 +32,7 @@ public class ThreshholdSlider extends SeekBar implements SeekBar.OnSeekBarChange
 			boolean from_user) {
 
 		/* Do something with progress here */
-		Log.e("Slider","Progress is set to: " + progress);
+		//Log.i("Slider","Progress is set to: " + progress);
 		value = progress;
 	}
 	
