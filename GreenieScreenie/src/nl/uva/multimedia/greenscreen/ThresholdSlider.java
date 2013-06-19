@@ -6,9 +6,6 @@ package nl.uva.multimedia.greenscreen;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 
 public class ThresholdSlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {

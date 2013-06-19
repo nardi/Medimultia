@@ -19,8 +19,6 @@ package nl.uva.multimedia.greenscreen;
  */
 import android.graphics.Color;
 import android.hardware.Camera;
-import android.util.Log;
-
 import nl.uva.multimedia.greenscreen.CameraData;
 import nl.uva.multimedia.greenscreen.CameraView;
 
