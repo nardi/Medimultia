@@ -1,7 +1,7 @@
 package nl.uva.multimedia.greenscreen;
 
 /*
- * Greenscreeners gonna greenscreen
+ * The class that actually applies the green screen effect.
  */
 
 import android.graphics.Color;
