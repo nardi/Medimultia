@@ -35,33 +35,33 @@ public class CalibrationFragment extends DialogFragment {
 		 */
 		
 		hueLower = GreenScreener.GREEN_HUE_LOWER;
-		final ThreshholdSlider hueLowSlider = (ThreshholdSlider)layoutId.findViewById(R.id.hueLower);
+		final ThresholdSlider hueLowSlider = (ThresholdSlider)layoutId.findViewById(R.id.hueLower);
 		hueLowSlider.setMax(359);
 		hueLowSlider.setProgress((int)Math.round(hueLower));
 		
 		hueCentre = GreenScreener.GREEN_HUE_CENTER;
-		final ThreshholdSlider hueCentSlider = (ThreshholdSlider)layoutId.findViewById(R.id.hueCentre);
+		final ThresholdSlider hueCentSlider = (ThresholdSlider)layoutId.findViewById(R.id.hueCentre);
 		hueCentSlider.setMax(359);
 		hueCentSlider.setProgress((int) Math.round(hueCentre));
 		
 		hueUpper = GreenScreener.GREEN_HUE_UPPER;
-		final ThreshholdSlider hueUppSlider = (ThreshholdSlider)layoutId.findViewById(R.id.hueUpper);
+		final ThresholdSlider hueUppSlider = (ThresholdSlider)layoutId.findViewById(R.id.hueUpper);
 		hueUppSlider.setMax(359);
 		hueUppSlider.setProgress((int)Math.round(hueUpper));
 		
 		minSat = GreenScreener.GREEN_MIN_SATURATION * 1000;
-		final ThreshholdSlider minSatSlider = (ThreshholdSlider)layoutId.findViewById(R.id.minSat);
+		final ThresholdSlider minSatSlider = (ThresholdSlider)layoutId.findViewById(R.id.minSat);
 		minSatSlider.setMax(1000);
 		minSatSlider.setProgress((int)Math.round(minSat));
 		
 		minVal = GreenScreener.GREEN_MIN_VALUE * 1000;
-		final ThreshholdSlider minValSlider = (ThreshholdSlider)layoutId.findViewById(R.id.minVal);
+		final ThresholdSlider minValSlider = (ThresholdSlider)layoutId.findViewById(R.id.minVal);
 		minValSlider.setMax(1000);
 		minValSlider.setProgress((int)Math.round(minVal));
 		
 		
 		maxVal = GreenScreener.GREEN_MAX_VALUE * 1000;
-		final ThreshholdSlider maxValSlider = (ThreshholdSlider)layoutId.findViewById(R.id.maxVal);
+		final ThresholdSlider maxValSlider = (ThresholdSlider)layoutId.findViewById(R.id.maxVal);
 		maxValSlider.setMax(1000);
 		maxValSlider.setProgress((int)Math.round(maxVal));
 		

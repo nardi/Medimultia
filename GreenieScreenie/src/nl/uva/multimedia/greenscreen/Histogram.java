@@ -1,5 +1,9 @@
 package nl.uva.multimedia.greenscreen;
 
+/*
+ * Base class for a 2D histogram
+ */
+
 import java.text.DecimalFormat;
 
 import android.graphics.Canvas;
@@ -20,6 +24,10 @@ public abstract class Histogram {
 		this.range = range;
 	}
 	
+	/*
+	 * Used to store the amount of data points that
+	 * fall on each pixel.
+	 */
 	private int[] pixelBins;
 	
 	public void setSize(int x, int y) {
@@ -49,22 +57,26 @@ public abstract class Histogram {
 			pixelBins[i] = 0;
 		}
 	}
-	
+
 	private void drawBase(Canvas canvas, int maxAmount) {
 		canvas.save();
 		canvas.translate(position.x, position.y);
 		
+		/* Draw the background and the edges */
 		canvas.drawRect(0, 0, size.x, size.y, bg);
 		canvas.drawRect(0, 0, size.x, 1, front);
 		canvas.drawRect(0, 0, 1, size.y, front);
 		
+		/* Draw the axis labels */
 		canvas.drawText(getXAxis(), size.x / 2 - 8, -10, front);
 		canvas.drawText(getYAxis(), -15, size.y / 2 + 8, front);
 		
+		/* Draw the scale numbers */
 		canvas.drawText("0", -10, -10, front);
 		canvas.drawText(rangeFormat.format(range.x), size.x - 8, -10, front);
 		canvas.drawText(rangeFormat.format(range.y), -10, size.y + 8, front);
 		
+		/* Draw the data points */
 		for (int y = 0; y < size.y; y++) {
 			for (int x = 0; x < size.x; x++) {
 				int amount = pixelBins[x + y * size.x];
@@ -87,6 +99,9 @@ public abstract class Histogram {
 
 		emptyPixelBins();
 		
+		/*
+		 * Count how many data points fall on each pixel
+		 */
 		int maxAmount = 1;
 		for (int i = 0; i < data.length - 1; i += 2) {
 			int x = (int)((size.x - 1) * data[i] / range.x);
@@ -112,6 +127,9 @@ public abstract class Histogram {
 
 		emptyPixelBins();
 		
+		/*
+		 * Count how many data points fall on each pixel
+		 */
 		int maxAmount = 1;
 		for (int i = 0; i < data.length - 1; i += 2) {
 			int x = (int)((size.x - 1) * data[i] / range.x);
