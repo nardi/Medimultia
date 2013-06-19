@@ -7,7 +7,10 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-
+/*
+ * This class will create a popup that let's the user alter the settings for
+ * the green screen, making blue screens or screens of any other colour possible.
+ */
 public class CalibrationFragment extends DialogFragment {
 	private double hueCentre;
 	private double hueLower;
@@ -19,10 +22,17 @@ public class CalibrationFragment extends DialogFragment {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState){
+		/*
+		 * Inflating the layout so it can find all the sliders.
+		 */
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		
 		View layoutId = getActivity().getLayoutInflater().inflate(R.layout.calibration_layout, null);
 		builder.setView(layoutId);
+		
+		/*
+		 * Creating the sliders and assigning values
+		 */
 		
 		hueLower = GreenScreener.GREEN_HUE_LOWER;
 		final ThreshholdSlider hueLowSlider = (ThreshholdSlider)layoutId.findViewById(R.id.hueLower);
@@ -56,6 +66,10 @@ public class CalibrationFragment extends DialogFragment {
 		maxValSlider.setProgress((int)Math.round(maxVal));
 		
 		builder.setMessage("Calibration");
+		/*
+		 * Assigning an action to the 'Apply' button, in this case it is to save
+		 * the values. 
+		 */
 		builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
@@ -70,6 +84,9 @@ public class CalibrationFragment extends DialogFragment {
 		
 		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
 			
+			/*
+			 * Cancel button that just closes the popup
+			 */
 			public void onClick(DialogInterface dialog, int which){
 				dialog.cancel();
 			}
