@@ -30,6 +30,7 @@ public class GreenScreenSwitch extends Switch implements
 	@Override
 	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 		canvas.doGreenScreen = arg1;
+		canvas.invalidate();
 	}
 
 }

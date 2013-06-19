@@ -40,7 +40,8 @@ public class CanvasView extends View implements OnLongClickListener {
 		else
 			histogram = new YUVHistogram(new Point(0, 0), new Point(0, 0));
 		this.yuv = yuv;
-		this.invalidate();
+		if (!doGreenScreen)
+			this.invalidate();
 	}
 	
 	Rect imageRect = new Rect();
@@ -81,36 +82,36 @@ public class CanvasView extends View implements OnLongClickListener {
 
 		canvas.drawColor(Color.BLACK);
 
-		/* Paint an image if we have it, just a demo, clean this up so it works
-		 * your way, or remove it if you don't need it
-		 */
-		if (m_image != null && doGreenScreen) {
-			imageRect.left = (getWidth() - image_width) / 2;
-			imageRect.top = getHeight() / 10;
-			imageRect.right = (getWidth() + image_width) / 2;
-			imageRect.bottom = 9 * getHeight() / 10;
+		if (doGreenScreen) {
+			if (m_image != null) {
+				imageRect.left = (getWidth() - image_width) / 2;
+				imageRect.top = getHeight() / 10;
+				imageRect.right = (getWidth() + image_width) / 2;
+				imageRect.bottom = 9 * getHeight() / 10;
+	
+				canvas.drawBitmap(m_image, null, imageRect, paint);
+			}
+			
+			if (argb != null) {
+				GreenScreener.screen(argb);
+				canvas.save();
+				canvas.translate((getWidth() - image_width) / 2, getHeight() / 10);
+				canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, paint);
+			}
+		} else {
+			if (hsv != null && !yuv && !doGreenScreen) {
+				histogram.position.x = getWidth()/4;
+				histogram.position.y = getHeight()/10;
+				histogram.setSize(getWidth()/2, 4*getHeight()/5);
+				histogram.draw(canvas, hsv);
+			}
 
-			canvas.drawBitmap(m_image, null, imageRect, paint);
-		}
-
-		if (hsv != null && !yuv && !doGreenScreen) {
-			histogram.position.x = getWidth()/4;
-			histogram.position.y = getHeight()/10;
-			histogram.setSize(getWidth()/2, 4*getHeight()/5);
-			histogram.draw(canvas, hsv);
-		}
-		if (yuvComponents != null && yuv) {
-			histogram.position.x = (getWidth() - image_width) / 2;
-			histogram.position.y = getHeight()/10;
-			histogram.setSize(getWidth()/2, 4*getHeight()/5);
-			histogram.draw(canvas, yuvComponents);
-		}
-
-		if (argb != null && doGreenScreen) {
-			GreenScreener.screen(argb);
-			canvas.save();
-			canvas.translate((getWidth() - image_width) / 2, getHeight() / 10);
-			canvas.drawBitmap(argb, 0, image_width, 0, 0, image_width, image_height, true, paint);
+			if (yuvComponents != null && yuv && !doGreenScreen) {
+				histogram.position.x = (getWidth() - image_width) / 2;
+				histogram.position.y = getHeight()/10;
+				histogram.setSize(getWidth()/2, 4*getHeight()/5);
+				histogram.draw(canvas, yuvComponents);
+			}
 		}
 	}
 

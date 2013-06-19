@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.util.Log;
 
 public abstract class Histogram {
 	public Point position;
@@ -79,6 +78,9 @@ public abstract class Histogram {
 		canvas.restore();
 	}
 	
+	/*
+	 * Data points with x- and y-values interleaved
+	 */
 	public void draw(Canvas canvas, float[] data) {
 		if (data.length == 0)
 			return;
