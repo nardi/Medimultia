@@ -10,6 +10,7 @@ package nl.uva.multimedia.greenscreen;
 
 /* XXX Yes, you should change stuff here */
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,8 +20,9 @@ import android.graphics.Rect;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.util.AttributeSet;
+import android.view.View.OnLongClickListener;
 
-public class CanvasView extends View {
+public class CanvasView extends View implements OnLongClickListener {
 	public int[] argb;
 	public int[] yuvComponents;
 	public float[] hsv;
@@ -65,6 +67,8 @@ public class CanvasView extends View {
 	
 	{
 		switchHistogram(false);
+		this.setClickable(true);
+		setOnLongClickListener(this);
 	}
 	
 	@Override protected void onMeasure(int width, int height) {
@@ -117,6 +121,13 @@ public class CanvasView extends View {
 
 	public Bitmap getSelectedImage() {
 		return m_image;
+	}
+	
+	@Override
+	public boolean onLongClick(View v){
+		((Activity)getContext()).getFragmentManager().beginTransaction()
+		.add(new CalibrationFragment(), "Calibration Menu").commit();
+		return true;
 	}
 }
 

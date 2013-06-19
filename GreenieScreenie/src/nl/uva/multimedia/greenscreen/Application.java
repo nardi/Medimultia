@@ -59,7 +59,7 @@ public class Application extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		/* Hide the window caption if we have a menu key (else those options
-		 * appaer there and attempt to use fullscreen. 
+		 * appear there and attempt to use fullscreen. 
 		 */
 		if (ViewConfiguration.get(this).hasPermanentMenuKey()) {
 			getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -71,7 +71,6 @@ public class Application extends Activity {
 		/* Grab the views and widgets from the lay-out. */
 		m_camera_view      = (CameraView)findViewById(R.id.cameraView);
 		m_canvas_view      = (CanvasView)findViewById(R.id.canvasView);
-		m_slider           = (MySlider)findViewById(R.id.slider);
 		m_button           = (SnapshotButton)findViewById(R.id.SnapshotButton);
 		m_switch_colour_space = (SwitchColourSpace)findViewById(R.id.SwitchColourSpace);
 		m_green_screen_switch = (GreenScreenSwitch)findViewById(R.id.GreenScreenSwitch);

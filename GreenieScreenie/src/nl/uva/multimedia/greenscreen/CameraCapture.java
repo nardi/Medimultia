@@ -79,7 +79,7 @@ class CameraCapture implements CameraView.PreviewCallback {
 		m_canvas_view.yuvComponents = yuvComponents;
 		m_canvas_view.image_height = size.height;
 		m_canvas_view.image_width = size.width;
-		
+		//FUCK THE POLICE
 		//m_canvas_view.invalidate();
 	}
 	
