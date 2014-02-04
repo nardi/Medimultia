@@ -1,11 +1,13 @@
+/*
+ * Histogram for the HSV colour space
+ */
+
 package nl.uva.multimedia.greenscreen;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.util.Log;
 
 public class HSVHistogram extends Histogram {
 	public HSVHistogram(Point pos, Point size) {

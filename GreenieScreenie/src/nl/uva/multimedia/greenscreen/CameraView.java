@@ -9,7 +9,7 @@ package nl.uva.multimedia.greenscreen;
  * I.M.J. Kamps, S.J.R. van Schaik, R. de Vries (2013)
  */
 
-/* XXX DO NOT change this code unless you know what you are doing XXX */
+/* XXX DO NOT change this code unless you know what you are doing */
 
 import android.content.Context;
 import android.content.res.Configuration;

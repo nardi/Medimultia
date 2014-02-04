@@ -1,8 +1,6 @@
 package nl.uva.multimedia.greenscreen;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.util.AttributeSet;
 import android.widget.Button;
 import android.view.View;

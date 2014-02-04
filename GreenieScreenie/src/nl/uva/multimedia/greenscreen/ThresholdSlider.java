@@ -1,10 +1,11 @@
+/*
+ * Slider to set the different thresholds for the GreenScreener class
+ */
+
 package nl.uva.multimedia.greenscreen;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 
 public class ThresholdSlider extends SeekBar implements SeekBar.OnSeekBarChangeListener {
@@ -31,8 +32,6 @@ public class ThresholdSlider extends SeekBar implements SeekBar.OnSeekBarChangeL
 	public void onProgressChanged(SeekBar slider, int progress,
 			boolean from_user) {
 
-		/* Do something with progress here */
-		//Log.i("Slider","Progress is set to: " + progress);
 		value = progress;
 	}
 	

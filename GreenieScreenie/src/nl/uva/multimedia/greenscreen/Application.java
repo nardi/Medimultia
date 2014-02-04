@@ -16,7 +16,6 @@ package nl.uva.multimedia.greenscreen;
  */
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent; 
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -25,13 +24,10 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -40,13 +36,11 @@ import nl.uva.multimedia.greenscreen.CameraCapture;
 import nl.uva.multimedia.greenscreen.CameraView;
 import nl.uva.multimedia.greenscreen.CanvasView;
 import nl.uva.multimedia.greenscreen.SnapshotButton;
-import nl.uva.multimedia.greenscreen.MySlider;
 
 /* Main activity */
 public class Application extends Activity {
 	CameraCapture   m_camera_capture   = new CameraCapture();
 	CanvasView      m_canvas_view      = null;
-	MySlider        m_slider           = null;
 	CameraView      m_camera_view      = null;
 	SnapshotButton  m_button           = null;
 	SwitchColourSpace m_switch_colour_space = null;
@@ -91,8 +85,6 @@ public class Application extends Activity {
 	
 	@Override protected void onResume() {
 		super.onResume();
-
-		Configuration config = getResources().getConfiguration();
 		
 		m_camera_view.acquireCamera();
 	}
