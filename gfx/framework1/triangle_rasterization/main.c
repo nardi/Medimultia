@@ -65,9 +65,14 @@ void PutPixel(int x, int y, byte r, byte g, byte b)
     // The pixels in framebuffer[] are layed out sequentially,
     // with the R, G and B values one after the other, e.g
     // RGBRGBRGB...
-    framebuffer[3*(framebuffer_width*y+x)] = r;
-    framebuffer[3*(framebuffer_width*y+x)+1] = g;
-    framebuffer[3*(framebuffer_width*y+x)+2] = b;
+	if(!color_by_putpixel_count){
+	    framebuffer[3*(framebuffer_width*y+x)] = r;
+	    framebuffer[3*(framebuffer_width*y+x)+1] = g;
+	    framebuffer[3*(framebuffer_width*y+x)+2] = b;
+	} else {
+		byte *fb_r = framebuffer + 3*(framebuffer_width*y+x);
+		*fb_r = *fb_r < 128 ? 128 : 255;
+	}
 }
 
 void
