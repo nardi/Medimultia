@@ -4,12 +4,11 @@
  * Description ..... Midpoint Line Algorithm
  * Created by ...... Jurgen Sturm 
  *
- * Student name ....
- * Student email ... 
- * Collegekaart ....
- * Date ............
- * Comments ........
- *
+ * Student name .... Bas Visser / Nardi Lam
+ * Student email ... bas.visser2@student.uva.nl / mij@nardilam.nl
+ * Collegekaart .... 10439013 / 10453555
+ * Date ............ 2014/02/07
+ * Comments ........ 10/10 would let Rex check my work again
  *
  * (always fill in these fields before submitting!!)
  */
