@@ -27,9 +27,9 @@ void myScalef(GLfloat x, GLfloat y, GLfloat z)
 {
     GLfloat M[16] =
     {
-        1.0, 0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0,
+        x,   0.0, 0.0, 0.0,
+        0.0, y,   0.0, 0.0,
+        0.0, 0.0, z,   0.0,
         0.0, 0.0, 0.0, 1.0
     };
 
@@ -44,7 +44,7 @@ void myTranslatef(GLfloat x, GLfloat y, GLfloat z)
         1.0, 0.0, 0.0, 0.0,
         0.0, 1.0, 0.0, 0.0,
         0.0, 0.0, 1.0, 0.0,
-        0.0, 0.0, 0.0, 1.0
+        x,   y,   z,   1.0
     };
 
     glMultMatrixf(M);
@@ -59,8 +59,20 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
     //
 
     // Store the incoming rotation axis in w and normalize w
+    GLfloat wlen = sqrt(x*x + y*y + z*z);
+    w[0] = x/wlen; w[1] = y/wlen; w[2] = z/wlen;
 
     // Compute the value of t, based on w
+    t = w;
+    int min;
+    if (x < y && x < z) {
+        min = 0;
+    } else if (y < x && y < z) {
+        min = 1;
+    } else {
+        min = 2;
+    }
+    t[min] = 1;
 
     // Compute u = t x w
 
@@ -92,10 +104,10 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 
     GLfloat B[16] =
     {
-        1.0, 0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0,
-        0.0, 0.0, 0.0, 1.0
+        cos(angle), -sin(angle), 0.0, 0.0,
+        sin(angle),  cos(angle), 0.0, 0.0,
+        0.0,         0.0,        1.0, 0.0,
+        0.0,         0.0,        0.0, 1.0
     };
 
     // Specify matrix C
