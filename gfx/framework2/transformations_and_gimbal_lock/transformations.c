@@ -63,7 +63,7 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
     w[0] = x/wlen; w[1] = y/wlen; w[2] = z/wlen;
 
     // Compute the value of t, based on w
-    t = w;
+    t[0] = w[0]; t[1] = w[1]; t[2] = w[2];
     int min;
     if (x < y && x < z) {
         min = 0;
@@ -75,7 +75,9 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
     t[min] = 1;
 
     // Compute u = t x w
-	u = cross(t,w);
+	u[0] = (t[1] * w[2]) - (t[2] * w[1]);
+	u[1] = (t[2] * w[0]) - (t[0] * w[2]);
+	u[0] = (t[0] * w[1]) - (t[1] * w[0]);
     // Normalize u
 	GFloat ulen = sqrt(u[0]*u[0] + u[1]*[1] + u[2]*[u2]);
 	u[0] = u[0]/ulen; u[1] = u[1]/ulen; u[2] = u[2]/ulen;
