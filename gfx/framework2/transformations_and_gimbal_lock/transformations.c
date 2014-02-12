@@ -77,12 +77,16 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
     // Compute u = t x w
 	u[0] = (t[1] * w[2]) - (t[2] * w[1]);
 	u[1] = (t[2] * w[0]) - (t[0] * w[2]);
-	u[0] = (t[0] * w[1]) - (t[1] * w[0]);
+	u[2] = (t[0] * w[1]) - (t[1] * w[0]);
     // Normalize u
 	GFloat ulen = sqrt(u[0]*u[0] + u[1]*[1] + u[2]*[u2]);
 	u[0] = u[0]/ulen; u[1] = u[1]/ulen; u[2] = u[2]/ulen;
 
     // Compute v = w x u
+	v[0] = (w[1] * u[2]) - (w[2] * u[1]);
+	v[1] = (w[2] * u[0]) - (w[0] * u[2]);
+	v[2] = (w[0] * u[1]) - (w[1] * u[0]);
+	
 	
     // At this point u, v and w should form an orthonormal basis.
     // If your routine does not seem to work correctly it might be
@@ -96,14 +100,14 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 
     GLfloat A[16] =
     {
-        1.0, 0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0,
+        u[0], v[0], w[0], 0.0,
+        u[1], v[1], w[1], 0.0,
+        u[2], v[2], w[2], 0.0,
         0.0, 0.0, 0.0, 1.0
     };
 
     // Convert 'angle' to radians
-
+	angle = angle * (3.145/180);
     // Specify matrix B
 
     GLfloat B[16] =
@@ -118,9 +122,9 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 
     GLfloat C[16] =
     {
-        1.0, 0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0,
+        u[0], u[1], u[2], 0.0,
+        v[0], v[1], v[2], 0.0,
+        w[0], w[1], w[2], 0.0,
         0.0, 0.0, 0.0, 1.0
     };
 
