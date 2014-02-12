@@ -75,11 +75,13 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
     t[min] = 1;
 
     // Compute u = t x w
-
+	u = cross(t,w);
     // Normalize u
+	GFloat ulen = sqrt(u[0]*u[0] + u[1]*[1] + u[2]*[u2]);
+	u[0] = u[0]/ulen; u[1] = u[1]/ulen; u[2] = u[2]/ulen;
 
     // Compute v = w x u
-
+	
     // At this point u, v and w should form an orthonormal basis.
     // If your routine does not seem to work correctly it might be
     // a good idea to the check the vector values.
