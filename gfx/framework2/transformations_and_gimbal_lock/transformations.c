@@ -107,7 +107,7 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
     };
 
     // Convert 'angle' to radians
-	angle = angle * (3.145/180);
+	angle = angle * (3.14159265358979323846/180);
     // Specify matrix B
 
     GLfloat B[16] =
