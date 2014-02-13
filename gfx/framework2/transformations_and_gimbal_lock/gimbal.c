@@ -102,6 +102,8 @@ void drawTeapots(void)
     glPushMatrix();
 
     drawRotatedTeapot(x_rotation, 0.0, z_rotation);
+
+    glPopMatrix();
     
     GLfloat TeaShift[16] =
     {
@@ -113,11 +115,16 @@ void drawTeapots(void)
 
     glMultMatrixf(TeaShift);
 
+    glPushMatrix();
 
     drawRotatedTeapot(x_rotation, 45.0, z_rotation);
-
+    
+    glPopMatrix();
+    
     glMultMatrixf(TeaShift);
-
+    
+    glPushMatrix();  
+ 
     drawRotatedTeapot(x_rotation, 90.0, z_rotation);
 
     glPopMatrix();
