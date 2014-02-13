@@ -100,9 +100,9 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 
     GLfloat A[16] =
     {
-        u[0], v[0], w[0], 0.0,
-        u[1], v[1], w[1], 0.0,
-        u[2], v[2], w[2], 0.0,
+        u[0], u[1], u[2], 0.0,
+        v[0], v[1], v[2], 0.0,
+        w[0], w[1], w[2], 0.0,
         0.0, 0.0, 0.0, 1.0
     };
 
@@ -112,8 +112,8 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 
     GLfloat B[16] =
     {
-        cos(angle), -sin(angle), 0.0, 0.0,
-        sin(angle),  cos(angle), 0.0, 0.0,
+        cos(angle), sin(angle), 0.0, 0.0,
+        -sin(angle),  cos(angle), 0.0, 0.0,
         0.0,         0.0,        1.0, 0.0,
         0.0,         0.0,        0.0, 1.0
     };
@@ -122,9 +122,9 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 
     GLfloat C[16] =
     {
-        u[0], u[1], u[2], 0.0,
-        v[0], v[1], v[2], 0.0,
-        w[0], w[1], w[2], 0.0,
+        u[0], v[0], w[0], 0.0,
+        u[1], v[1], w[1], 0.0,
+        u[2], v[2], w[2], 0.0,
         0.0, 0.0, 0.0, 1.0
     };
 
