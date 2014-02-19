@@ -29,8 +29,15 @@
 void
 evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, float u)
 {
-    *x = 0.0;
-    *y = 0.0;
+    float b;
+    for(int i = 0; i < num_points - 1; i++){
+        b = B(n, i, u)
+        *x += b * p[i]->x;
+        *y += b * p[i]->y;        
+    }
+
+    //*x = 0.0;
+    //*y = 0.0;
 }
 
 /* Draw a Bezier curve defined by the control points in p[], which
@@ -57,6 +64,7 @@ evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, flo
 void
 draw_bezier_curve(int num_segments, control_point p[], int num_points)
 {
+    
 }
 
 /* Find the intersection of a cubic Bezier curve with the line X=x.
@@ -71,3 +79,23 @@ intersect_cubic_bezier_curve(float *y, control_point p[], float x)
     return 0;
 }
 
+float B(int i, int n, float u){
+    return bin_dis(n, i) * pow(u, i) * pow((1 - u), n - i);
+}
+
+float bin_dis(int n, int k){
+    return fact(n)/(float)(fact(k) * fact(n - k));
+}
+
+int fact(int q){
+    int res = q;
+    if(q <= 0){
+        return 1;
+    }
+    else{
+        for(q; q > 0; q--){
+            res *= q;
+        }
+        return q;
+    }
+}
