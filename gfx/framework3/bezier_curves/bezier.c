@@ -31,9 +31,9 @@ evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, flo
 {
     float b;
     for(int i = 0; i < num_points - 1; i++){
-        b = B(n, i, u)
-        *x += b * p[i]->x;
-        *y += b * p[i]->y;        
+        b = B(num_points, i, u);
+        *x += b * p[i].x;
+        *y += b * p[i].y;        
     }
 
     //*x = 0.0;
@@ -64,7 +64,10 @@ evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, flo
 void
 draw_bezier_curve(int num_segments, control_point p[], int num_points)
 {
-    
+//    printf("Hello\n");
+    glBegin(GL_LINE_STRIP);
+
+    glVertex2f(  
 }
 
 /* Find the intersection of a cubic Bezier curve with the line X=x.
@@ -93,7 +96,7 @@ int fact(int q){
         return 1;
     }
     else{
-        for(q; q > 0; q--){
+        for(int i = q; i > 0; i--){
             res *= q;
         }
         return q;
