@@ -28,10 +28,8 @@ void myLookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ,
               GLdouble centerX, GLdouble centerY, GLdouble centerZ,
               GLdouble upX, GLdouble upY, GLdouble upZ) {
 
-    //glTranslated(-eyeX, -eyeY, -eyeZ);
     GLfloat cx[3], cy[3], cz[3], czlen, cxlen;
     cz[0] = centerX - eyeX; cz[1] = centerY - eyeY; cz[2] = centerZ - eyeZ;
-    //cz[0] =  eyeX - centerX; cz[1] = eyeY - centerY; cz[2] =  eyeZ - centerZ;
 
     czlen = sqrt(cz[0]*cz[0] + cz[1]*cz[1] + cz[2]*cz[2]);
     cz[0] /= czlen; cz[1] /= czlen; cz[2] /= czlen;
@@ -47,12 +45,6 @@ void myLookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ,
 	cy[1] = (cx[2] * cz[0]) - (cx[0] * cz[2]);
 	cy[2] = (cx[0] * cz[1]) - (cx[1] * cz[0]);
 
-    /*GLfloat R[16] = {
-                        cx[0], cx[1], cx[2], 0.0,
-                        cy[0], cy[1], cy[2], 0.0,
-                        -cz[0], -cz[1], -cz[2], 0.0,
-                        0.0, 0.0, 0.0, 1.0
-    };*/
 
     GLfloat R[16] = {
                         cx[0], cy[0], -cz[0], 0.0,
@@ -63,5 +55,5 @@ void myLookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ,
 
 
     glMultMatrixf(R);   
-    glTranslated(-eyeX, -eyeY, -eyeZ);
+    //glTranslated(-eyeX, -eyeY, -eyeZ); //Dit maakt hem slechter!
 }

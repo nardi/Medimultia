@@ -100,7 +100,7 @@ void myRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 
     GLfloat A[16] =
     {
-        u[0], u[1], u[2], 0.0,
+        0[u], u[1], u[2], 0.0,
         v[0], v[1], v[2], 0.0,
         w[0], w[1], w[2], 0.0,
         0.0, 0.0, 0.0, 1.0
