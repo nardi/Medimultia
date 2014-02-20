@@ -4,10 +4,10 @@
  * Date ............ 22.07.2009
  * Created by ...... Paul Melis
  *
- * Student name ....
- * Student email ...
- * Collegekaart ....
- * Date ............
+ * Student name .... Bas Visser / Nardi Lam
+ * Student email ... bas.visser2@student.uva.nl / mij@nardilam.nl
+ * Collegekaart .... 10439013 / 10453555
+ * Date ............ 2014/02/21
  * Comments ........
  *
  *
@@ -17,6 +17,7 @@
 #include <math.h>
 #include "bezier.h"
 #include <stdio.h>
+#include <float.h>
 
 /* Given a Bezier curve defined by the 'num_points' control points
  * in 'p' compute the position of the point on the curve for parameter
@@ -26,21 +27,13 @@
  * respectively.
  */
 
-void
-evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, float u)
-{
-    printf("U: %g\n", u);
-    float b;
+void evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, float u) {
     *x = 0; *y = 0;
     for(int i = 0; i < num_points; i++){
-        b = B(i, num_points - 1, u);
-        printf("B: %g\n" , b);
+        float b = B(i, num_points - 1, u);
         *x += b * p[i].x;
-        *y += b * p[i].y;        
+        *y += b * p[i].y;
     }
-    
-    //*x = 0.0;
-    //*y = 0.0;
 }
 
 /* Draw a Bezier curve defined by the control points in p[], which
@@ -64,16 +57,13 @@ evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, flo
  * the curve.
  */
 
-void
-draw_bezier_curve(int num_segments, control_point p[], int num_points)
-{
-//    printf("Hello\n");
+void draw_bezier_curve(int num_segments, control_point p[], int num_points) {
     glBegin(GL_LINE_STRIP);
-    float x,y;
-    for(int i = 0; i <= num_segments; i++){
+    float x, y;
+    for(int i = 0; i <= num_segments; i++) {
         evaluate_bezier_curve(&x, &y, p, num_points, i/(float)num_segments);
         glVertex2f(x, y);
-    } 
+    }
     glEnd();
 }
 
@@ -83,31 +73,39 @@ draw_bezier_curve(int num_segments, control_point p[], int num_points)
    Return 0 if no intersection exists.
 */
 
-int
-intersect_cubic_bezier_curve(float *y, control_point p[], float x)
-{
-    return 0;
+int intersect_cubic_bezier_curve(float *y, control_point p[], float x) {
+    if (x < p[0].x || x > p[3].x)
+        return 0;
+    
+    float cur_x, u = 0.5, i = 2;
+    while (fabs(cur_x - x) > 0.0001) {
+        evaluate_bezier_curve(&cur_x, y, p, 4, u);
+        if (cur_x < x)
+            u += 1/pow(2, i);
+        else
+            u -= 1/pow(2, i);
+        i++;
+    }
+
+    return 1;
 }
 
-float B(int i, int n, float u){
+float B(int i, int n, float u) {
     return bin_dis(n, i) * pow(u, i) * pow((1 - u), n - i);
 }
 
-float bin_dis(int n, int k){
+float bin_dis(int n, int k) {
     return fact(n)/(float)(fact(k) * fact(n - k));
 }
 
-int fact(int q){
-    printf("Q: %d\n" , q);
-    int res = q;
-    if(q <= 0){
+int fact(int q) {
+    if (q <= 0) {
         return 1;
-    }
-    else{
-        for(int i = q-1; i > 0; i--){
+    } else {
+        int res = q;
+        for(int i = q - 1; i > 0; i--) {
             res *= i;
         }
-        printf("Res: %d\n", res);
         return res;
     }
 }
