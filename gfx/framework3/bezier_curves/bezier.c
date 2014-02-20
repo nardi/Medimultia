@@ -29,13 +29,16 @@
 void
 evaluate_bezier_curve(float *x, float *y, control_point p[], int num_points, float u)
 {
+    printf("U: %g\n", u);
     float b;
-    for(int i = 0; i < num_points - 1; i++){
-        b = B(num_points, i, u);
+    *x = 0; *y = 0;
+    for(int i = 0; i < num_points; i++){
+        b = B(i, num_points - 1, u);
+        printf("B: %g\n" , b);
         *x += b * p[i].x;
         *y += b * p[i].y;        
     }
-
+    
     //*x = 0.0;
     //*y = 0.0;
 }
@@ -66,8 +69,12 @@ draw_bezier_curve(int num_segments, control_point p[], int num_points)
 {
 //    printf("Hello\n");
     glBegin(GL_LINE_STRIP);
-
-    glVertex2f(  
+    float x,y;
+    for(int i = 0; i <= num_segments; i++){
+        evaluate_bezier_curve(&x, &y, p, num_points, i/(float)num_segments);
+        glVertex2f(x, y);
+    } 
+    glEnd();
 }
 
 /* Find the intersection of a cubic Bezier curve with the line X=x.
@@ -91,14 +98,16 @@ float bin_dis(int n, int k){
 }
 
 int fact(int q){
+    printf("Q: %d\n" , q);
     int res = q;
     if(q <= 0){
         return 1;
     }
     else{
-        for(int i = q; i > 0; i--){
-            res *= q;
+        for(int i = q-1; i > 0; i--){
+            res *= i;
         }
-        return q;
+        printf("Res: %d\n", res);
+        return res;
     }
 }
