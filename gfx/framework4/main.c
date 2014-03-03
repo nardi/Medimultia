@@ -192,8 +192,8 @@ ray_trace(void)
     {
         for (i = 0; i < framebuffer_width; i++)
         {
-            y = (j / (float)framebuffer_height - 0.5) * image_plane_height;
-            x = (i / (float)framebuffer_width - 0.5) * image_plane_width;
+            y = ((j + 0.5) / (float)framebuffer_height - 0.5) * image_plane_height;
+            x = ((i + 0.5) / (float)framebuffer_width - 0.5) * image_plane_width;
             from_center_plane = v3_add(v3_multiply(up_vector, -y), v3_multiply(right_vector, x));
             from_camera_position = v3_add(forward_vector, from_center_plane);
             
