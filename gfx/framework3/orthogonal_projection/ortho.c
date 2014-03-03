@@ -39,7 +39,7 @@ void myOrtho(GLdouble left,
         2/width,  0.0,       0.0,      0.0,
         0.0,      2/height,  0.0,      0.0,
         0.0,      0.0,       2/depth,  0.0,
-        -(right + left) / width, -(top+  bottom) / height, -(near + far) / depth, 1.0
+        -(right+left)/width, -(top+bottom)/height, -(near+far)/depth, 1.0
     };
     
     glMultMatrixd(P);

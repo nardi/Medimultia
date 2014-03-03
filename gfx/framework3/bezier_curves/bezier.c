@@ -73,19 +73,25 @@ void draw_bezier_curve(int num_segments, control_point p[], int num_points) {
    Return 0 if no intersection exists.
 */
 
+float threshold = 0.0001;
 int intersect_cubic_bezier_curve(float *y, control_point p[], float x) {
+    // If x does not lie in the range of this curve, no intersection exists.
     if (x < p[0].x || x > p[3].x)
         return 0;
     
     float cur_x, u = 0.5, i = 2;
-    while (fabs(cur_x - x) > 0.0001) {
+    // Do a binary search for a close enough u
+    do {
+        // Calculate x for this value of u
         evaluate_bezier_curve(&cur_x, y, p, 4, u);
-        if (cur_x < x)
+        // Increase u if the x is too small, decrease it otherwise
+        if (cur_x < x) {
             u += 1/pow(2, i);
-        else
+        } else {
             u -= 1/pow(2, i);
+        }
         i++;
-    }
+    } while (fabs(cur_x - x) > threshold);
 
     return 1;
 }
