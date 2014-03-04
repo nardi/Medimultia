@@ -64,8 +64,11 @@ shade_blinn_phong(intersection_point ip)
         vec3 li = v3_normalize(v3_subtract(scene_lights[i].position, ip.p)),
              h = v3_normalize(v3_add(ip.i, li));
         
-        diffuse += scene_lights[i].intensity * fmax(0, v3_dotprod(ip.n, li));
-        specular += scene_lights[i].intensity * pow(v3_dotprod(ip.n, h), a);
+        if (!shadow_check(v3_add(ip.p, v3_multiply(li, 0.0001)), li))
+        {
+            diffuse += scene_lights[i].intensity * fmax(0, v3_dotprod(ip.n, li));
+            specular += scene_lights[i].intensity * pow(v3_dotprod(ip.n, h), a);
+        }
     }
     
     return v3_add(v3_multiply(cd, scene_ambient_light + kd * diffuse),
