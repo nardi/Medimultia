@@ -177,9 +177,39 @@ ray_intersects_sphere(intersection_point* ip, sphere sph,
 
 static int
 find_first_intersected_bvh_triangle(intersection_point* ip,
-    vec3 ray_origin, vec3 ray_direction)
-{
-    return 0;
+    vec3 ray_origin, vec3 ray_direction){
+    float *t_min, *t_max;    
+
+    return recursive_bvh(ip, ray_origin, ray_direction, bvh_root->bbox, t_min, t_max);
+}
+
+recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, _bvh_node bnode, float* t_min, float* t_max){    
+    float t0 = *t_min;
+    float t1 = *t_max;
+
+    int num_tri;
+    triangle *tri;
+    if(bnode->bbox->is_leaf){
+        num_tri = leaf_node_num_triangles(bnode);
+        for(int i = 0; i < num_tri; i++){
+            if(ray_intersects_triangle(ip, tri[i], ray_origin, ray_direction)){
+                break;
+            }
+        }
+    }
+
+    else{
+        if(bbox_intersect(t_min, t_max, bnode->bbox, vec3 origin, vec3 direction, t0, t1)){
+            recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), t_min, t_max);
+        }
+        
+        if(bbox_intersect(t_min, t_max, bnode->bbox, vec3 origin, vec3 direction, t0, t1)){
+            recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), t_min, t_max);
+        }
+    }
+    else{
+        return 0;
+    }
 }
 
 // Returns the nearest hit of the given ray with objects in the scene

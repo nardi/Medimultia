@@ -1,8 +1,8 @@
 CC=gcc
 CXX=g++
 
-BULLET=./bullet32
-#BULLET=./bullet64
+#BULLET=./bullet32
+BULLET=./bullet64
 #BULLET=./bullet64MAC
 
 WARNING_FLAGS=-Wall -Wextra -Werror-implicit-function-declaration -Wshadow -Wstrict-prototypes -pedantic
