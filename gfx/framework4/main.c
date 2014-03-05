@@ -186,19 +186,31 @@ ray_trace(void)
 
     float x, y; // from center
     vec3 from_center_plane, from_camera_position;
+    int si, sj, subsample = do_antialiasing ? 2 : 1;
 
     // Loop over all pixels in the framebuffer
     for (j = 0; j < framebuffer_height; j++)
     {
         for (i = 0; i < framebuffer_width; i++)
         {
-            y = ((j + 0.5) / (float)framebuffer_height - 0.5) * image_plane_height;
-            x = ((i + 0.5) / (float)framebuffer_width - 0.5) * image_plane_width;
-            from_center_plane = v3_add(v3_multiply(up_vector, -y), v3_multiply(right_vector, x));
-            from_camera_position = v3_add(forward_vector, from_center_plane);
+            color = v3_create(0, 0, 0);
+            for (sj = 0; sj < subsample; sj++)
+            {
+                for (si = 0; si < subsample; si++)
+                {
+                    float sub_i = (si + 0.5) / (float)subsample,
+                          sub_j = (sj + 0.5) / (float)subsample;
+                    y = ((j + sub_j) / (float)framebuffer_height - 0.5) * image_plane_height;
+                    x = ((i + sub_i) / (float)framebuffer_width - 0.5) * image_plane_width;
+                    from_center_plane = v3_add(v3_multiply(up_vector, -y), v3_multiply(right_vector, x));
+                    from_camera_position = v3_add(forward_vector, from_center_plane);
+                    
+                    color = v3_add(color, ray_color(0, scene_camera_position,
+                            v3_normalize(from_camera_position)));
+                }
+            }
             
-            color = ray_color(0, scene_camera_position, v3_normalize(from_camera_position));
-
+            color = v3_multiply(color, 1.0 / pow(subsample, 2));
             // Output pixel color
             put_pixel(i, j, color.x, color.y, color.z);
         }
