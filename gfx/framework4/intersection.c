@@ -12,6 +12,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "intersection.h"
 #include "v3math.h"
 #include "constants.h"
@@ -37,6 +38,8 @@ int num_bboxes_tested = 0;
 
 static int  find_first_intersected_bvh_triangle(intersection_point* ip,
                 vec3 ray_origin, vec3 ray_direction);
+
+int recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, bvh_node *bnode, float* t_min, float* t_max, int* got_int);    
 
 // Checks if the given triangle is intersected by ray with given
 // origin and direction.
@@ -178,38 +181,51 @@ ray_intersects_sphere(intersection_point* ip, sphere sph,
 static int
 find_first_intersected_bvh_triangle(intersection_point* ip,
     vec3 ray_origin, vec3 ray_direction){
-    float *t_min, *t_max;    
-
-    return recursive_bvh(ip, ray_origin, ray_direction, bvh_root->bbox, t_min, t_max);
+    float t_min = 0, t_max = C_INFINITY;    
+    int got_int = 0;
+    return recursive_bvh(ip, ray_origin, ray_direction, bvh_root, &t_min, &t_max, &got_int);
 }
 
-recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, _bvh_node bnode, float* t_min, float* t_max){    
+int recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, bvh_node *bnode, float* t_min, float* t_max, int* got_int){    
     float t0 = *t_min;
     float t1 = *t_max;
 
+    intersection_point *ip_next = malloc(sizeof(intersection_point));
+
     int num_tri;
     triangle *tri;
-    if(bnode->bbox->is_leaf){
+    if(bnode->is_leaf){
         num_tri = leaf_node_num_triangles(bnode);
         for(int i = 0; i < num_tri; i++){
-            if(ray_intersects_triangle(ip, tri[i], ray_origin, ray_direction)){
-                break;
+            //SET hier de distance van de intersect.
+            tri = leaf_node_triangles(bnode);
+            if(ray_intersects_triangle(ip_next, tri[i], ray_origin, ray_direction)){
+                if(ip_next->t < ip->t){
+                    *got_int = 1;
+                    ip = ip_next;
+                }
             }
         }
     }
-
+    
+    //Hier moet een distance check komen voordat de recursie wordt aangeroepen.
     else{
-        if(bbox_intersect(t_min, t_max, bnode->bbox, vec3 origin, vec3 direction, t0, t1)){
-            recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), t_min, t_max);
+        if(bbox_intersect(t_min, t_max, bnode->bbox, ray_origin, ray_direction, t0, t1)){
+            if(*t_min < ip->t){
+                recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), t_min, t_max, got_int);
+            }
         }
         
-        if(bbox_intersect(t_min, t_max, bnode->bbox, vec3 origin, vec3 direction, t0, t1)){
-            recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), t_min, t_max);
+        if(bbox_intersect(t_min, t_max, bnode->bbox, ray_origin, ray_direction, t0, t1)){
+            if(*t_min < ip->t){
+                recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), t_min, t_max, got_int);
+            }
         }
     }
-    else{
-        return 0;
+    if(got_int){
+        return 1;
     }
+    return 0;
 }
 
 // Returns the nearest hit of the given ray with objects in the scene
