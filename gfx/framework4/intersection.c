@@ -216,13 +216,30 @@ int recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, b
     //Hier moet een distance check komen voordat de recursie wordt aangeroepen.
     else{
         if(bbox_intersect(&t_min_local, &t_max_local, bnode->bbox, ray_origin, ray_direction, t0, t1)){
-            if(t_min_local < ip->t || !*got_int){
-                //printf("Chilling at the left side\n");
-                *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), &t_min_local, &t_max_local, got_int);
+            float t_min_left, t_max_left, t_min_right, t_max_right;
+    
+            bbox_intersect(&t_min_left, &t_max_left, bnode->bbox, ray_origin, ray_direction, t0, t1);
+            bbox_intersect(&t_min_right, &t_max_right, bnode->bbox, ray_origin, ray_direction, t0, t1);
+            
+            if(t_min_left < t_min_right){
+                if(t_min_local < ip->t || !*got_int){
+                    //printf("Chilling at the left side\n");
+                    *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), &t_min_local, &t_max_local, got_int);
+                }
+                if(t_min_local < ip->t || !*got_int){
+                    //printf("Chilling at the right side\n");
+                    *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), &t_min_local, &t_max_local, got_int);
+                }
             }
-            if(t_min_local < ip->t || !*got_int){
-                //printf("Chilling at the right side\n");
-                *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), &t_min_local, &t_max_local, got_int);
+            else{
+                if(t_min_local < ip->t || !*got_int){
+                    //printf("Chilling at the right side\n");
+                    *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), &t_min_local, &t_max_local, got_int);
+                }
+                if(t_min_local < ip->t || !*got_int){
+                    //printf("Chilling at the left side\n");
+                    *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), &t_min_local, &t_max_local, got_int);
+                }
             }
         }
     }
