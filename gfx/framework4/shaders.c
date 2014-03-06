@@ -30,7 +30,8 @@
 vec3
 shade_constant(intersection_point ip)
 {
-    return v3_create(1, 0, 0);
+    //return v3_create(1, 0, 0);
+    return v3_create(0, 1, 0);
 }
 
 vec3
