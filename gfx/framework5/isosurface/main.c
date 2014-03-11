@@ -225,6 +225,32 @@ void DrawVolumeAsIsosurface(void)
 
 void FillArrayWithIsosurface(void)
 {
+    int total_tri = 0;
+    triangle triangles[12];
+    for (int k = 0; k < nz - 1; k++)
+    {
+        for (int j = 0; j < ny - 1; j++)
+        {
+            for (int i = 0; i < nx - 1; i++)
+            {
+                cell c = get_cell(i, j, k);
+                int num_tri = generate_cell_triangles(triangles, c, isovalue);
+                for (int m = 0; m < num_tri; m++)
+                {
+                    triangle t = triangles[m];
+                    // Calculate the normal vector of the triangle
+                    vec3 a = v3_subtract(t.p[0], t.p[1]),
+                         b = v3_subtract(t.p[0], t.p[2]),
+                         n = v3_normalize(v3_crossprod(a, b));
+                    AddVertexToArray(t.p[0], n);
+                    AddVertexToArray(t.p[1], n);
+                    AddVertexToArray(t.p[2], n);
+                }
+                total_tri += num_tri;
+            }
+        }
+    }
+    printf("Total triangles: %d\n", total_tri);
 }
 
 void DrawScene(void)
