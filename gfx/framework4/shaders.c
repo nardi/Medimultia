@@ -1,9 +1,10 @@
 /* Computer Graphics and Game Technology, Assignment Ray-tracing
  *
- * Student name ....
- * Student email ...
- * Collegekaart ....
- * Date ............
+ *
+ * Student name .... Bas Visser / Nardi Lam
+ * Student email ... bas.visser2@student.uva.nl / mij@nardilam.nl
+ * Collegekaart .... 10439013 / 10453555
+ * Date ............ 2014/03/10
  * Comments ........
  *
  *
@@ -30,8 +31,7 @@
 vec3
 shade_constant(intersection_point ip)
 {
-    //return v3_create(1, 0, 0);
-    return v3_create(0, 1, 0);
+    return v3_create(1, 0, 0);
 }
 
 vec3

@@ -1,9 +1,9 @@
 /* Computer Graphics and Game Technology, Assignment Ray-tracing
  *
- * Student name ....
- * Student email ...
- * Collegekaart ....
- * Date ............
+ * Student name .... Bas Visser / Nardi Lam
+ * Student email ... bas.visser2@student.uva.nl / mij@nardilam.nl
+ * Collegekaart .... 10439013 / 10453555
+ * Date ............ 2014/03/10
  * Comments ........
  *
  *
@@ -192,17 +192,18 @@ int recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, b
     float t1 = *t_max;
     float t_max_local = *t_max;
     float t_min_local = *t_min;
-    //int got_int = 0;
     intersection_point *ip_next = malloc(sizeof(intersection_point));
-    //intersection_point *ip_next;
     *ip_next = *ip;
 
     int num_tri;
     triangle *tri;
+    /*bnode is a leaf and its triangles need to be checked for intersection
+     *only when the found intersection is closer than the last one we already found
+     *it should be saved
+     */    
     if(bnode->is_leaf){
         num_tri = leaf_node_num_triangles(bnode);
         for(int i = 0; i < num_tri; i++){
-            //SET hier de distance van de intersect.
             tri = leaf_node_triangles(bnode);
             if(ray_intersects_triangle(ip_next, tri[i], ray_origin, ray_direction)){
                 if(!*got_int || ip_next->t < ip->t){
@@ -213,7 +214,9 @@ int recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, b
         }
     }
     
-    //Hier moet een distance check komen voordat de recursie wordt aangeroepen.
+    /*bnode is another box and will this function should be called recursively with its child
+     *but first it should be determined whether the left or right should be followed first
+     */
     else{
         if(bbox_intersect(&t_min_local, &t_max_local, bnode->bbox, ray_origin, ray_direction, t0, t1)){
             float t_min_left, t_max_left, t_min_right, t_max_right;
@@ -223,27 +226,23 @@ int recursive_bvh(intersection_point* ip, vec3 ray_origin, vec3 ray_direction, b
             
             if(t_min_left < t_min_right){
                 if(t_min_local < ip->t || !*got_int){
-                    //printf("Chilling at the left side\n");
                     *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), &t_min_local, &t_max_local, got_int);
                 }
                 if(t_min_local < ip->t || !*got_int){
-                    //printf("Chilling at the right side\n");
                     *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), &t_min_local, &t_max_local, got_int);
                 }
             }
             else{
                 if(t_min_local < ip->t || !*got_int){
-                    //printf("Chilling at the right side\n");
                     *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_right_child(bnode), &t_min_local, &t_max_local, got_int);
                 }
                 if(t_min_local < ip->t || !*got_int){
-                    //printf("Chilling at the left side\n");
                     *got_int = recursive_bvh(ip, ray_origin, ray_direction, inner_node_left_child(bnode), &t_min_local, &t_max_local, got_int);
                 }
             }
         }
     }
-    //free(ip_next);
+    free(ip_next);
     return *got_int;
 }
 
