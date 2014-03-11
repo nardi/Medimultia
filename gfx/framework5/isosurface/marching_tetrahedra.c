@@ -52,59 +52,43 @@ generate_tetrahedron_triangles(triangle *triangles, unsigned char isovalue, cell
 #define interpolate(a, b) interpolate_points(isovalue, c.p[v[a]], c.p[v[b]], \
     c.value[v[a]], c.value[v[b]])
     
-    triangle t1, t2;
+#define make_triangle(t, a, b, c, d) \
+    t.p[0] = interpolate(a, b); \
+    t.p[1] = interpolate(a, c); \
+    t.p[2] = interpolate(a, d); \
+    num_t = 1
+    
+#define make_quad(t1, t2, a, b, c, d) \
+    t1.p[0] = interpolate(a, b); \
+    t1.p[1] = interpolate(b, c); \
+    t1.p[2] = interpolate(c, d); \
+    t2.p[0] = interpolate(c, d); \
+    t2.p[1] = interpolate(d, a); \
+    t2.p[2] = interpolate(a, b); \
+    num_t = 2
+
     switch (B)
     {
         case 1:
-            t1.p[0] = interpolate(0, 1);
-            t1.p[1] = interpolate(0, 2);
-            t1.p[2] = interpolate(0, 3);
-            triangles[0] = t1; num_t = 1;
+            make_triangle(triangles[0], 0, 1, 2, 3);
         break;
         case 2:
-            t1.p[0] = interpolate(1, 0);
-            t1.p[1] = interpolate(1, 2);
-            t1.p[2] = interpolate(1, 3);
-            triangles[0] = t1; num_t = 1;
+            make_triangle(triangles[0], 1, 0, 2, 3);
         break;
         case 3:
-            t1.p[0] = interpolate(0, 2);
-            t1.p[1] = interpolate(2, 1);
-            t1.p[2] = interpolate(1, 3);
-            t2.p[0] = interpolate(1, 3);
-            t2.p[1] = interpolate(3, 0);
-            t2.p[2] = interpolate(0, 2);
-            triangles[0] = t1; triangles[1] = t2; num_t = 2;
+            make_quad(triangles[0], triangles[1], 0, 2, 1, 3);
         break;
         case 4:
-            t1.p[0] = interpolate(2, 0);
-            t1.p[1] = interpolate(2, 1);
-            t1.p[2] = interpolate(2, 3);
-            triangles[0] = t1; num_t = 1;
+            make_triangle(triangles[0], 2, 0, 1, 3);
         break;
         case 5:
-            t1.p[0] = interpolate(0, 1);
-            t1.p[1] = interpolate(1, 2);
-            t1.p[2] = interpolate(2, 3);
-            t2.p[0] = interpolate(2, 3);
-            t2.p[1] = interpolate(3, 0);
-            t2.p[2] = interpolate(0, 1);
-            triangles[0] = t1; triangles[1] = t2; num_t = 2;
+            make_quad(triangles[0], triangles[1], 0, 1, 2, 3);
         break;
         case 6:
-            t1.p[0] = interpolate(2, 0);
-            t1.p[1] = interpolate(0, 1);
-            t1.p[2] = interpolate(1, 3);
-            t2.p[0] = interpolate(1, 3);
-            t2.p[1] = interpolate(3, 2);
-            t2.p[2] = interpolate(2, 0);
-            triangles[0] = t1; triangles[1] = t2; num_t = 2;
+            make_quad(triangles[0], triangles[1], 2, 0, 1, 3);
         break;
         case 7:
-            t1.p[0] = interpolate(3, 0);
-            t1.p[1] = interpolate(3, 1);
-            t1.p[2] = interpolate(3, 2);
-            triangles[0] = t1; num_t = 1;
+            make_triangle(triangles[0], 3, 0, 1, 2);
         break;
     }
     
