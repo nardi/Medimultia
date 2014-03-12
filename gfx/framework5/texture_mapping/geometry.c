@@ -103,8 +103,8 @@ setHemispherePoint(vec3 *p, vec3* n, vec3* t, int latitude, int longitude,
     p->z = oz + cos(longitude * dToR) * cos(latitude * dToR) * s;
 
     // Set texture coordinate
-    t->x = 0.0;
-    t->y = 0.0;
+    t->x = p->x;
+    t->y = p->y;
 
     // calculate normal
     n->x = p->x - ox;
@@ -241,6 +241,7 @@ readPolyVertices(poly *p, FILE *f, const vec3 *vertex_list, int num_vertices_to_
             }
 
             //printf("%d %f %f %f %f %f\n",  vidx,  nx,  ny,  nz,  s,  t);
+            printf("%g,%g\n", s, t);
             p->pts[pidx] = vertex_list[vidx];
 
             p->texture_id = texture_name;
