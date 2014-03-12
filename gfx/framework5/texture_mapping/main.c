@@ -308,18 +308,39 @@ DrawPolylist(polys * list)
 
         // Make the correct texture active
         glBindTexture(GL_TEXTURE_2D, p.texture_id);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+        float start, p1,p2;
+        
+        if(p.points == 3){
+            p1 = v3_length(v3_subtract(p.pts[1], p.pts[0]));
+            p2 = v3_length(v3_subtract(p.pts[2], p.pts[0]));
+        }        
 
         glBegin(GL_POLYGON);
         for (j = 0; j < p.points; j++)
         {
-            if(j == 0)
-                glTexCoord2f(0,0);
-            if(j == 1)
+            /*if(p.points != 4)
+                printf("%d\n", p.points);*/
+//            printf("TexC: %d,%d,%d\n", p.tcoord[j].x, p.tcoord[j].y, p.tcoord[j].z);
+            
+            /*if(p.pts[j].x - p.pts[0].x == 0){
+                glTexCoord2f(p.pts[j].z - p.pts[0].z,p.pts[j].y - p.pts[0].y);
+            }
+            else if(p.pts[j].y - p.pts[0].y == 0){
+                glTexCoord2f(p.pts[j].x - p.pts[0].x, p.pts[j].z - p.pts[0].z);
+            }
+            else if(p.pts[j].z - p.pts[0].z == 0){
+                glTexCoord2f(p.pts[j].x - p.pts[0]. x,p.pts[j].y - p.pts[0].y);
+            }
+            else{
                 glTexCoord2f(0,1);
-            if(j == 2)
-                glTexCoord2f(1,0);
-            if(j == 3)
-                glTexCoord2f(1,1);
+            }*/
+            //glTextCoord2f(p.tcoord[j].x, p.tcoord[j].y);
+            
+            glTexCoord2f(p.tcoord[j].x, p.tcoord[j].y);
             glNormal3f(p.normal[j].x, p.normal[j].y, p.normal[j].z);
             glVertex3f(p.pts[j].x, p.pts[j].y, p.pts[j].z);
         }
