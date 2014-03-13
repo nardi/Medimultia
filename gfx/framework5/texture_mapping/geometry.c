@@ -38,8 +38,8 @@ setSpherePoint(vec3 *p, vec3* n, vec3* t, int latitude, int longitude,
     p->z = oz + cos(longitude * dToR) * cos(latitude * dToR) * sz;
 
     // Set texture coordinate
-    t->x = 0.0;
-    t->y = 0.0;
+    t->x = p->x;
+    t->y = p->y;
 
     // calculate normal, this actually doesn't take the sphere size
     // per axis into account, but should still be usable
