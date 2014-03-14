@@ -136,7 +136,7 @@ InitializePolygonlists(void)
     //createSphere(polylistTreeLeafs, 0.7, 0.7, 0.7,  0, 1.7, 0,  0, 1, 0);
     loadPolygonalObject(polylistTreeLeafs, "treetops.obj", texture_names, 0.10, 0.0, 0.0, 0.0);    
     for (i = 0; i < polylistTreeLeafs->length; i++)
-        polylistTreeLeafs->items[i].texture_id = texture_names[0];
+        polylistTreeLeafs->items[i].texture_id = texture_names[6];
 
     polylistTreeStem = CreatePolylist(10);
     createCylinder(polylistTreeStem, 0.075, 1.8,  0, 0, 0,  0.5, 0.3, 0);
@@ -258,8 +258,8 @@ InitGL(void)
             glBindTexture(GL_TEXTURE_2D, texture_names[i]);
             glCheckError("glBindTexture");
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
             glCheckError("glTexParameteri");
@@ -311,8 +311,8 @@ DrawPolylist(polys * list)
         // Make the correct texture active
         glBindTexture(GL_TEXTURE_2D, p.texture_id);
         
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         float start, p1,p2;
         
@@ -451,7 +451,11 @@ DrawGLScene(void)
         glScalef(1, 1 + (rand_float()-0.5)*0.6, 1);
 
         DrawPolylist(polylistTreeStem);
-        DrawPolylist(polylistTreeLeafs);
+	
+	for(int q = 0; q < 6; q++){
+		glRotatef(60.0, 0, 1, 0);
+        	DrawPolylist(polylistTreeLeafs);
+	}
 
         glPopMatrix();
     }
