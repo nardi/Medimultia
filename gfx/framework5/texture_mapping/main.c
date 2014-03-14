@@ -133,7 +133,8 @@ InitializePolygonlists(void)
 
     // A single tree object
     polylistTreeLeafs = CreatePolylist(10);
-    createSphere(polylistTreeLeafs, 0.7, 0.7, 0.7,  0, 1.7, 0,  0, 1, 0);
+    //createSphere(polylistTreeLeafs, 0.7, 0.7, 0.7,  0, 1.7, 0,  0, 1, 0);
+    loadPolygonalObject(polylistTreeLeafs, "treetops.obj", texture_names, 0.10, 0.0, 0.0, 0.0);    
     for (i = 0; i < polylistTreeLeafs->length; i++)
         polylistTreeLeafs->items[i].texture_id = texture_names[0];
 
@@ -260,11 +261,12 @@ InitGL(void)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
             glCheckError("glTexParameteri");
-
-            glTexImage2D(GL_TEXTURE_2D, 0, texture_internal_format,
-                width, height, 0, texture_format, texture_type, image_data);
+            //DEBUG
+            /*glTexImage2D(GL_TEXTURE_2D, 0, texture_internal_format,
+                width, height, 0, texture_format, texture_type, image_data);*/
+            gluBuild2DMipmaps(GL_TEXTURE_2D,texture_internal_format, width, height, texture_format, texture_type, image_data);
             glCheckError("glTexImage2D");
 
             // Free the image data, as OpenGL will have made its internal copy by now
