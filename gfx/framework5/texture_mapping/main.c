@@ -133,9 +133,10 @@ InitializePolygonlists(void)
 
     // A single tree object
     polylistTreeLeafs = CreatePolylist(10);
-    createSphere(polylistTreeLeafs, 0.7, 0.7, 0.7,  0, 1.7, 0,  0, 1, 0);
+    //createSphere(polylistTreeLeafs, 0.7, 0.7, 0.7,  0, 1.7, 0,  0, 1, 0);
+    loadPolygonalObject(polylistTreeLeafs, "treetops.obj", texture_names, 0.10, 0.0, 0.0, 0.0);    
     for (i = 0; i < polylistTreeLeafs->length; i++)
-        polylistTreeLeafs->items[i].texture_id = texture_names[0];
+        polylistTreeLeafs->items[i].texture_id = texture_names[6];
 
     polylistTreeStem = CreatePolylist(10);
     createCylinder(polylistTreeStem, 0.075, 1.8,  0, 0, 0,  0.5, 0.3, 0);
@@ -257,14 +258,15 @@ InitGL(void)
             glBindTexture(GL_TEXTURE_2D, texture_names[i]);
             glCheckError("glBindTexture");
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
             glCheckError("glTexParameteri");
-
-            glTexImage2D(GL_TEXTURE_2D, 0, texture_internal_format,
-                width, height, 0, texture_format, texture_type, image_data);
+            //DEBUG
+            /*glTexImage2D(GL_TEXTURE_2D, 0, texture_internal_format,
+                width, height, 0, texture_format, texture_type, image_data);*/
+            gluBuild2DMipmaps(GL_TEXTURE_2D,texture_internal_format, width, height, texture_format, texture_type, image_data);
             glCheckError("glTexImage2D");
 
             // Free the image data, as OpenGL will have made its internal copy by now
@@ -308,18 +310,39 @@ DrawPolylist(polys * list)
 
         // Make the correct texture active
         glBindTexture(GL_TEXTURE_2D, p.texture_id);
+        
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+        float start, p1,p2;
+        
+        if(p.points == 3){
+            p1 = v3_length(v3_subtract(p.pts[1], p.pts[0]));
+            p2 = v3_length(v3_subtract(p.pts[2], p.pts[0]));
+        }        
 
         glBegin(GL_POLYGON);
         for (j = 0; j < p.points; j++)
         {
-            if(j == 0)
-                glTexCoord2f(0,0);
-            if(j == 1)
+            /*if(p.points != 4)
+                printf("%d\n", p.points);*/
+//            printf("TexC: %d,%d,%d\n", p.tcoord[j].x, p.tcoord[j].y, p.tcoord[j].z);
+            
+            /*if(p.pts[j].x - p.pts[0].x == 0){
+                glTexCoord2f(p.pts[j].z - p.pts[0].z,p.pts[j].y - p.pts[0].y);
+            }
+            else if(p.pts[j].y - p.pts[0].y == 0){
+                glTexCoord2f(p.pts[j].x - p.pts[0].x, p.pts[j].z - p.pts[0].z);
+            }
+            else if(p.pts[j].z - p.pts[0].z == 0){
+                glTexCoord2f(p.pts[j].x - p.pts[0]. x,p.pts[j].y - p.pts[0].y);
+            }
+            else{
                 glTexCoord2f(0,1);
-            if(j == 2)
-                glTexCoord2f(1,0);
-            if(j == 3)
-                glTexCoord2f(1,1);
+            }*/
+            //glTextCoord2f(p.tcoord[j].x, p.tcoord[j].y);
+            
+            glTexCoord2f(p.tcoord[j].x, p.tcoord[j].y);
             glNormal3f(p.normal[j].x, p.normal[j].y, p.normal[j].z);
             glVertex3f(p.pts[j].x, p.pts[j].y, p.pts[j].z);
         }
@@ -428,7 +451,11 @@ DrawGLScene(void)
         glScalef(1, 1 + (rand_float()-0.5)*0.6, 1);
 
         DrawPolylist(polylistTreeStem);
-        DrawPolylist(polylistTreeLeafs);
+	
+	for(int q = 0; q < 6; q++){
+		glRotatef(60.0, 0, 1, 0);
+        	DrawPolylist(polylistTreeLeafs);
+	}
 
         glPopMatrix();
     }
@@ -437,7 +464,7 @@ DrawGLScene(void)
 
     glPushAttrib(GL_LIGHTING_BIT);
     glDisable(GL_LIGHTING);
-    //DrawPolylist(polylistSkydome);
+    DrawPolylist(polylistSkydome);
     glPopAttrib();
 
     glutSwapBuffers();
