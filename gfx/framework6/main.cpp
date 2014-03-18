@@ -29,6 +29,7 @@ int frame_count;
 unsigned int num_levels;
 level_t *levels;
 
+b2World *world = NULL;
 
 /*
  * Load a given world, i.e. read the world from the `levels' data structure and
@@ -46,6 +47,30 @@ void load_world(unsigned int level)
 
     // Create a Box2D world and populate it with all bodies for this level
     // (including the ball).
+    delete world;
+    world = new b2World(b2Vec2(0.0f, -9.81f));
+    level_t l = levels[level];
+    
+    for (int i = 0; i < l.num_polygons; i++)
+    {
+        poly_t poly = l.polygons[i];
+        
+        b2BodyDef bodyDef;
+        bodyDef.position.Set(poly.position.x, poly.position.y);
+        bodyDef.type = poly.is_dynamic ? b2_dynamicBody : b2_staticBody;
+        b2PolygonShape shape;
+        b2Vec2 *points = new b2Vec2[poly.num_verts];
+        for (int j = 0; j < poly.num_verts; j++)
+        {
+            point_t p = poly.verts[j];
+            points[j].Set(p.x, p.y);
+        }
+        shape.Set(points, poly.num_verts);
+        
+        b2Body* body = world->CreateBody(&bodyDef);
+        body->CreateFixture(&shape, 1.0f);
+        delete[] points;
+    }
 }
 
 
