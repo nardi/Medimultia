@@ -11,6 +11,7 @@
  */
 
 #include <cstdio>
+#include <time.h>
 
 #include <GL/gl.h>
 #include <GL/glut.h>
@@ -66,6 +67,9 @@ void draw(void)
     //
     // Do any logic and drawing here.
     //
+    struct timespec sleep = {0};
+    sleep.tv_nsec = 20000000;
+    nanosleep(&sleep, NULL);
 
 
     // Show rendered frame
