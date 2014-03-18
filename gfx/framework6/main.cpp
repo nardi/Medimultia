@@ -11,7 +11,8 @@
  */
 
 #include <cstdio>
-#include <time.h>
+#include <ctime>
+#include <map>
 
 #include <GL/gl.h>
 #include <GL/glut.h>
@@ -30,6 +31,16 @@ unsigned int num_levels;
 level_t *levels;
 
 b2World *world = NULL;
+std::map<b2Shape*, b2Vec3> shape_colors;
+
+b2Vec3 random_color()
+{
+    b2Vec3 color;
+    color.x = 0.35 + 0.65 * rand() / (float)RAND_MAX,
+    color.y = 0.35 + 0.65 * rand() / (float)RAND_MAX,
+    color.z = 0.35 + 0.65 * rand() / (float)RAND_MAX;
+    return color;
+}
 
 /*
  * Load a given world, i.e. read the world from the `levels' data structure and
@@ -52,16 +63,16 @@ void load_world(unsigned int level)
     level_t l = levels[level];
     
     b2BodyDef ballDef;
-    ballDef.position.Set(0, 0);
+    ballDef.position.Set(l.start.x, l.start.y);
     ballDef.type = b2_dynamicBody;
     b2CircleShape circle;
     circle.m_p.Set(0, 0);
-    circle.m_radius = 1;
+    circle.m_radius = 0.22f;
     
     b2Body* ball = world->CreateBody(&ballDef);
     ball->CreateFixture(&circle, 1.0f);
     
-    /* for (int i = 0; i < l.num_polygons; i++)
+    for (unsigned int i = 0; i < l.num_polygons; i++)
     {
         poly_t poly = l.polygons[i];
         
@@ -70,17 +81,17 @@ void load_world(unsigned int level)
         bodyDef.type = poly.is_dynamic ? b2_dynamicBody : b2_staticBody;
         b2PolygonShape shape;
         b2Vec2 *points = new b2Vec2[poly.num_verts];
-        for (int j = 0; j < poly.num_verts; j++)
+        for (unsigned int j = 0; j < poly.num_verts; j++)
         {
             point_t p = poly.verts[j];
             points[j].Set(p.x, p.y);
         }
         shape.Set(points, poly.num_verts);
         
-        b2Body* body = world->CreateBody(&bodyDef);
+        b2Body *body = world->CreateBody(&bodyDef);
         body->CreateFixture(&shape, 1.0f);
         delete[] points;
-    } */
+    }
 }
 
 
@@ -95,21 +106,59 @@ void draw(void)
     frame_count++;
 
     // Clear the buffer
-    glColor3f(0, 0, 0);
+    glColor3f(0.35, 0.35, 0.35);
     glClear(GL_COLOR_BUFFER_BIT);
-
 
     //
     // Do any logic and drawing here.
     //
     struct timespec sleep = {0};
-    sleep.tv_nsec = 20000000;
+    sleep.tv_nsec = 10000000;
     nanosleep(&sleep, NULL);
 
     world->Step(1/60.0f, 8, 3);
-    b2Body *ball = world->GetBodyList();
-    b2Vec2 pos = ball->GetPosition();
-    printf("Ball position: (%g, %g)\n", pos.x, pos.y);
+    
+    b2Body *body = world->GetBodyList();
+    while (body != NULL)
+    {
+        b2Vec2 pos = body->GetPosition();
+        b2Fixture *fixture = body->GetFixtureList();
+        while (fixture != NULL)
+        {
+            b2Shape *shape = fixture->GetShape();
+            if (shape_colors.find(shape) == shape_colors.end())
+            {
+                shape_colors[shape] = random_color();
+            }
+            b2Vec3 color = shape_colors[shape];
+            glColor3f(color.x, color.y, color.z);
+            if (shape->GetType() == 0)
+            {
+                b2CircleShape *circle = (b2CircleShape*)shape;
+                glBegin(GL_TRIANGLE_FAN);
+                for (int i = 0; i < 360; i += 5)
+                {
+                    glVertex2f(pos.x + cos(i * M_PI/180) * circle->m_radius,
+                               pos.y + sin(i * M_PI/180) * circle->m_radius);
+                }
+                glEnd();
+            }
+            else
+            {
+                b2PolygonShape *poly = (b2PolygonShape*)shape;
+                glBegin(GL_POLYGON);
+                for (int i = 0; i < poly->GetVertexCount(); i++)
+                {
+                    b2Vec2 p = poly->GetVertex(i);
+                    glVertex2f(p.x, p.y);
+                }
+                glEnd();
+            }
+            fixture = fixture->GetNext();
+        }
+        body = body->GetNext();
+    }
+    
 
     // Show rendered frame
     glutSwapBuffers();
