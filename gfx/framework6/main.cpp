@@ -51,7 +51,17 @@ void load_world(unsigned int level)
     world = new b2World(b2Vec2(0.0f, -9.81f));
     level_t l = levels[level];
     
-    for (int i = 0; i < l.num_polygons; i++)
+    b2BodyDef ballDef;
+    ballDef.position.Set(0, 0);
+    ballDef.type = b2_dynamicBody;
+    b2CircleShape circle;
+    circle.m_p.Set(0, 0);
+    circle.m_radius = 1;
+    
+    b2Body* ball = world->CreateBody(&ballDef);
+    ball->CreateFixture(&circle, 1.0f);
+    
+    /* for (int i = 0; i < l.num_polygons; i++)
     {
         poly_t poly = l.polygons[i];
         
@@ -70,7 +80,7 @@ void load_world(unsigned int level)
         b2Body* body = world->CreateBody(&bodyDef);
         body->CreateFixture(&shape, 1.0f);
         delete[] points;
-    }
+    } */
 }
 
 
@@ -96,6 +106,10 @@ void draw(void)
     sleep.tv_nsec = 20000000;
     nanosleep(&sleep, NULL);
 
+    world->Step(1/60.0f, 8, 3);
+    b2Body *ball = world->GetBodyList();
+    b2Vec2 pos = ball->GetPosition();
+    printf("Ball position: (%g, %g)\n", pos.x, pos.y);
 
     // Show rendered frame
     glutSwapBuffers();
