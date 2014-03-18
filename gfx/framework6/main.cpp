@@ -29,16 +29,20 @@ int frame_count;
 // Information about the levels loaded from files will be available in these.
 unsigned int num_levels;
 level_t *levels;
+int cur_level = -1;
 
 b2World *world = NULL;
 std::map<b2Shape*, b2Vec3> shape_colors;
+b2Body *player_body = NULL;
+b2Shape *player_shape = NULL;
 
 b2Vec3 random_color()
 {
     b2Vec3 color;
-    color.x = 0.35 + 0.65 * rand() / (float)RAND_MAX,
-    color.y = 0.35 + 0.65 * rand() / (float)RAND_MAX,
-    color.z = 0.35 + 0.65 * rand() / (float)RAND_MAX;
+    int bias = rand();
+    color.x = 0.35 + 0.25 * rand() / (float)RAND_MAX + 0.2 * ((bias + 0) % 3),
+    color.y = 0.35 + 0.25 * rand() / (float)RAND_MAX + 0.2 * ((bias + 1) % 3),
+    color.z = 0.35 + 0.25 * rand() / (float)RAND_MAX + 0.2 * ((bias + 2) % 3);
     return color;
 }
 
@@ -69,8 +73,9 @@ void load_world(unsigned int level)
     circle.m_p.Set(0, 0);
     circle.m_radius = 0.22f;
     
-    b2Body* ball = world->CreateBody(&ballDef);
-    ball->CreateFixture(&circle, 1.0f);
+    b2Body *ball = player_body = world->CreateBody(&ballDef);
+    b2Fixture *ballFixture = ball->CreateFixture(&circle, 1.0f);
+    player_shape = ballFixture->GetShape();
     
     for (unsigned int i = 0; i < l.num_polygons; i++)
     {
@@ -92,6 +97,8 @@ void load_world(unsigned int level)
         body->CreateFixture(&shape, 1.0f);
         delete[] points;
     }
+    
+    cur_level = level;
 }
 
 
@@ -159,6 +166,26 @@ void draw(void)
         body = body->GetNext();
     }
     
+    point_t end = levels[cur_level].end;
+    float size = 0.36;
+    glColor3f(1.0, 1.0, 0.9);
+    glBegin(GL_POLYGON);
+        glVertex2f(end.x + 0.25f*size, end.y + 0.5f*size);
+        glVertex2f(end.x + 0.5f*size, end.y + 0.25f*size);
+        glVertex2f(end.x - 0.25f*size, end.y - 0.5f*size);
+        glVertex2f(end.x - 0.5f*size, end.y - 0.25f*size);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glVertex2f(end.x - 0.25f*size, end.y + 0.5f*size);
+        glVertex2f(end.x - 0.5f*size, end.y + 0.25f*size);
+        glVertex2f(end.x + 0.25f*size, end.y - 0.5f*size);
+        glVertex2f(end.x + 0.5f*size, end.y - 0.25f*size);
+    glEnd();
+    
+    if (player_shape->TestPoint(player_body->GetTransform(), b2Vec2(end.x, end.y)))
+    {
+        load_world(cur_level + 1);
+    }
 
     // Show rendered frame
     glutSwapBuffers();
@@ -169,7 +196,7 @@ void draw(void)
         char window_title[128];
         snprintf(window_title, 128,
                 "Box2D: %f fps, level %d/%d",
-                frame_count / (frametime / 1000.f), -1, num_levels);
+                frame_count / (frametime / 1000.f), cur_level, num_levels);
         glutSetWindowTitle(window_title);
         last_time = time;
         frame_count = 0;
