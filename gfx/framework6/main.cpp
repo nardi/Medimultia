@@ -119,12 +119,16 @@ void draw(void)
     //
     // Do any logic and drawing here.
     //
+    
+    // Sleep to provide a constant fps
     struct timespec sleep = {0};
     sleep.tv_nsec = 10000000;
     nanosleep(&sleep, NULL);
 
+    // Perform physics simulation
     world->Step(1/60.0f, 8, 3);
     
+    // Draw all bodies in world
     b2Body *body = world->GetBodyList();
     while (body != NULL)
     {
@@ -133,6 +137,7 @@ void draw(void)
         while (fixture != NULL)
         {
             b2Shape *shape = fixture->GetShape();
+            // Assign a random color if this shape has none
             if (shape_colors.find(shape) == shape_colors.end())
             {
                 shape_colors[shape] = random_color();
@@ -166,22 +171,25 @@ void draw(void)
         body = body->GetNext();
     }
     
+    // Draw the endpoint
     point_t end = levels[cur_level].end;
-    float size = 0.36;
+    float size = 0.3, thickness = 0.3;
     glColor3f(1.0, 1.0, 0.9);
+    float corner = (1 - thickness) * 0.5f;
     glBegin(GL_POLYGON);
-        glVertex2f(end.x + 0.25f*size, end.y + 0.5f*size);
-        glVertex2f(end.x + 0.5f*size, end.y + 0.25f*size);
-        glVertex2f(end.x - 0.25f*size, end.y - 0.5f*size);
-        glVertex2f(end.x - 0.5f*size, end.y - 0.25f*size);
+        glVertex2f(end.x + corner*size, end.y + 0.5f*size);
+        glVertex2f(end.x + 0.5f*size, end.y + corner*size);
+        glVertex2f(end.x - corner*size, end.y - 0.5f*size);
+        glVertex2f(end.x - 0.5f*size, end.y - corner*size);
     glEnd();
     glBegin(GL_POLYGON);
-        glVertex2f(end.x - 0.25f*size, end.y + 0.5f*size);
-        glVertex2f(end.x - 0.5f*size, end.y + 0.25f*size);
-        glVertex2f(end.x + 0.25f*size, end.y - 0.5f*size);
-        glVertex2f(end.x + 0.5f*size, end.y - 0.25f*size);
+        glVertex2f(end.x - corner*size, end.y + 0.5f*size);
+        glVertex2f(end.x - 0.5f*size, end.y + corner*size);
+        glVertex2f(end.x + corner*size, end.y - 0.5f*size);
+        glVertex2f(end.x + 0.5f*size, end.y - corner*size);
     glEnd();
     
+    // Detect whether the player has reached the endpoint
     if (player_shape->TestPoint(player_body->GetTransform(), b2Vec2(end.x, end.y)))
     {
         load_world(cur_level + 1);
