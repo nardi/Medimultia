@@ -19,10 +19,11 @@
 #include <Box2D/Box2D.h>
 
 #include "levels.h"
+#include "functions.h"
 
 unsigned int reso_x = 800, reso_y = 600; // Window size in pixels
 const float world_x = 8.f, world_y = 6.f; // Level (world) size in meters
-
+float px_to_m = reso_x/world_x;
 int last_time;
 int frame_count;
 
@@ -35,6 +36,14 @@ b2World *world = NULL;
 std::map<b2Shape*, b2Vec3> shape_colors;
 b2Body *player_body = NULL;
 b2Shape *player_shape = NULL;
+
+float GRAVITY = -9.81f;
+bool PLAY = false;
+//Custom polygon
+int custom_limit = 4;
+b2Vec2 *custom_vertices = NULL;
+int point_index = 0;
+bool mouse_released = false;
 
 b2Vec3 random_color()
 {
@@ -63,7 +72,7 @@ void load_world(unsigned int level)
     // Create a Box2D world and populate it with all bodies for this level
     // (including the ball).
     delete world;
-    world = new b2World(b2Vec2(0.0f, -9.81f));
+    world = new b2World(b2Vec2(0.0f, GRAVITY));   
     level_t l = levels[level];
     
     b2BodyDef ballDef;
@@ -112,6 +121,7 @@ void draw(void)
     int frametime = time - last_time;
     frame_count++;
 
+
     // Clear the buffer
     glColor3f(0.35, 0.35, 0.35);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -126,7 +136,10 @@ void draw(void)
     nanosleep(&sleep, NULL);
 
     // Perform physics simulation
-    world->Step(1/60.0f, 8, 3);
+    if(PLAY){
+        world->Step(1/60.0f, 8, 3);
+        world->ClearForces();
+    }
     
     // Draw all bodies in world
     b2Body *body = world->GetBodyList();
@@ -233,18 +246,130 @@ void key_pressed(unsigned char key, int x, int y)
         case 'q':
             exit(0);
             break;
+        case 'g':
+            PLAY = !PLAY;
+            printf("Youpressedg\n");
+            break;
         // Add any keys you want to use, either for debugging or gameplay.
         default:
             break;
     }
 }
 
+
 /*
  * Called when the user clicked (or released) a mouse buttons inside the window.
  */
 void mouse_clicked(int button, int state, int x, int y)
-{
+{   
+    if(mouse_released){
+        point_t p;
+        /*Save each click in Box2D coordinates (100pixels=1metre) and y-axis inverted*/
+        p.x = x/px_to_m;
+        p.y = -(y/px_to_m)+world_y;
+        //DEBUG
+        printf("Point %d with coordinates %g, %g has been saved!\n", point_index, p.x, p.y);
+        create_custom_poly(p, point_index);
+    }
+    /*This function is called twice for each mouseclick; once on mouse down, once on mouse up. This variable ensures that only one coordinate
+    is saved for each click*/
+    mouse_released = !mouse_released;
+}
 
+void create_custom_poly(point_t poly_point, int vert_count){
+    bool done = false;
+	if(custom_limit > 8){
+		printf("Custom polygons cannot have more than 8 vertices\n");
+		custom_limit = 8;
+	}
+
+    if(custom_vertices == NULL){
+        custom_vertices = new b2Vec2[custom_limit];
+    }
+
+    if(vert_count < custom_limit){
+        //DEBUG
+        printf("Setting index %d as %g, %g\n", vert_count, poly_point.x, poly_point.y);
+        custom_vertices[vert_count].Set(poly_point.x, poly_point.y);
+        point_index++;
+        printf("Set index %d as %g,%g\n", vert_count, custom_vertices[vert_count].x, custom_vertices[vert_count].y);
+        if(vert_count == custom_limit - 1){
+            done = true;
+        }
+    }
+
+    if(done){
+        /*if(is_concave_poly()){
+            fix_poly();
+        }*/
+        b2PolygonShape custom_poly;
+
+        custom_poly.Set(custom_vertices, custom_limit);
+        
+        b2BodyDef custom_body_def;
+        custom_body_def.type = b2_dynamicBody;
+        //DEBUG
+        custom_body_def.position.Set(custom_vertices[0].x, custom_vertices[0].y);
+
+        b2Body *custom_body = world->CreateBody(&custom_body_def);
+
+        b2FixtureDef custom_fixture_def;
+        custom_fixture_def.shape = &custom_poly;
+        custom_fixture_def.density = 1.0;
+        custom_fixture_def.friction = 1.0;
+        custom_body->CreateFixture(&custom_fixture_def);
+
+        delete custom_vertices;
+        custom_vertices = NULL;
+        point_index = 0;
+    }
+    
+}
+
+
+
+bool is_concave_poly(){
+    b2Vec2 *flawed_poly = custom_vertices;
+    int vert_count = custom_limit - 1;
+    bool positive, got_sign = false;
+    for(int i = 0; i < vert_count - 1; i++){
+        b2Vec2 tmp1 = flawed_poly[i];
+        b2Vec2 tmp2 = flawed_poly[i+1];
+        if(are_vertices_concave(tmp1, tmp2, &positive, &got_sign)){
+            return true;
+        }        
+    }
+    b2Vec2 tmp1 = flawed_poly[vert_count - 1];
+    b2Vec2 tmp2 = flawed_poly[0];
+
+    if(are_vertices_concave(tmp1, tmp2, &positive, &got_sign)){
+            return true;
+    }
+
+    return false;
+
+}
+
+bool are_vertices_concave(b2Vec2 tmp1, b2Vec2 tmp2,bool *got_sign, bool *positive){
+    if(!*got_sign){
+            if(!b2Cross(tmp1, tmp2) < 0){
+                *positive = true;
+                *got_sign = true;
+            }
+            else{
+                *positive = false;
+                *got_sign = true;
+            }
+    }
+    else{
+        if(b2Cross(tmp1, tmp2) < 0 && *positive){
+            return true;
+        }
+        if(!(b2Cross(tmp1, tmp2) < 0) && !*positive){
+            return true;
+        }
+    }
+    return false;
 }
 
 /*
